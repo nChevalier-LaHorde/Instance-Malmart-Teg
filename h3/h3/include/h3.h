@@ -953,6 +953,19 @@ void H3_Font_Printf(H3Handle h3, SH3TextProperties properties, SH3Transform* tra
 // ============================================================================
 
 /**
+ * \brief Draws and manages a button
+ * \param h3      The main H3 handle
+ * \param texture The texture handle to use as a button
+ * \param x       X position in screen pixels
+ * \param y       Y position in screen pixels
+ * \param anchor  The anchor to use as a reference. px and py will define the position of the anchor
+ * \return        True if the button is pressed, false otherwise
+ */
+bool H3_Button(H3Handle h3, H3Handle texture, float x, float y, EH3Anchor anchor);
+
+// ============================================================================
+
+/**
  * \brief Gets the current view properties
  * \param h3  The main H3 handle
  * \param x   pointer to write the view center's X coordinate to

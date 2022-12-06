@@ -45,6 +45,8 @@
 #pragma comment(lib, "box2d-s.lib")
 #endif // NDEBUG
 
+#pragma warning (disable : 6011 28182)
+
 // #define H3_DEBUG_DRAW_PHYSICS
 
 // ============================================================================
@@ -1437,6 +1439,51 @@ H3_CAPI void H3_Font_Printf(H3Handle h3, SH3TextProperties properties, SH3Transf
 	text.setOrigin(fvAnchor);
 
 	window->draw(text);
+}
+
+H3_CAPI bool H3_Button(H3Handle h3, H3Handle texture, float x, float y, EH3Anchor anchor)
+{
+	H3_Texture_Draw(h3, x, y, texture, anchor);
+
+	if (H3_Input_IsMouseBtnPressed(MB_Left))
+	{
+		sf::Texture* tex = reinterpret_cast<sf::Texture*>(texture);
+		if (!tex)
+			return false;
+
+		auto texSize = tex->getSize();
+
+		int mx, my;
+		H3_Input_GetMousePos(h3, &mx, &my);
+
+		int x0 = x;
+		int y0 = y;
+
+		switch (anchor & 0x0f)
+		{
+		case A_Right:
+			x0 -= texSize.x / 2;
+		case A_Center:
+			x0 -= texSize.x / 2;
+		default:
+			break;
+		}
+
+		switch (anchor & 0xf0)
+		{
+		case A_Bottom:
+			y0 -= texSize.y / 2;
+		case A_Middle:
+			y0 -= texSize.y / 2;
+		default:
+			break;
+		}
+
+		if (mx >= x0 && my >= y0 && mx <= (x0 + texSize.x) && my <= (y0 + texSize.y))
+			return true;
+	}
+
+	return false;
 }
 
 H3_CAPI void H3_GetView(H3Handle h3, float* x, float* y, float* w, float* h, float* vpw, float* vph)

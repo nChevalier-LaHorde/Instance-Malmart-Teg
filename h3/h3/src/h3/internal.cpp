@@ -18,7 +18,6 @@ const std::string& H3Internal_GetAssertMessage()
 
 void H3Internal_HandleAssertPopup()
 {
-
 	if (ImGui::BeginPopupModal("ASSERTION FAILED"))
 	{
 		ImGui::Text(gAssertMessage.c_str());

@@ -24,7 +24,7 @@ void* CameraComponent_CreateProperties(float width, float height)
 	CameraComponent_Properties* properties = malloc(sizeof(CameraComponent_Properties));
 	H3_ASSERT_CONSOLE(properties, "Failed to allocate properties");
 
-	properties->Width  = width;
+	properties->Width = width;
 	properties->Height = height;
 
 	return properties;

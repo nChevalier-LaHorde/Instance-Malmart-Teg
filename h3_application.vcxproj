@@ -165,7 +165,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Cofee.c" />
+    <ClCompile Include="src\Detector.c" />
+    <ClCompile Include="src\Enemie.c" />
+    <ClCompile Include="src\EnigmeShape.c" />
     <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\MainMenu.c" />
+    <ClCompile Include="src\Player.c" />
+    <ClCompile Include="src\Wire.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Cofee.h" />
+    <ClInclude Include="include\Detector.h" />
+    <ClInclude Include="include\Enemie.h" />
+    <ClInclude Include="include\EnigmeShape.h" />
+    <ClInclude Include="include\MainMenu.h" />
+    <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\Wire.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

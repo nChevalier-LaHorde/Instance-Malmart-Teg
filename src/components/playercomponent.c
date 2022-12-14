@@ -400,7 +400,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerrightgun.png", A_Center + A_Middle));
 				}
 			}
-			else if(InventoryComponent_Getcase_1Ex(object) != OBJ_airsoft_gun)
+			else
 			{
 				props->isGun = false;
 				if (props->direction == K_Z)

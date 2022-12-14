@@ -41,7 +41,7 @@ int main(int argc, char** argv)
     H3_Object_SetRenderOrder(mapwalls, 2);
     H3Handle mapobjects = H3_Object_Create(scene, "mapobjects", NULL);
     H3_Object_AddComponent(mapobjects, MAPLAYERCOMPONENT_CREATE(map_load, "objects"));
-    H3_Object_SetRenderOrder(mapobjects, 3);
+    H3_Object_SetRenderOrder(mapobjects, 5);
 
     // Player
     float player_x = 49, player_y = 847;
@@ -49,9 +49,9 @@ int main(int argc, char** argv)
     H3_Object_AddComponent(player, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
     H3_Object_AddComponent(player, PLAYERCOMPONENT_CREATE(scene, 1));
     H3_Object_AddComponent(player, INVENTORYCOMPONENT_CREATE());
-    H3_Object_EnablePhysics(player, H3_BOX_COLLIDER(CDT_Dynamic, 23, 56, 0x22, false));
+    H3_Object_EnablePhysics(player, H3_BOX_COLLIDER(CDT_Dynamic, 23, 54, 0x22, false));
     H3_Object_SetTranslation(player, player_x, player_y);
-    H3_Object_SetRenderOrder(player, 7);
+    H3_Object_SetRenderOrder(player, 4);
 
     // Camera
     H3Handle camera = H3_Object_Create(scene, "camera", NULL);
@@ -87,7 +87,7 @@ int main(int argc, char** argv)
     H3_Object_AddComponent(object_test_1, SPRITECOMPONENT_CREATE("assets/items/airsoft.png", A_Center + A_Middle));
     H3_Object_AddComponent(object_test_1, OBJECTSCOMPONENT_CREATE(OBJ_airsoft_gun));
     H3_Object_SetTranslation(object_test_1, 1552, 957);
-    H3_Object_SetRenderOrder(object_test_1, 3);
+    H3_Object_SetRenderOrder(object_test_1, 6);
 
     H3Handle object_test_2 = H3_Object_Create(scene, "object_test_2", NULL);
     H3_Object_EnablePhysics(object_test_2, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));

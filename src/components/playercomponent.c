@@ -23,6 +23,7 @@ typedef struct
 	int nb_bullets;
 	H3Handle Sound_Effect;
 	H3Handle scene;
+	EH3Key direction;
 
 	bool isMonster;
 	bool isCoffee;
@@ -80,6 +81,17 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 
 	float dist = sqrtf((mxScene - player_x) * (mxScene - player_x) + (myScene - player_y) * (myScene - player_y));
 
+
+	if      (H3_Input_IsKeyDown(K_Z))     props->direction = K_Z;
+	else if (H3_Input_IsKeyDown(K_Q))     props->direction = K_Q;
+	else if (H3_Input_IsKeyDown(K_S))     props->direction = K_S;
+	else if (H3_Input_IsKeyDown(K_D))     props->direction = K_D;
+	/*if (H3_Input_IsKeyDown(K_Up))    props->direction = K_Up;
+	else if (H3_Input_IsKeyDown(K_Left))  props->direction = K_Left;
+	else if (H3_Input_IsKeyDown(K_Down))  props->direction = K_Down;
+	else if (H3_Input_IsKeyDown(K_Right)) props->direction = K_Right;*/
+
+
 	// update position inventory items
 	float object_1_x, object_2_x, object_3_x;
 	float object_1_y, object_2_y, object_3_y;
@@ -107,15 +119,21 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 		// movements
 		if (!(H3_Input_IsKeyDown(K_Shift)))
 		{
-			if (H3_Input_IsKeyDown(K_D) || H3_Input_IsKeyDown(K_Right))
+			if (H3_Input_IsKeyDown(K_D) /*|| H3_Input_IsKeyDown(K_Right)*/)
 			{
 				player_velo_x = 128;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
 			}
-			else if (H3_Input_IsKeyDown(K_Q) || H3_Input_IsKeyDown(K_Left))
+			else if (H3_Input_IsKeyDown(K_Q) /*|| H3_Input_IsKeyDown(K_Left)*/)
 			{
 				player_velo_x = -128;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
 			}
 			else
 			{
@@ -123,15 +141,21 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
 			}
 
-			if (H3_Input_IsKeyDown(K_Z) || H3_Input_IsKeyDown(K_Up))
+			if (H3_Input_IsKeyDown(K_Z) /*|| H3_Input_IsKeyDown(K_Up)*/)
 			{
 				player_velo_y = -128;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
 			}
-			else if (H3_Input_IsKeyDown(K_S) || H3_Input_IsKeyDown(K_Down))
+			else if (H3_Input_IsKeyDown(K_S) /*|| H3_Input_IsKeyDown(K_Down)*/)
 			{
 				player_velo_y = 128;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
 			}
 			else
 			{
@@ -141,15 +165,21 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 		}
 		else
 		{
-			if      (H3_Input_IsKeyDown(K_D) || H3_Input_IsKeyDown(K_Right))
+			if      (H3_Input_IsKeyDown(K_D) /*|| H3_Input_IsKeyDown(K_Right)*/)
 			{
 				player_velo_x = 282;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
 			}
-			else if (H3_Input_IsKeyDown(K_Q) || H3_Input_IsKeyDown(K_Left))   
+			else if (H3_Input_IsKeyDown(K_Q) /*|| H3_Input_IsKeyDown(K_Left)*/)   
 			{
 				player_velo_x = -282;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
 			}
 			else   
 			{
@@ -157,15 +187,21 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
 			}
 
-			if      (H3_Input_IsKeyDown(K_Z) || H3_Input_IsKeyDown(K_Up))      
+			if      (H3_Input_IsKeyDown(K_Z) /*|| H3_Input_IsKeyDown(K_Up)*/)      
 			{
 				player_velo_y = -282;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
 			}
-			else if (H3_Input_IsKeyDown(K_S) || H3_Input_IsKeyDown(K_Down))
+			else if (H3_Input_IsKeyDown(K_S) /*|| H3_Input_IsKeyDown(K_Down)*/)
 			{
 				player_velo_y = 282;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
 			}
 			else   
 			{
@@ -338,19 +374,55 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 		}
 
 		// boolean management
-		if      (props->inventory_pointer == 1)
+		if(props->inventory_pointer == 1)
 		{
 			if (InventoryComponent_Getcase_1Ex(object) == OBJ_airsoft_gun)
 			{
 				props->isGun = true;
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
+				if (props->direction == K_Z)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerbackgun.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_Q)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleftgun.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_S)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_D)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerrightgun.png", A_Center + A_Middle));
+				}
 			}
-			else
+			else if(InventoryComponent_Getcase_1Ex(object) != OBJ_airsoft_gun)
 			{
 				props->isGun = false;
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
+				if (props->direction == K_Z)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_Q)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_S)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_D)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
+				}
 			}
 
 			if (InventoryComponent_Getcase_1Ex(object) == OBJ_monster) props->isMonster = true;
@@ -379,14 +451,50 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 			if (InventoryComponent_Getcase_2Ex(object) == OBJ_airsoft_gun)
 			{
 				props->isGun = true;
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
+				if (props->direction == K_Z)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerbackgun.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_Q)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleftgun.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_S)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_D)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerrightgun.png", A_Center + A_Middle));
+				}
 			}
 			else
 			{
 				props->isGun = false;
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
+				if (props->direction == K_Z)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_Q)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_S)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_D)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
+				}
 			}
 
 			if (InventoryComponent_Getcase_2Ex(object) == OBJ_monster) props->isMonster = true;
@@ -415,14 +523,50 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 			if (InventoryComponent_Getcase_3Ex(object) == OBJ_airsoft_gun)
 			{
 				props->isGun = true;
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
+				if (props->direction == K_Z)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerbackgun.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_Q)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleftgun.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_S)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_D)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerrightgun.png", A_Center + A_Middle));
+				}
 			}
 			else
 			{
 				props->isGun = false;
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
+				if (props->direction == K_Z)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_Q)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_S)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
+				}
+				else if (props->direction == K_D)
+				{
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
+				}
 			}
 
 			if (InventoryComponent_Getcase_3Ex(object) == OBJ_monster) props->isMonster = true;

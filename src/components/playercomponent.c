@@ -24,7 +24,14 @@ typedef struct
 	H3Handle Sound_Effect;
 	H3Handle scene;
 
-	bool isDrink;
+	bool isMonster;
+	bool isCoffee;
+	bool isPostIt;
+	bool isCoin;
+	bool isPuzzlePiece;
+	bool isKey;
+	bool isKeyCard;
+
 
 	int inventory_pointer;
 	int nb_inventory_objects;
@@ -73,7 +80,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 
 	float dist = sqrtf((mxScene - player_x) * (mxScene - player_x) + (myScene - player_y) * (myScene - player_y));
 
-	// update inventory items
+	// update position inventory items
 	float object_1_x, object_2_x, object_3_x;
 	float object_1_y, object_2_y, object_3_y;
 	if      (props->character == 1)
@@ -83,9 +90,9 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 	}
 	else if (props->character == 2)
 	{
-		object_1_x = player_x - 45, object_1_y = player_y + 230;
+		object_1_x = player_x - 60, object_1_y = player_y + 230;
 		object_2_x = player_x     , object_2_y = player_y + 230;
-		object_3_x = player_x + 45, object_3_y = player_y + 230;
+		object_3_x = player_x + 60, object_3_y = player_y + 230;
 	}
 
 	if (InventoryComponent_Getcase_1Ex(object) != OBJ_Void) H3_Object_SetTranslation(props->object_1, object_1_x, object_1_y);
@@ -134,23 +141,23 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 		}
 		else
 		{
-			if (H3_Input_IsKeyDown(K_D) || H3_Input_IsKeyDown(K_Right))
+			if      (H3_Input_IsKeyDown(K_D) || H3_Input_IsKeyDown(K_Right))
 			{
 				player_velo_x = 282;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
 			}
-			else if (H3_Input_IsKeyDown(K_Q) || H3_Input_IsKeyDown(K_Left))
+			else if (H3_Input_IsKeyDown(K_Q) || H3_Input_IsKeyDown(K_Left))   
 			{
 				player_velo_x = -282;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
 			}
-			else
+			else   
 			{
 				player_velo_x = 0;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
 			}
 
-			if (H3_Input_IsKeyDown(K_Z) || H3_Input_IsKeyDown(K_Up))
+			if      (H3_Input_IsKeyDown(K_Z) || H3_Input_IsKeyDown(K_Up))      
 			{
 				player_velo_y = -282;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
@@ -160,7 +167,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				player_velo_y = 282;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
 			}
-			else
+			else   
 			{
 				player_velo_y = 0;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
@@ -170,7 +177,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 		// action
 		if (H3_Input_IsMouseBtnPressed(MB_Left))
 		{
-			// attack airsoft gun
+			// attack 
 			if (props->isGun == true)
 			{
 				H3_Sound_Play(props->Sound_Effect, 0.5, false);
@@ -191,7 +198,29 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 			}
 
 			// energy boost
-			if (props->isDrink == true) //isDrink -> dans les mains ?
+			if      (props->isCoffee  == true) 
+			{
+				props->Tiredness -= 20; // nous donne 60s en plus
+				if (props->Tiredness < 0) props->Tiredness = 0;
+
+				if      (props->inventory_pointer == 1)
+				{
+					InventoryComponent_Setcase_1Ex(object, OBJ_Void);
+					H3_Object_Destroy(props->object_1, false);
+				}
+				else if (props->inventory_pointer == 2)
+				{
+					InventoryComponent_Setcase_2Ex(object, OBJ_Void);
+					H3_Object_Destroy(props->object_2, false);
+				}
+				else if (props->inventory_pointer == 3)
+				{
+					InventoryComponent_Setcase_3Ex(object, OBJ_Void);
+					H3_Object_Destroy(props->object_3, false);
+				}
+
+			}
+			else if (props->isMonster == true) 
 			{
 				props->Tiredness -= 15; // nous donne 45s en plus
 				if (props->Tiredness < 0) props->Tiredness = 0;
@@ -215,7 +244,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 			}
 		}
 
-		// interact with items
+		// pick up
 		if (props->inObject == true && H3_Input_IsKeyPressed(K_Space))
 		{
 			// si tu as un objet, tu le pose par terre
@@ -275,9 +304,21 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 			}
 			else if (props->character == 2)
 			{
-				if (props->inventory_pointer == 1) H3_Object_SetTranslation(props->object_1, player_x, player_y + 230);
-				if (props->inventory_pointer == 2) H3_Object_SetTranslation(props->object_2, player_x, player_y + 230);
-				if (props->inventory_pointer == 3) H3_Object_SetTranslation(props->object_3, player_x, player_y + 230);
+				if      (props->inventory_pointer == 1)
+				{
+					H3_Object_SetTranslation(props->object_1, player_x - 60, player_y + 230);
+					H3_Object_SetRenderOrder(props->object_1, 6);
+				}
+				else if (props->inventory_pointer == 2)
+				{
+					H3_Object_SetTranslation(props->object_2, player_x      , player_y + 230);
+					H3_Object_SetRenderOrder(props->object_2, 6);
+				}
+				else if (props->inventory_pointer == 3)
+				{
+					H3_Object_SetTranslation(props->object_3, player_x + 60, player_y + 230);
+					H3_Object_SetRenderOrder(props->object_3, 6);
+				}
 			}
 		}
 
@@ -290,31 +331,11 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 			{
 				if (props->inventory_pointer > 2) props->inventory_pointer = 1;
 			}
-			
 			else if (props->character == 2)
 			{
 				if (props->inventory_pointer > 3) props->inventory_pointer = 1;
 			}
 		}
-		
-		// tiredness
-		if (!(H3_Input_IsKeyDown(K_Shift)))
-		{
-			if (H3_GetTime() - props->player_timer > 3)
-			{
-				props->Tiredness++;
-				props->player_timer = H3_GetTime();
-			}
-		}
-		else
-		{
-			if (H3_GetTime() - props->player_timer > 1)
-			{
-				props->Tiredness++;
-				props->player_timer = H3_GetTime();
-			}
-		}
-		printf("tiredness = %d\n", props->Tiredness);
 
 		// boolean management
 		if      (props->inventory_pointer == 1)
@@ -332,8 +353,26 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
 			}
 
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_drink) props->isDrink = true;
-			else props->isDrink = false;
+			if (InventoryComponent_Getcase_1Ex(object) == OBJ_monster) props->isMonster = true;
+			else props->isMonster = false;
+
+			if (InventoryComponent_Getcase_1Ex(object) == OBJ_coffee) props->isCoffee = true;
+			else props->isCoffee = false;
+
+			if (InventoryComponent_Getcase_1Ex(object) == OBJ_post_it) props->isPostIt = true;
+			else props->isPostIt = false;
+
+			if (InventoryComponent_Getcase_1Ex(object) == OBJ_coin) props->isCoin = true;
+			else props->isCoin = false;
+
+			if (InventoryComponent_Getcase_1Ex(object) == OBJ_puzzlepiece) props->isPuzzlePiece = true;
+			else props->isPuzzlePiece = false;
+
+			if (InventoryComponent_Getcase_1Ex(object) == OBJ_key) props->isKey = true;
+			else props->isKey = false;
+
+			if (InventoryComponent_Getcase_1Ex(object) == OBJ_keycard) props->isKeyCard = true;
+			else props->isKeyCard = false;
 		}
 		else if (props->inventory_pointer == 2)
 		{
@@ -349,8 +388,27 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
 				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
 			}
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_drink) props->isDrink = true;
-			else props->isDrink = false;
+
+			if (InventoryComponent_Getcase_2Ex(object) == OBJ_monster) props->isMonster = true;
+			else props->isMonster = false;
+
+			if (InventoryComponent_Getcase_2Ex(object) == OBJ_coffee) props->isCoffee = true;
+			else props->isCoffee = false;
+
+			if (InventoryComponent_Getcase_2Ex(object) == OBJ_post_it) props->isPostIt = true;
+			else props->isPostIt = false;
+
+			if (InventoryComponent_Getcase_2Ex(object) == OBJ_coin) props->isCoin = true;
+			else props->isCoin = false;
+
+			if (InventoryComponent_Getcase_2Ex(object) == OBJ_puzzlepiece) props->isPuzzlePiece = true;
+			else props->isPuzzlePiece = false;
+
+			if (InventoryComponent_Getcase_2Ex(object) == OBJ_key) props->isKey = true;
+			else props->isKey = false;
+
+			if (InventoryComponent_Getcase_2Ex(object) == OBJ_keycard) props->isKeyCard = true;
+			else props->isKeyCard = false;
 		}
 		else if (props->inventory_pointer == 3)
 		{
@@ -366,10 +424,46 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
 				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
 			}
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_drink) props->isDrink = true;
-			else props->isDrink = false;
-		}
 
+			if (InventoryComponent_Getcase_3Ex(object) == OBJ_monster) props->isMonster = true;
+			else props->isMonster = false;
+
+			if (InventoryComponent_Getcase_3Ex(object) == OBJ_coffee) props->isCoffee = true;
+			else props->isCoffee = false;
+
+			if (InventoryComponent_Getcase_3Ex(object) == OBJ_post_it) props->isPostIt = true;
+			else props->isPostIt = false;
+
+			if (InventoryComponent_Getcase_3Ex(object) == OBJ_coin) props->isCoin = true;
+			else props->isCoin = false;
+
+			if (InventoryComponent_Getcase_3Ex(object) == OBJ_puzzlepiece) props->isPuzzlePiece = true;
+			else props->isPuzzlePiece = false;
+
+			if (InventoryComponent_Getcase_3Ex(object) == OBJ_key) props->isKey = true;
+			else props->isKey = false;
+
+			if (InventoryComponent_Getcase_3Ex(object) == OBJ_keycard) props->isKeyCard = true;
+			else props->isKeyCard = false;
+		}
+		
+		// tiredness
+		if (!(H3_Input_IsKeyDown(K_Shift)))
+		{
+			if (H3_GetTime() - props->player_timer > 3)
+			{
+				props->Tiredness++;
+				props->player_timer = H3_GetTime();
+			}
+		}
+		else 
+		{
+			if (H3_GetTime() - props->player_timer > 1)
+			{
+				props->Tiredness++;
+				props->player_timer = H3_GetTime();
+			}
+		}
 	}
 }
 
@@ -424,7 +518,8 @@ void* PlayerComponent_CreateProperties(H3Handle scene, int character)
 	properties->Sound_Effect = H3_Sound_Load("assets/sound_effect_airsoft_shot.wav");
 	properties->scene = scene;
 
-	properties->isDrink = false;
+	properties->isMonster = false;
+	properties->isCoffee = false;
 
 	properties->inventory_pointer = 1;
 	properties->nb_inventory_objects = 0;
@@ -434,14 +529,9 @@ void* PlayerComponent_CreateProperties(H3Handle scene, int character)
 	return properties;
 }
 
-H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW(PlayerComponent, int, character);
-H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW(PlayerComponent, int, Tiredness);
-H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW(PlayerComponent, bool, isCatch);
-H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW(PlayerComponent, bool, isDrink);
-H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW(PlayerComponent, bool, isGun);
-
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, int, character);
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, int, Tiredness);
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, bool, isCatch);
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, bool, isGun);
-H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, bool, isDrink);
+H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, bool, isMonster);
+H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, bool, isCoffee);

@@ -6,11 +6,13 @@
 typedef enum
 {
 	OBJ_airsoft_gun,
-	OBJ_drink,
+	OBJ_monster,
+	OBJ_coffee,
 	OBJ_post_it,
 	OBJ_coin,
-	OBJ_puzzle,
+	OBJ_puzzlepiece,
 	OBJ_key,
+	OBJ_keycard,
 
 	OBJ_Void,
 } EObjects;

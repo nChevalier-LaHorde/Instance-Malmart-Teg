@@ -33,6 +33,7 @@ void BulletsComponent_OnCollisionEnter(H3Handle object, SH3Collision collider)
 	if (collider.other == NULL /*|| H3_Object_HasComponent(collider.other, ENEMIESCOMPONENT_TYPEID)*/)
 	{
 		H3_Object_Destroy(object, false);
+		// set enenmies pv (get enenmies pv (collider.other) - 1);
 	}
 }
 

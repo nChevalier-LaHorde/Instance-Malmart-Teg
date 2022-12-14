@@ -111,7 +111,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 	if (InventoryComponent_Getcase_2Ex(object) != OBJ_Void) H3_Object_SetTranslation(props->object_2, object_2_x, object_2_y);
 	if (InventoryComponent_Getcase_3Ex(object) != OBJ_Void) H3_Object_SetTranslation(props->object_3, object_3_x, object_3_y);
 
-
+	
 
 
 	if (props->Tiredness < 100 && props->isCatch == false)

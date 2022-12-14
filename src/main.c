@@ -1,6 +1,7 @@
 #include <h3.h>
 
 #include <components/spritecomponent.h>
+#include <components/textcomponent.h>
 #include <components/maplayercomponent.h>
 
 #include <components/mycameracomponent.h>
@@ -64,7 +65,7 @@ int main(int argc, char** argv)
     /*if      (PlayerComponent_GetcharacterEx == 1)*/ H3_Object_AddComponent(inventory, SPRITECOMPONENT_CREATE("assets/hotbar/hotbar_male.png", A_Center + A_Middle));
     /*else if (PlayerComponent_GetcharacterEx == 2)*/ //H3_Object_AddComponent(inventory, SPRITECOMPONENT_CREATE("assets/hotbar/hotbar_female.png", A_Center + A_Middle));
     H3_Object_SetTranslation(inventory, inventory_x, inventory_y + 230);
-    H3_Object_SetRenderOrder(inventory, 4);
+    H3_Object_SetRenderOrder(inventory, 5);
 
 
     int inventory_pointer_offset;
@@ -82,27 +83,12 @@ int main(int argc, char** argv)
 
 
     //object test
-    H3Handle object_test_1 = H3_Object_Create(scene, "object_test_1", NULL);
-    H3_Object_EnablePhysics(object_test_1, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));
-    H3_Object_AddComponent(object_test_1, SPRITECOMPONENT_CREATE("assets/items/airsoft.png", A_Center + A_Middle));
-    H3_Object_AddComponent(object_test_1, OBJECTSCOMPONENT_CREATE(OBJ_airsoft_gun));
-    H3_Object_SetTranslation(object_test_1, 1552, 957);
-    H3_Object_SetRenderOrder(object_test_1, 6);
-
-    H3Handle object_test_2 = H3_Object_Create(scene, "object_test_2", NULL);
-    H3_Object_EnablePhysics(object_test_2, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));
-    H3_Object_AddComponent(object_test_2, SPRITECOMPONENT_CREATE("assets/items/coffee.png", A_Center + A_Middle));
-    H3_Object_AddComponent(object_test_2, OBJECTSCOMPONENT_CREATE(OBJ_coffee));
-    H3_Object_SetTranslation(object_test_2, 365, 1060);
-    H3_Object_SetRenderOrder(object_test_2, 3);
-
-    H3Handle object_test_3 = H3_Object_Create(scene, "object_test_3", NULL);
-    H3_Object_EnablePhysics(object_test_3, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));
-    H3_Object_AddComponent(object_test_3, SPRITECOMPONENT_CREATE("assets/items/monster.png", A_Center + A_Middle));
-    H3_Object_AddComponent(object_test_3, OBJECTSCOMPONENT_CREATE(OBJ_monster));
-    H3_Object_SetTranslation(object_test_3, 370, 1200);
-    H3_Object_SetRenderOrder(object_test_3, 3);
-
+    H3Handle airsoft_gun = H3_Object_Create(scene, "airsoft_gun", NULL);
+    H3_Object_EnablePhysics(airsoft_gun, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));
+    H3_Object_AddComponent(airsoft_gun, SPRITECOMPONENT_CREATE("assets/items/airsoft.png", A_Center + A_Middle));
+    H3_Object_AddComponent(airsoft_gun, OBJECTSCOMPONENT_CREATE(OBJ_airsoft_gun));
+    H3_Object_SetTranslation(airsoft_gun, 1552, 957);
+    H3_Object_SetRenderOrder(airsoft_gun, 6);
 
     bool keepGoing = true;
     while (keepGoing)

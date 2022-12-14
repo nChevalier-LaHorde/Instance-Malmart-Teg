@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     H3Handle screen = H3_Init((SH3InitParams) {
         .width = screen_width,
         .height = screen_height,
-        .fullscreen = false,
+        .fullscreen = true,
         .windowTitle = "HorrorMart"
     });
 

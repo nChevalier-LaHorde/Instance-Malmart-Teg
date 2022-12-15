@@ -11,7 +11,8 @@ void MainMenuComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 void MainMenuComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties);
 void* MainMenuComponent_CreateProperties(H3Handle Player);
 
-H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(MainMenuComponent, bool, inGame);
+H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(MainMenuComponent, bool, Ending);
+H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(MainMenuComponent, bool, lunching);
 
 H3_CAPI_END_BLOCK
 

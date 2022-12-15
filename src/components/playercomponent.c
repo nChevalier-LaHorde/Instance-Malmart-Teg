@@ -972,14 +972,14 @@ void PlayerComponent_OnCollisionEnter(H3Handle object, SH3Collision collider)
 	SH3Component* component = H3_Object_GetComponent(object, PLAYERCOMPONENT_TYPEID);
 	PlayerComponent_Properties* props = (PlayerComponent_Properties*)component->properties;
 
-	/*if (collider.other != NULL && H3_Object_HasComponent(collider.other, ENEMIECOMPONENT_TYPEID))
+	if (collider.other != NULL && H3_Object_HasComponent(collider.other, ENEMIECOMPONENT_TYPEID))
 	{
 		props->isCatch = true;
 	}
 	if (collider.other == NULL )
 	{
 		props->isCatch = false;
-	}*/
+	}
 }
 
 void PlayerComponent_OnTriggerEnter(H3Handle object, SH3Collision collider)

@@ -165,10 +165,17 @@ int main()
     H3_Object_SetRenderOrder(book_test, 5);
 
 
-    //MENU
-    H3Handle BackGroud = H3_Object_Create2(scene, "BackGroud", NULL, 100);
-    H3_Object_AddComponent(BackGroud, SPRITECOMPONENT_CREATE("assets/menus/start.png", A_Middle + A_Center));
-    H3_Object_AddComponent(BackGroud, MAINMENUCOMPONENT_CREATE(player));
+    //MENU BEGINNING
+    H3Handle BackGroudB = H3_Object_Create2(scene, "BackGroud", NULL, 100);
+    H3_Object_AddComponent(BackGroudB, SPRITECOMPONENT_CREATE("assets/menus/start.png", A_Middle + A_Center));
+    H3_Object_AddComponent(BackGroudB, MAINMENUCOMPONENT_CREATE(player));
+    H3_Object_SetTranslation(BackGroudB, 0, 0);
+
+    //MENU ENDING
+    H3Handle BackGroudE = H3_Object_Create2(scene, "BackGroud", NULL, 100);
+    H3_Object_AddComponent(BackGroudE, SPRITECOMPONENT_CREATE("assets/menus/gameover.png", A_Middle + A_Center));
+    H3_Object_AddComponent(BackGroudE, MAINMENUCOMPONENT_CREATE(player));
+    H3_Object_SetTranslation(BackGroudE, -1000, -1000);
 
     //ENIGME EQUATION
     H3Handle EnigmeEquation = H3_Object_Create2(scene, "EnigmeEquation", NULL, 12);
@@ -205,6 +212,9 @@ int main()
     bool keepGoing = true;
     while (keepGoing)
     {
+        float SpawnRndx = (rand() % 1481) + 418;
+        float SpawnRndy = (rand() % 735) + 764;
+
         H3_Transform_GetPosition(H3_Object_GetTransform(player), &inventory_x, &inventory_y);
         H3_Object_SetTranslation(inventory, inventory_x, inventory_y + 230);
         H3_Object_SetTranslation(inventory_pointer, inventory_x + inventory_pointer_offset, inventory_y + 230);
@@ -226,13 +236,18 @@ int main()
 
 
         //BACKGROUD
-        H3_Object_SetTranslation(BackGroud, player_x, player_y);
-        if (player_x >= 1 && player_y >= 1)
-        {
-            H3_Object_RemoveComponent(BackGroud, SPRITECOMPONENT_TYPEID);
-            H3_Object_RemoveComponent(BackGroud, MAINMENUCOMPONENT_TYPEID);
-        }
 
+        if (MainMenuComponent_GetlunchingEx == false)
+        {
+            H3_Object_RemoveComponent(BackGroudB, SPRITECOMPONENT_TYPEID);
+            H3_Object_RemoveComponent(BackGroudB, MAINMENUCOMPONENT_TYPEID);
+
+        }
+        if (MainMenuComponent_GetEndingEx == true)
+        {
+            H3_Object_RemoveComponent(BackGroudE, SPRITECOMPONENT_TYPEID);
+            H3_Object_RemoveComponent(BackGroudE, MAINMENUCOMPONENT_TYPEID);
+        }
         //ENEMIE
         if (EnemieCounteBoss <= 1)
         {
@@ -261,7 +276,7 @@ int main()
                 H3_Object_AddComponent(Enemie, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/enemie.png", A_Center + A_Middle));
                 H3_Object_AddComponent(Enemie, ENEMIECOMPONENT_CREATE(player, scene));
                 H3_Object_SetRenderOrder(Enemie, 4);
-                H3_Object_SetTranslation(Enemie, 1450, 950);
+                H3_Object_SetTranslation(Enemie, SpawnRndx + 200, SpawnRndy);
                 EnemieCounteMinion += 1;
                 Timer = H3_GetTime();
                 

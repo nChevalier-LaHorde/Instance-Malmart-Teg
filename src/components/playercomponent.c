@@ -370,12 +370,12 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 						if (props->inventory_pointer == 1)
 						{
 							H3_Object_SetTranslation(props->object_1, player_x - 30, player_y + 230);
-							H3_Object_SetRenderOrder(props->object_1, 6);
+							H3_Object_SetRenderOrder(props->object_1, 8);
 						}
 						else if (props->inventory_pointer == 2)
 						{
 							H3_Object_SetTranslation(props->object_2, player_x + 30, player_y + 230);
-							H3_Object_SetRenderOrder(props->object_2, 6);
+							H3_Object_SetRenderOrder(props->object_2, 8);
 						}
 					}
 					else if (props->character == 2)
@@ -383,17 +383,17 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 						if (props->inventory_pointer == 1)
 						{
 							H3_Object_SetTranslation(props->object_1, player_x - 60, player_y + 230);
-							H3_Object_SetRenderOrder(props->object_1, 6);
+							H3_Object_SetRenderOrder(props->object_1, 8);
 						}
 						else if (props->inventory_pointer == 2)
 						{
 							H3_Object_SetTranslation(props->object_2, player_x, player_y + 230);
-							H3_Object_SetRenderOrder(props->object_2, 6);
+							H3_Object_SetRenderOrder(props->object_2, 8);
 						}
 						else if (props->inventory_pointer == 3)
 						{
 							H3_Object_SetTranslation(props->object_3, player_x + 60, player_y + 230);
-							H3_Object_SetRenderOrder(props->object_3, 6);
+							H3_Object_SetRenderOrder(props->object_3, 8);
 						}
 					}
 				}
@@ -505,12 +505,12 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 					if (props->inventory_pointer == 1)
 					{
 						H3_Object_SetTranslation(props->object_1, player_x - 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 6);
+						H3_Object_SetRenderOrder(props->object_1, 8);
 					}
 					else if (props->inventory_pointer == 2)
 					{
 						H3_Object_SetTranslation(props->object_2, player_x + 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 6);
+						H3_Object_SetRenderOrder(props->object_2, 8);
 					}
 				}
 				else if (props->character == 2)
@@ -518,17 +518,17 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 					if (props->inventory_pointer == 1)
 					{
 						H3_Object_SetTranslation(props->object_1, player_x - 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 6);
+						H3_Object_SetRenderOrder(props->object_1, 8);
 					}
 					else if (props->inventory_pointer == 2)
 					{
 						H3_Object_SetTranslation(props->object_2, player_x, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 6);
+						H3_Object_SetRenderOrder(props->object_2, 8);
 					}
 					else if (props->inventory_pointer == 3)
 					{
 						H3_Object_SetTranslation(props->object_3, player_x + 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_3, 6);
+						H3_Object_SetRenderOrder(props->object_3, 8);
 					}
 				}
 			}
@@ -599,12 +599,12 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 					if (props->inventory_pointer == 1)
 					{
 						H3_Object_SetTranslation(props->object_1, player_x - 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 6);
+						H3_Object_SetRenderOrder(props->object_1, 8);
 					}
 					else if (props->inventory_pointer == 2)
 					{
 						H3_Object_SetTranslation(props->object_2, player_x + 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 6);
+						H3_Object_SetRenderOrder(props->object_2, 8);
 					}
 				}
 				else if (props->character == 2)
@@ -612,17 +612,17 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 					if (props->inventory_pointer == 1)
 					{
 						H3_Object_SetTranslation(props->object_1, player_x - 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 6);
+						H3_Object_SetRenderOrder(props->object_1, 8);
 					}
 					else if (props->inventory_pointer == 2)
 					{
 						H3_Object_SetTranslation(props->object_2, player_x, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 6);
+						H3_Object_SetRenderOrder(props->object_2, 8);
 					}
 					else if (props->inventory_pointer == 3)
 					{
 						H3_Object_SetTranslation(props->object_3, player_x + 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_3, 6);
+						H3_Object_SetRenderOrder(props->object_3, 8);
 					}
 				}
 
@@ -972,14 +972,14 @@ void PlayerComponent_OnCollisionEnter(H3Handle object, SH3Collision collider)
 	SH3Component* component = H3_Object_GetComponent(object, PLAYERCOMPONENT_TYPEID);
 	PlayerComponent_Properties* props = (PlayerComponent_Properties*)component->properties;
 
-	if (collider.other != NULL && H3_Object_HasComponent(collider.other, ENEMIECOMPONENT_TYPEID))
+	/*if (collider.other != NULL && H3_Object_HasComponent(collider.other, ENEMIECOMPONENT_TYPEID))
 	{
 		props->isCatch = true;
 	}
 	if (collider.other == NULL )
 	{
 		props->isCatch = false;
-	}
+	}*/
 }
 
 void PlayerComponent_OnTriggerEnter(H3Handle object, SH3Collision collider)

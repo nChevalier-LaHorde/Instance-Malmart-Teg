@@ -37,17 +37,13 @@
 
 int main()
 {
-
-
-
-
     // Screen + Scene
     const int screen_width = 1920, screen_height = 1080;
 
     H3Handle screen = H3_Init((SH3InitParams) {
         .width = screen_width,
             .height = screen_height,
-            .fullscreen = false,
+            .fullscreen = true,
             .windowTitle = "HorrorMart"
     });
 
@@ -91,7 +87,7 @@ int main()
     /*if      (PlayerComponent_GetcharacterEx == 1)*/ H3_Object_AddComponent(inventory, SPRITECOMPONENT_CREATE("assets/hotbar/hotbar_male.png", A_Center + A_Middle));
     /*else if (PlayerComponent_GetcharacterEx == 2)*/ //H3_Object_AddComponent(inventory, SPRITECOMPONENT_CREATE("assets/hotbar/hotbar_female.png", A_Center + A_Middle));
     H3_Object_SetTranslation(inventory, inventory_x, inventory_y + 230);
-    H3_Object_SetRenderOrder(inventory, 5);
+    H3_Object_SetRenderOrder(inventory, 6);
 
     int inventory_pointer_offset;
     int nb_tab = 0;
@@ -100,7 +96,7 @@ int main()
     H3Handle inventory_pointer = H3_Object_Create(scene, "inventory_pointer", NULL);
     H3_Object_AddComponent(inventory_pointer, SPRITECOMPONENT_CREATE("assets/hotbar/hotbar_select.png", A_Center + A_Middle));
     H3_Object_SetTranslation(inventory_pointer, inventory_x + inventory_pointer_offset, inventory_y + 230);
-    H3_Object_SetRenderOrder(inventory_pointer, 5);
+    H3_Object_SetRenderOrder(inventory_pointer, 6);
 
 
     // Music
@@ -196,17 +192,15 @@ int main()
     //CHAMP DE VISION
     H3Handle Vision = H3_Object_Create(scene, "vision", player);
     H3_Object_AddComponent(Vision, SPRITECOMPONENT_CREATE("assets/ChampDeVision.png", A_Center + A_Middle));
-    H3_Object_SetRenderOrder(Vision, 10);
+    H3_Object_SetRenderOrder(Vision, 5);
 
 
     int EnemieCounteBoss = 1;
     int EnemieCounteMinion = 1;
-    char enemie[256];
+    char strEnemie[256];
     int enemieindex = 0;
     float TimerBoss = H3_GetTime();
     float Timer = H3_GetTime();
-
-
 
 
     bool keepGoing = true;
@@ -251,7 +245,6 @@ int main()
         //ENEMIE
         if (EnemieCounteBoss <= 1)
         {
-
             if (H3_GetTime() - Timer >= 5)
             {
                 H3Handle Boss = H3_Object_Create(scene, "Boss", NULL);
@@ -264,32 +257,32 @@ int main()
                 TimerBoss = H3_GetTime();
             }
         }
-        if (EnemieCounteMinion <= 5)
-        {
+        //if (EnemieCounteMinion <= 5)
+        //{
 
-            if (H3_GetTime() - Timer >= 1)
-            {
-                enemieindex += 1;
-                snprintf(enemie, 256, "Enemie_%d", enemieindex);
-                H3Handle Enemie = H3_Object_Create(scene, enemie, NULL);
-                H3_Object_EnablePhysics(Enemie, H3_BOX_COLLIDER(CDT_Dynamic, 54, 60, 0x22, false));
-                H3_Object_AddComponent(Enemie, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/enemie.png", A_Center + A_Middle));
-                H3_Object_AddComponent(Enemie, ENEMIECOMPONENT_CREATE(player, scene));
-                H3_Object_SetRenderOrder(Enemie, 4);
-                H3_Object_SetTranslation(Enemie, SpawnRndx + 200, SpawnRndy);
-                EnemieCounteMinion += 1;
-                Timer = H3_GetTime();
-                
-               /* if (EnemieCounteMinion <= 10 && EnemieCounteMinion >=5)
-                {
-                    H3_Object_SetTranslation(Enemie, 1500, 1035);
-                }
-                if (EnemieCounteMinion <= 15 && EnemieCounteMinion >= 10)
-                {
-                    H3_Object_SetTranslation(Enemie, 2670, 485);
-                }*/
-            }
-        }
+        //    if (h3_gettime() - Timer >= 1) 
+        //    {
+        //        snprintf(strEnemie, 256, "enemie_%d", enemieindex++);
+        //        H3Handle enemie = H3_Object_Create(scene, strEnemie, NULL);
+        //        H3_Object_EnablePhysics(enemie, H3_BOX_COLLIDER(CDT_Dynamic, 54, 60, 0x22, false));
+        //        H3_Object_AddComponent(enemie, SPRITECOMPONENT_CREATE("assets/playerandenemiessprites/enemie.png", A_Center + A_Middle));
+        //        H3_Object_AddComponent(enemie, ENEMIECOMPONENT_CREATE(player, scene));
+        //        H3_Object_SetRenderOrder(enemie, 4);
+        //        H3_Object_SetTranslation(enemie, 1450, 950);
+        //        EnemieCounteMinion += 1;
+        //        Timer = h3_gettime();
+        //        
+        //        
+        //       /* if (EnemieCounteMinion <= 10 && EnemieCounteMinion >=5)
+        //        {
+        //            H3_Object_SetTranslation(enemie, 1500, 1035);
+        //        }
+        //        if (enemiecounteminion <= 15 && enemiecounteminion >= 10)
+        //        {
+        //            h3_object_settranslation(enemie, 2670, 485);
+        //        }*/
+        //    }
+        //}
 
 
         keepGoing = H3_DoFrame(screen, scene);

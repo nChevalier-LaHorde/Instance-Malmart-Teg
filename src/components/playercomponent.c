@@ -5,7 +5,6 @@
 #include <Enemie.h>
 
 #include <components/spritecomponent.h>
-#include <h3/ui.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,7 +13,7 @@
 typedef struct
 {
 	H3Handle scene;
-
+	
 	int character; // 1 for man or 2 for woman like on the vital cards
 
 	bool isCatch;
@@ -69,7 +68,6 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 {
 	PlayerComponent_Properties* props = (PlayerComponent_Properties*)properties;
 
-
 	int mouse_x, mouse_y;
 	float player_x, player_y;
 	int player_velo_x = 0, player_velo_y = 0;
@@ -77,24 +75,15 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 	H3_Input_GetMousePos(h3, &mouse_x, &mouse_y);
 	H3_Transform_GetPosition(transform, &player_x, &player_y);
 
-	if (H3_Ui_BeginWindow("PLayer"))
-	{
-		H3_Ui_Printf("coordinate: (%f,%f)", player_x, player_y);
-	}
-	H3_Ui_EndWindow();
-
-
-
-
 
 	float center_x, center_y, view_width, view_height, window_width, window_height;
 	H3_GetView(h3, &center_x, &center_y, &view_width, &view_height, &window_width, &window_height);
 
-	float x0 = center_x - view_width  / 2;
+	float x0 = center_x - view_width / 2;
 	float y0 = center_y - view_height / 2;
-	float x1 = center_x + view_width  / 2;
+	float x1 = center_x + view_width / 2;
 	float y1 = center_y + view_height / 2;
-	
+
 	float mx01 = mouse_x / window_width;
 	float my01 = mouse_y / window_height;
 
@@ -109,7 +98,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 	float dist = sqrtf((mxScene - player_x) * (mxScene - player_x) + (myScene - player_y) * (myScene - player_y));
 
 
-	if      (H3_Input_IsKeyDown(K_Z))     props->direction = K_Z;
+	if (H3_Input_IsKeyDown(K_Z))     props->direction = K_Z;
 	else if (H3_Input_IsKeyDown(K_Q))     props->direction = K_Q;
 	else if (H3_Input_IsKeyDown(K_S))     props->direction = K_S;
 	else if (H3_Input_IsKeyDown(K_D))     props->direction = K_D;
@@ -122,7 +111,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 	// update position inventory items
 	float object_1_x, object_2_x, object_3_x;
 	float object_1_y, object_2_y, object_3_y;
-	if      (props->character == 1)
+	if (props->character == 1)
 	{
 		object_1_x = player_x - 30, object_1_y = player_y + 230;
 		object_2_x = player_x + 30, object_2_y = player_y + 230;
@@ -130,7 +119,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 	else if (props->character == 2)
 	{
 		object_1_x = player_x - 60, object_1_y = player_y + 230;
-		object_2_x = player_x     , object_2_y = player_y + 230;
+		object_2_x = player_x, object_2_y = player_y + 230;
 		object_3_x = player_x + 60, object_3_y = player_y + 230;
 	}
 
@@ -190,7 +179,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 		}
 		else
 		{
-			if      (H3_Input_IsKeyDown(K_D) /*|| H3_Input_IsKeyDown(K_Right)*/)
+			if (H3_Input_IsKeyDown(K_D) /*|| H3_Input_IsKeyDown(K_Right)*/)
 			{
 				player_velo_x = 282;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
@@ -198,7 +187,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
 				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
 			}
-			else if (H3_Input_IsKeyDown(K_Q) /*|| H3_Input_IsKeyDown(K_Left)*/)   
+			else if (H3_Input_IsKeyDown(K_Q) /*|| H3_Input_IsKeyDown(K_Left)*/)
 			{
 				player_velo_x = -282;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
@@ -206,13 +195,13 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
 				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
 			}
-			else   
+			else
 			{
 				player_velo_x = 0;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
 			}
 
-			if      (H3_Input_IsKeyDown(K_Z) /*|| H3_Input_IsKeyDown(K_Up)*/)      
+			if (H3_Input_IsKeyDown(K_Z) /*|| H3_Input_IsKeyDown(K_Up)*/)
 			{
 				player_velo_y = -282;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
@@ -228,7 +217,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
 				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
 			}
-			else   
+			else
 			{
 				player_velo_y = 0;
 				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
@@ -259,12 +248,12 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 			}
 
 			// energy boost
-			else if (props->isCoffee  == true)
+			else if (props->isCoffee == true)
 			{
 				props->Tiredness -= 20; // nous donne 60s en plus
 				if (props->Tiredness < 0) props->Tiredness = 0;
 
-				if      (props->inventory_pointer == 1)
+				if (props->inventory_pointer == 1)
 				{
 					InventoryComponent_Setcase_1Ex(object, OBJ_Void);
 					H3_Object_Destroy(props->object_1, false);
@@ -281,12 +270,12 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				}
 
 			}
-			else if (props->isMonster == true) 
+			else if (props->isMonster == true)
 			{
 				props->Tiredness -= 15; // nous donne 45s en plus
 				if (props->Tiredness < 0) props->Tiredness = 0;
 
-				if      (props->inventory_pointer == 1)
+				if (props->inventory_pointer == 1)
 				{
 					InventoryComponent_Setcase_1Ex(object, OBJ_Void);
 					H3_Object_Destroy(props->object_1, false);
@@ -370,12 +359,12 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 						if (props->inventory_pointer == 1)
 						{
 							H3_Object_SetTranslation(props->object_1, player_x - 30, player_y + 230);
-							H3_Object_SetRenderOrder(props->object_1, 8);
+							H3_Object_SetRenderOrder(props->object_1, 6);
 						}
 						else if (props->inventory_pointer == 2)
 						{
 							H3_Object_SetTranslation(props->object_2, player_x + 30, player_y + 230);
-							H3_Object_SetRenderOrder(props->object_2, 8);
+							H3_Object_SetRenderOrder(props->object_2, 6);
 						}
 					}
 					else if (props->character == 2)
@@ -383,17 +372,17 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 						if (props->inventory_pointer == 1)
 						{
 							H3_Object_SetTranslation(props->object_1, player_x - 60, player_y + 230);
-							H3_Object_SetRenderOrder(props->object_1, 8);
+							H3_Object_SetRenderOrder(props->object_1, 6);
 						}
 						else if (props->inventory_pointer == 2)
 						{
 							H3_Object_SetTranslation(props->object_2, player_x, player_y + 230);
-							H3_Object_SetRenderOrder(props->object_2, 8);
+							H3_Object_SetRenderOrder(props->object_2, 6);
 						}
 						else if (props->inventory_pointer == 3)
 						{
 							H3_Object_SetTranslation(props->object_3, player_x + 60, player_y + 230);
-							H3_Object_SetRenderOrder(props->object_3, 8);
+							H3_Object_SetRenderOrder(props->object_3, 6);
 						}
 					}
 				}
@@ -505,12 +494,12 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 					if (props->inventory_pointer == 1)
 					{
 						H3_Object_SetTranslation(props->object_1, player_x - 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 8);
+						H3_Object_SetRenderOrder(props->object_1, 6);
 					}
 					else if (props->inventory_pointer == 2)
 					{
 						H3_Object_SetTranslation(props->object_2, player_x + 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 8);
+						H3_Object_SetRenderOrder(props->object_2, 6);
 					}
 				}
 				else if (props->character == 2)
@@ -518,17 +507,17 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 					if (props->inventory_pointer == 1)
 					{
 						H3_Object_SetTranslation(props->object_1, player_x - 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 8);
+						H3_Object_SetRenderOrder(props->object_1, 6);
 					}
 					else if (props->inventory_pointer == 2)
 					{
 						H3_Object_SetTranslation(props->object_2, player_x, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 8);
+						H3_Object_SetRenderOrder(props->object_2, 6);
 					}
 					else if (props->inventory_pointer == 3)
 					{
 						H3_Object_SetTranslation(props->object_3, player_x + 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_3, 8);
+						H3_Object_SetRenderOrder(props->object_3, 6);
 					}
 				}
 			}
@@ -599,12 +588,12 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 					if (props->inventory_pointer == 1)
 					{
 						H3_Object_SetTranslation(props->object_1, player_x - 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 8);
+						H3_Object_SetRenderOrder(props->object_1, 6);
 					}
 					else if (props->inventory_pointer == 2)
 					{
 						H3_Object_SetTranslation(props->object_2, player_x + 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 8);
+						H3_Object_SetRenderOrder(props->object_2, 6);
 					}
 				}
 				else if (props->character == 2)
@@ -612,17 +601,17 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 					if (props->inventory_pointer == 1)
 					{
 						H3_Object_SetTranslation(props->object_1, player_x - 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 8);
+						H3_Object_SetRenderOrder(props->object_1, 6);
 					}
 					else if (props->inventory_pointer == 2)
 					{
 						H3_Object_SetTranslation(props->object_2, player_x, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 8);
+						H3_Object_SetRenderOrder(props->object_2, 6);
 					}
 					else if (props->inventory_pointer == 3)
 					{
 						H3_Object_SetTranslation(props->object_3, player_x + 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_3, 8);
+						H3_Object_SetRenderOrder(props->object_3, 6);
 					}
 				}
 
@@ -678,7 +667,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 		}
 
 		// boolean management
-		if(props->inventory_pointer == 1)
+		if (props->inventory_pointer == 1)
 		{
 			if (InventoryComponent_Getcase_1Ex(object) == OBJ_airsoft_gun)
 			{
@@ -930,7 +919,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 			if (InventoryComponent_Getcase_3Ex(object) == OBJ_book) props->isBook = true;
 			else props->isBook = false;
 		}
-		
+
 		// tiredness
 		if (!(H3_Input_IsKeyDown(K_Shift)))
 		{
@@ -940,7 +929,7 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				props->player_timer = H3_GetTime();
 			}
 		}
-		else 
+		else
 		{
 			if (H3_GetTime() - props->player_timer > 1.5)
 			{
@@ -975,10 +964,6 @@ void PlayerComponent_OnCollisionEnter(H3Handle object, SH3Collision collider)
 	if (collider.other != NULL && H3_Object_HasComponent(collider.other, ENEMIECOMPONENT_TYPEID))
 	{
 		props->isCatch = true;
-	}
-	if (collider.other == NULL )
-	{
-		props->isCatch = false;
 	}
 }
 
@@ -1046,6 +1031,11 @@ void* PlayerComponent_CreateProperties(H3Handle scene, int character)
 	properties->nb_inventory_objects = 0;
 
 	properties->inObject = false;
+	properties->object_1 = NULL;
+	properties->object_2 = NULL;
+	properties->object_3 = NULL;
+	properties->object_feet = NULL;
+	properties->object_tempo = NULL;
 
 	return properties;
 }

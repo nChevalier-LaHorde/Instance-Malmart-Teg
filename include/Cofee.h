@@ -3,7 +3,7 @@
 
 #include <h3.h>
 
-#define COFEECOMPONENT_TYPEID 0x10000003
+#define COFEECOMPONENT_TYPEID 0x10000001
 
 H3_CAPI_BEGIN_BLOCK
 void CofeeComponent_Terminate(void* properties);

@@ -3,7 +3,7 @@
 
 #include <h3.h>
 
-#define DETECTORCOMPONENT_TYPEID 0x04000001
+#define DETECTORCOMPONENT_TYPEID 0x10000002
 
 H3_CAPI_BEGIN_BLOCK
 void DetectorComponent_Terminate(void* properties);

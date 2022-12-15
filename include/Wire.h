@@ -3,7 +3,7 @@
 
 #include <h3.h>
 
-#define WIRECOMPONENT_TYPEID 0x10000003
+#define WIRECOMPONENT_TYPEID 0x10000007
 
 H3_CAPI_BEGIN_BLOCK
 void WireComponent_Terminate(void* properties);

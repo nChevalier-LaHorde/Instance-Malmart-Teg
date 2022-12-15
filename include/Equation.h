@@ -3,7 +3,7 @@
 
 #include <h3.h>
 
-#define EQUATIONCOMPONENT_TYPEID 0x10000003
+#define EQUATIONCOMPONENT_TYPEID 0x10000005
 
 H3_CAPI_BEGIN_BLOCK
 void EquationComponent_Terminate(void* properties);

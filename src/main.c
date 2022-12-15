@@ -109,7 +109,7 @@ int main()
 
 
     // Clock
-    H3Handle Clock = H3_Object_Create2(scene, "Clock", camera, 10);
+    H3Handle Clock = H3_Object_Create2(scene, "Clock", camera, 20);
     SH3TextProperties Clock_Props = (SH3TextProperties)
     {
         .font = H3_Font_Load("assets/BOGLEBOLD.otf"),
@@ -126,7 +126,7 @@ int main()
 
 
     // Tiredness
-    H3Handle Tiredness = H3_Object_Create2(scene, "Tiredness", camera, 10);
+    H3Handle Tiredness = H3_Object_Create2(scene, "Tiredness", camera, 20);
     SH3TextProperties Tiredness_Props = (SH3TextProperties)
     {
         .font = H3_Font_Load("assets/BOGLEBOLD.otf"),

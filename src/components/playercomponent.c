@@ -2,8 +2,10 @@
 #include <components/playercomponent.h>
 #include <components/bulletscomponent.h>
 #include <components/inventorycomponent.h>
-#include <h3/ui.h>
+#include <Enemie.h>
+
 #include <components/spritecomponent.h>
+#include <h3/ui.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -970,10 +972,10 @@ void PlayerComponent_OnCollisionEnter(H3Handle object, SH3Collision collider)
 	SH3Component* component = H3_Object_GetComponent(object, PLAYERCOMPONENT_TYPEID);
 	PlayerComponent_Properties* props = (PlayerComponent_Properties*)component->properties;
 
-	/*if (H3_Object_HasComponent(collider.other, ENEMIECOMPONENT_TYPEID))
+	if (H3_Object_HasComponent(collider.other, ENEMIECOMPONENT_TYPEID))
 	{
 		props->isCatch = true;
-	}*/
+	}
 }
 
 void PlayerComponent_OnTriggerEnter(H3Handle object, SH3Collision collider)

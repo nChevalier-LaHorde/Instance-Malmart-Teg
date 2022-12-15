@@ -3,7 +3,7 @@
 
 #include <h3.h>
 
-#define ENIGMESHAPECOMPONENT_TYPEID 0x10000003
+#define ENIGMESHAPECOMPONENT_TYPEID 0x10000004
 
 H3_CAPI_BEGIN_BLOCK
 void EnigmeShapeComponent_Terminate(void* properties);

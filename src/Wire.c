@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <h3/ui.h>
 
+#include <components/playercomponent.h>
+
 typedef struct
 {
 	float px;
@@ -355,7 +357,7 @@ void WireComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform,
 
 		if (props->GameOver == 1)
 		{
-			//ACCESSOR isCatch
+			PlayerComponent_SetisCatchEx(props->Player, true);
 			if (H3_Ui_BeginWindow("Wire"))
 			{
 				H3_Ui_Printf("GameOver = true");

@@ -12,8 +12,6 @@ void BulletsComponent_OnCollisionEnter(H3Handle object, SH3Collision collider);
 
 void* BulletsComponent_CreateProperties();
 
-//H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW(BulletsComponent, int, Useless);
-//H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(BulletsComponent, int, Useless);
 H3_CAPI_END_BLOCK
 
 #define BULLETSCOMPONENT_CREATE()                                 \

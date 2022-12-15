@@ -167,18 +167,22 @@
   <ItemGroup>
     <ClCompile Include="include\components\objectscomponent.c" />
     <ClCompile Include="src\components\bulletscomponent.c" />
+    <ClCompile Include="src\components\clockcomponent.c" />
     <ClCompile Include="src\components\inventorycomponent.c" />
     <ClCompile Include="src\components\mycameracomponent.c" />
     <ClCompile Include="src\components\playercomponent.c" />
+    <ClCompile Include="src\components\tirednesscomponent.c" />
     <ClCompile Include="src\components\triggerplayercomponent.c" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\components\bulletscomponent.h" />
+    <ClInclude Include="include\components\clockcomponent.h" />
     <ClInclude Include="include\components\mycameracomponent.h" />
     <ClInclude Include="include\components\objectscomponent.h" />
     <ClInclude Include="include\components\inventorycomponent.h" />
     <ClInclude Include="include\components\playercomponent.h" />
+    <ClInclude Include="include\components\tirednesscomponent.h" />
     <ClInclude Include="include\components\triggerplayercomponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

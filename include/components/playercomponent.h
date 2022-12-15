@@ -25,7 +25,6 @@ H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, int, character);
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, int, Tiredness);
 
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, bool, isCatch);
-H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, bool, isBook);
 H3_CAPI_END_BLOCK
 
 #define PLAYERCOMPONENT_CREATE(SCENE, CHARACTER)                                \

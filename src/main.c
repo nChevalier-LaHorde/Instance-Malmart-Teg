@@ -9,6 +9,8 @@
 #include <components/triggerplayercomponent.h>
 #include <components/objectScomponent.h>
 #include <components/inventorycomponent.h>
+#include <components/clockcomponent.h>
+#include <components/tirednesscomponent.h>
 
 
 #ifndef NDEBUG
@@ -31,6 +33,7 @@ int main(int argc, char** argv)
 
     H3Handle scene = H3_Scene_Create(screen, true);
 
+
     // Map
     H3Handle map_load = H3_Map_Load("assets/maps/realmap.tmx");
     H3_Map_RegisterObjectLayerForPhysicsInScene(scene, map_load, "collider");
@@ -44,6 +47,7 @@ int main(int argc, char** argv)
     H3_Object_AddComponent(mapobjects, MAPLAYERCOMPONENT_CREATE(map_load, "objects"));
     H3_Object_SetRenderOrder(mapobjects, 5);
 
+
     // Player
     float player_x = 49, player_y = 847;
     H3Handle player = H3_Object_Create(scene, "Player", NULL);
@@ -54,11 +58,13 @@ int main(int argc, char** argv)
     H3_Object_SetTranslation(player, player_x, player_y);
     H3_Object_SetRenderOrder(player, 4);
 
+
     // Camera
     H3Handle camera = H3_Object_Create(scene, "camera", NULL);
     H3_Object_AddComponent(camera, MYCAMERACOMPONENT_CREATE(screen_width / 2, screen_height / 2, player));
     H3_Object_SetTranslation(camera, screen_width / 2, screen_height / 2);
     
+
     // Inventory
     float inventory_x = player_x, inventory_y = player_y;
     H3Handle inventory = H3_Object_Create(scene, "inventory", NULL);
@@ -66,7 +72,6 @@ int main(int argc, char** argv)
     /*else if (PlayerComponent_GetcharacterEx == 2)*/ //H3_Object_AddComponent(inventory, SPRITECOMPONENT_CREATE("assets/hotbar/hotbar_female.png", A_Center + A_Middle));
     H3_Object_SetTranslation(inventory, inventory_x, inventory_y + 230);
     H3_Object_SetRenderOrder(inventory, 5);
-
 
     int inventory_pointer_offset;
     int nb_tab = 0;
@@ -77,9 +82,44 @@ int main(int argc, char** argv)
     H3_Object_SetTranslation(inventory_pointer, inventory_x + inventory_pointer_offset, inventory_y + 230);
     H3_Object_SetRenderOrder(inventory_pointer, 5);
 
+
     // Music
     H3Handle music = H3_Music_Load("assets/Horror_Music.wav");
     H3_Music_Play(music, 1, true);
+
+
+    // Clock
+    H3Handle Clock = H3_Object_Create2(scene, "Clock", camera, 10);
+    SH3TextProperties Clock_Props = (SH3TextProperties)
+    {
+        .font = H3_Font_Load("assets/BOGLEBOLD.otf"),
+        .size = 30,
+        .fillColor = {.r = 255,.g = 255, .b = 255,.a = 255},
+        .anchor = A_Center + A_Middle,
+        .hasOutline = true,
+        .isBold = false,
+        .isItalic = false,
+        .isUnderlined = false
+    };
+    H3_Object_AddComponent(Clock, CLOCKCOMPONENT_CREATE("%dh%d%d", Clock_Props));
+    H3_Object_SetTranslation(Clock, 0, -260);
+
+
+    // Tiredness
+    H3Handle Tiredness = H3_Object_Create2(scene, "Tiredness", camera, 10);
+    SH3TextProperties Tiredness_Props = (SH3TextProperties)
+    {
+        .font = H3_Font_Load("assets/BOGLEBOLD.otf"),
+        .size = 25,
+        .fillColor = {.r = 255,.g = 255, .b = 255,.a = 255},
+        .anchor = A_Left + A_Middle,
+        .hasOutline = true,
+        .isBold = false,
+        .isItalic = false,
+        .isUnderlined = false
+    };
+    H3_Object_AddComponent(Tiredness, TIREDNESSCOMPONENT_CREATE("Tiredness : %d/100", Tiredness_Props, player));
+    H3_Object_SetTranslation(Tiredness, -470, -260);
 
 
     //object test
@@ -92,14 +132,14 @@ int main(int argc, char** argv)
 
     H3Handle keycard_test = H3_Object_Create(scene, "keycard_test", NULL);
     H3_Object_EnablePhysics(keycard_test, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));
-    H3_Object_AddComponent(keycard_test, SPRITECOMPONENT_CREATE("assets/items/keycardB.png", A_Center + A_Middle));
+    H3_Object_AddComponent(keycard_test, SPRITECOMPONENT_CREATE("assets/items/keycard.png", A_Center + A_Middle));
     H3_Object_AddComponent(keycard_test, OBJECTSCOMPONENT_CREATE(OBJ_keycard));
     H3_Object_SetTranslation(keycard_test, 1552, 1050);
     H3_Object_SetRenderOrder(keycard_test, 5);
 
     H3Handle book_test = H3_Object_Create(scene, "book_test", NULL);
     H3_Object_EnablePhysics(book_test, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));
-    H3_Object_AddComponent(book_test, SPRITECOMPONENT_CREATE("assets/items/pedestal1.png", A_Center + A_Middle));
+    H3_Object_AddComponent(book_test, SPRITECOMPONENT_CREATE("assets/items/bookS.png", A_Center + A_Middle));
     H3_Object_AddComponent(book_test, OBJECTSCOMPONENT_CREATE(OBJ_book));
     H3_Object_SetTranslation(book_test, 3792, 752);
     H3_Object_SetRenderOrder(book_test, 5);

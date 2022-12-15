@@ -10,6 +10,7 @@
 #include "EnigmeShape.h"
 #include "Cofee.h"
 #include "Wire.h"
+#include "Equation.h"
 #include "MainMenu.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -60,9 +61,12 @@ int main()
 	H3_Object_AddComponent(BackGroud, SPRITECOMPONENT_CREATE("assets/menus/start.png", A_Middle + A_Center));
 	H3_Object_AddComponent(BackGroud, MAINMENUCOMPONENT_CREATE(Player));
 	
+	//ENIGME EQUATION
+	H3Handle EnigmeEquation = H3_Object_Create2(scene, "EnigmeEquation", NULL, 12);
+	H3_Object_AddComponent(EnigmeEquation, EQUATIONCOMPONENT_CREATE(scene, Player));
 
 	//ENIGMESHAPE
-	H3Handle EnigmeShape = H3_Object_Create(scene, "Shape", NULL);
+	H3Handle EnigmeShape = H3_Object_Create2(scene, "EnigmeShape", NULL, 12);
 	H3_Object_AddComponent(EnigmeShape, ENIGMESHAPECOMPONENT_CREATE(scene));
 
 	//ENIGMEBUTTON
@@ -135,3 +139,5 @@ int main()
 
 	return 0;
 }
+
+//3730 33745

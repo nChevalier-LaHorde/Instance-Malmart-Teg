@@ -41,11 +41,11 @@ void MainMenuComponent_Draw(H3Handle h3, SH3Transform* transform, void* properti
 {
 	MainMenuComponent_Properties* props = (MainMenuComponent_Properties*)properties;
 
-	if (H3_Button(h3, props->Play, 400, 652, A_Middle + A_Center))
+	if (H3_Button(h3, props->Play, 390, 672, A_Middle + A_Center))
 	{
 		props->inGame = true;
 	}
-	if (H3_Button(h3, props->Quit, 1122, 638, A_Middle + A_Center))
+	if (H3_Button(h3, props->Quit, 1112, 658, A_Middle + A_Center))
 	{
 		props->DoQuit = true;
 	}

@@ -154,7 +154,7 @@ int main()
     H3_Object_EnablePhysics(keycard_test, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));
     H3_Object_AddComponent(keycard_test, SPRITECOMPONENT_CREATE("assets/items/keycard.png", A_Center + A_Middle));
     H3_Object_AddComponent(keycard_test, OBJECTSCOMPONENT_CREATE(OBJ_keycard));
-    H3_Object_SetTranslation(keycard_test, 1552, 1050);
+    H3_Object_SetTranslation(keycard_test, 1952, 621);
     H3_Object_SetRenderOrder(keycard_test, 5);
 
     H3Handle book_test = H3_Object_Create(scene, "book_test", NULL);
@@ -192,10 +192,13 @@ int main()
     H3_Object_SetRenderOrder(Vision, 10);
 
 
-    int EnemieCounte = 1;
+    int EnemieCounteBoss = 1;
+    int EnemieCounteMinion = 1;
     char enemie[256];
     int enemieindex = 0;
+    float TimerBoss = H3_GetTime();
     float Timer = H3_GetTime();
+    float RndSpawn = rand() % 2;
 
 
 
@@ -232,7 +235,22 @@ int main()
         }
 
         //ENEMIE
-        if (EnemieCounte <= 1)
+        if (EnemieCounteBoss <= 1)
+        {
+
+            if (H3_GetTime() - Timer >= 5)
+            {
+                H3Handle Boss = H3_Object_Create(scene, Boss, NULL);
+                H3_Object_EnablePhysics(Boss, H3_BOX_COLLIDER(CDT_Dynamic, 54, 60, 0x22, false));
+                H3_Object_AddComponent(Boss, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/miniboss.png", A_Center + A_Middle));
+                H3_Object_AddComponent(Boss, ENEMIECOMPONENT_CREATE(player, scene));
+                H3_Object_SetTranslation(Boss, 400, 400);
+                H3_Object_SetRenderOrder(Boss, 4);
+                EnemieCounteBoss += 1;
+                TimerBoss = H3_GetTime();
+            }
+        }
+        if (EnemieCounteMinion <= 15)
         {
 
             if (H3_GetTime() - Timer >= 5)
@@ -243,11 +261,22 @@ int main()
                 H3_Object_EnablePhysics(Enemie, H3_BOX_COLLIDER(CDT_Dynamic, 54, 60, 0x22, false));
                 H3_Object_AddComponent(Enemie, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/miniboss.png", A_Center + A_Middle));
                 H3_Object_AddComponent(Enemie, ENEMIECOMPONENT_CREATE(player, scene));
-                H3_Object_SetTranslation(Enemie, 400, 400);
                 H3_Object_SetRenderOrder(Enemie, 4);
-                EnemieCounte += 1;
-                printf("%d\n", EnemieCounte);
+                EnemieCounteMinion += 1;
+                RndSpawn = rand() % 2;
                 Timer = H3_GetTime();
+                if (RndSpawn == 0)
+                {
+                    H3_Object_SetTranslation(Enemie, 3165, 642);
+                }
+                if (RndSpawn == 0)
+                {
+                    H3_Object_SetTranslation(Enemie, 1500, 1035);
+                }
+                if (RndSpawn == 0)
+                {
+                    H3_Object_SetTranslation(Enemie, 2670, 485);
+                }
             }
         }
 

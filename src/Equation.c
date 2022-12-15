@@ -103,7 +103,7 @@ void EquationComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 		if (H3_Input_IsKeyPressed(K_Space))
 		{
 			
-			if (3725 < props->px && props->px < 3735 && 290>props->py && props->py > 285)
+			if (3720 < props->px && props->px < 3735 && 290>props->py && props->py > 284)
 			{
 				H3_Object_AddComponent(props->Equation, SPRITECOMPONENT_CREATE("assets/equation/pannel.png", A_Center + A_Middle));
 				props->EquationOn = true;
@@ -657,7 +657,7 @@ void EquationComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 				}
 				else
 				{
-					H3_Object_SetTranslation(props->Player, 3730,285);
+					H3_Object_SetTranslation(props->Player, 3730,290);
 					props->nbr1 = false;
 					props->nbr2 = false;
 					props->nbr3 = false;
@@ -695,55 +695,55 @@ void EquationComponent_Draw(H3Handle h3, SH3Transform* transform, void* properti
 
 	if (props->EquationOn == true)
 	{
-		if (H3_Button(h3, props->Equation1Tex, 735, 435, A_Center + A_Middle))
+		if (H3_Button(h3, props->Equation1Tex, 735, 496, A_Center + A_Middle))
 		{
 			props->nbr1 = true;
 			H3_Object_SetTranslation(props->T1, 3641, 280);
 			H3_Object_AddComponent(props->T1, SPRITECOMPONENT_CREATE("assets/equation/pannelbuttondisapear.png", A_Middle + A_Center));
 		}
-		if (H3_Button(h3, props->Equation2Tex, 915, 435, A_Center + A_Middle))
+		if (H3_Button(h3, props->Equation2Tex, 915, 496, A_Center + A_Middle))
 		{
 			props->nbr2 = true;
 			H3_Object_SetTranslation(props->T2, 3731, 280);
 			H3_Object_AddComponent(props->T2, SPRITECOMPONENT_CREATE("assets/equation/pannelbuttondisapear.png", A_Middle + A_Center));
 		}
-		if (H3_Button(h3, props->Equation3Tex, 1095, 435, A_Center + A_Middle))
+		if (H3_Button(h3, props->Equation3Tex, 1095, 496, A_Center + A_Middle))
 		{
 			props->nbr3 = true;
 			H3_Object_SetTranslation(props->T3, 3820, 280);
 			H3_Object_AddComponent(props->T3, SPRITECOMPONENT_CREATE("assets/equation/pannelbuttondisapear.png", A_Middle + A_Center));
 		}
-		if (H3_Button(h3, props->Equation4Tex, 735, 567, A_Center + A_Middle))
+		if (H3_Button(h3, props->Equation4Tex, 735, 628, A_Center + A_Middle))
 		{
 			props->nbr4 = true;
 			H3_Object_SetTranslation(props->T4, 3641, 346);
 			H3_Object_AddComponent(props->T4, SPRITECOMPONENT_CREATE("assets/equation/pannelbuttondisapear.png", A_Middle + A_Center));
 		}
-		if (H3_Button(h3, props->Equation5Tex, 915, 567, A_Center + A_Middle))
+		if (H3_Button(h3, props->Equation5Tex, 915, 628, A_Center + A_Middle))
 		{
 			props->nbr5 = true;
 			H3_Object_SetTranslation(props->T5, 3731, 346);
 			H3_Object_AddComponent(props->T5, SPRITECOMPONENT_CREATE("assets/equation/pannelbuttondisapear.png", A_Middle + A_Center));
 		}
-		if (H3_Button(h3, props->Equation6Tex, 1095, 567, A_Center + A_Middle))
+		if (H3_Button(h3, props->Equation6Tex, 1095, 628, A_Center + A_Middle))
 		{
 			props->nbr6 = true;
 			H3_Object_SetTranslation(props->T6, 3820, 346);
 			H3_Object_AddComponent(props->T6, SPRITECOMPONENT_CREATE("assets/equation/pannelbuttondisapear.png", A_Middle + A_Center));
 		}
-		if (H3_Button(h3, props->Equation7Tex, 735, 699, A_Center + A_Middle))
+		if (H3_Button(h3, props->Equation7Tex, 735, 760, A_Center + A_Middle))
 		{
 			props->nbr7 = true;
 			H3_Object_SetTranslation(props->T7, 3641, 412);
 			H3_Object_AddComponent(props->T7, SPRITECOMPONENT_CREATE("assets/equation/pannelbuttondisapear.png", A_Middle + A_Center));
 		}
-		if (H3_Button(h3, props->Equation8Tex, 915, 699, A_Center + A_Middle))
+		if (H3_Button(h3, props->Equation8Tex, 915, 760, A_Center + A_Middle))
 		{
 			props->nbr8 = true;
 			H3_Object_SetTranslation(props->T8, 3731, 412);
 			H3_Object_AddComponent(props->T8, SPRITECOMPONENT_CREATE("assets/equation/pannelbuttondisapear.png", A_Middle + A_Center));
 		}
-		if (H3_Button(h3, props->Equation9Tex, 1095, 699, A_Center + A_Middle))
+		if (H3_Button(h3, props->Equation9Tex, 1090, 760, A_Center + A_Middle))
 		{
 			props->nbr9 = true;
 			H3_Object_SetTranslation(props->T9, 3820, 412);

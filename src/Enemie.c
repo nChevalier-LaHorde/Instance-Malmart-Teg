@@ -1,6 +1,8 @@
 #include "Enemie.h"
-#include "Detector.h"
+#include "Enemie.h"
 #include "components/spritecomponent.h"
+#include <components/playercomponent.h>
+#include <components/bulletscomponent.h>
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -13,7 +15,7 @@ typedef struct
 	float vex;
 	float vey;
 	float Timer;
-	float TimerDetector;
+	float TimerEnemie;
 	float TimerEnemie;
 	float rndx;
 	float rndy;
@@ -31,6 +33,17 @@ typedef struct
 void EnemieComponent_Terminate(void* properties)
 {
 	free(properties);
+}
+
+void EnemieComponent_OnCollisionEnter(H3Handle object, SH3Collision Collision)
+{
+	SH3Component* component = H3_Object_GetComponent(object, ENEMIECOMPONENT_TYPEID);
+	EnemieComponent_Properties* props = (EnemieComponent_Properties*)(component->properties);
+
+	if (H3_Object_HasComponent(Collision.other, BULLETSCOMPONENT_TYPEID))
+	{
+		PlayerComponent_SetisCatchEx(props->Player, true);
+	}
 }
 
 void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform, float t, float dt, void* properties)
@@ -91,22 +104,22 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 
 	
 	//RAYCAST
-	if (H3_GetTime() - props->TimerDetector > 0.5)
+	if (H3_GetTime() - props->TimerEnemie > 0.5)
 	{
 		props->detectorindex += 1;
 		snprintf(props->detector, 256, "detector_%d", props->detectorindex);
-		H3Handle Detector = H3_Object_Create(props->scene, props->detector, NULL);
+		H3Handle Enemie = H3_Object_Create(props->scene, props->detector, NULL);
 
-		H3_Object_EnablePhysics(Detector, H3_BOX_COLLIDER(CDT_Dynamic, 4, 6, 0x22, true));
-		H3_Object_AddComponent(Detector, DETECTORCOMPONENT_CREATE(object));
+		H3_Object_EnablePhysics(Enemie, H3_BOX_COLLIDER(CDT_Dynamic, 4, 6, 0x22, true));
+		H3_Object_AddComponent(Enemie, ENEMIECOMPONENT_CREATE(object));
 		bx = ((px - ex) / dist) * 2000;
 		by = ((py - ey) / dist) * 2000;
 		pbx = ((px - ex) / dist) * 50;
 		pby = ((py - ey) / dist) * 50;
-		H3_Object_SetVelocity(Detector, bx, by);
-		H3_Object_SetRotation(Detector, aDeg + 90);
-		H3_Object_SetTranslation(Detector, ex + pbx, ey + pby);
-		props->TimerDetector = H3_GetTime();
+		H3_Object_SetVelocity(Enemie, bx, by);
+		H3_Object_SetRotation(Enemie, aDeg + 90);
+		H3_Object_SetTranslation(Enemie, ex + pbx, ey + pby);
+		props->TimerEnemie = H3_GetTime();
 	}
 
 

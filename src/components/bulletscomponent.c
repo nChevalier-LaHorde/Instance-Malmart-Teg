@@ -31,7 +31,7 @@ void* BulletsComponent_CreateProperties()
 
 void BulletsComponent_OnCollisionEnter(H3Handle object, SH3Collision collider)
 {
-	if (collider.other == NULL && H3_Object_HasComponent(collider.other, ENEMIECOMPONENT_TYPEID))
+	if (collider.other == NULL || H3_Object_HasComponent(collider.other, ENEMIECOMPONENT_TYPEID))
 	{
 		H3_Object_Destroy(object, false);
 	}

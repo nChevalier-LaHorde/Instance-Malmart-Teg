@@ -91,7 +91,7 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 
 
 	//RAYCAST
-	if (H3_GetTime() - props->TimerDetector > 0.5)
+	if (H3_GetTime() - props->TimerDetector > 0.5 && dist <= 300)
 	{
 		props->detectorindex += 1;
 		snprintf(props->detector, 256, "detector_%d", props->detectorindex);

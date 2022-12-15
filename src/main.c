@@ -69,7 +69,7 @@ int main()
 
 
     // Player
-    float player_x = 2900, player_y = 100;
+    float player_x = 0, player_y = 0;
     H3Handle player = H3_Object_Create(scene, "Player", NULL);
     H3_Object_AddComponent(player, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
     H3_Object_AddComponent(player, PLAYERCOMPONENT_CREATE(scene, 1));
@@ -249,7 +249,7 @@ int main()
                 TimerBoss = H3_GetTime();
             }
         }
-        if (EnemieCounteMinion <= 1)
+        if (EnemieCounteMinion <= 5)
         {
 
             if (H3_GetTime() - Timer >= 1)
@@ -261,7 +261,7 @@ int main()
                 H3_Object_AddComponent(Enemie, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/enemie.png", A_Center + A_Middle));
                 H3_Object_AddComponent(Enemie, ENEMIECOMPONENT_CREATE(player, scene));
                 H3_Object_SetRenderOrder(Enemie, 4);
-                H3_Object_SetTranslation(Enemie, 3165, 642);
+                H3_Object_SetTranslation(Enemie, 1450, 950);
                 EnemieCounteMinion += 1;
                 Timer = H3_GetTime();
                 

@@ -952,6 +952,8 @@ void H3_Font_Printf(H3Handle h3, SH3TextProperties properties, SH3Transform* tra
 
 // ============================================================================
 
+bool H3_Button(H3Handle h3, H3Handle texture, float x, float y, EH3Anchor anchor);
+
 /**
  * \brief Draws and manages a button
  * \param h3      The main H3 handle

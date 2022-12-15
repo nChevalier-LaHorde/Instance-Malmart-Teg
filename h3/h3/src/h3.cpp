@@ -47,7 +47,7 @@
 
 #pragma warning (disable : 6011 28182)
 
-//#define H3_DEBUG_DRAW_PHYSICS
+ #define H3_DEBUG_DRAW_PHYSICS
 
 // ============================================================================
 
@@ -106,7 +106,7 @@ public:
 	{
 	}
 
-    void DrawPoint(const b2Vec2& p, float size, const b2Color& color)
+	void DrawPoint(const b2Vec2& p, float size, const b2Color& color)
 	{
 	}
 };
@@ -138,8 +138,8 @@ struct SH3SceneObject_
 
 	int32_t                            renderOrder;
 
-	SH3Scene_*                         scene;
-	SH3SceneObject_*                   parent;
+	SH3Scene_* scene;
+	SH3SceneObject_* parent;
 	std::vector<SH3SceneObject_*>      children;
 
 	std::vector<SH3Component>          components;
@@ -148,7 +148,7 @@ struct SH3SceneObject_
 	sf::Transform                      globalTransform;
 
 	bool                               physicsEnabled;
-	b2Body*                            physicsBody;
+	b2Body* physicsBody;
 };
 
 struct SH3Scene_
@@ -203,7 +203,7 @@ public:
 	{
 		SH3SceneObject_* oA = (SH3SceneObject_*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 		SH3SceneObject_* oB = (SH3SceneObject_*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-		
+
 		b2WorldManifold worldManifold;
 		contact->GetWorldManifold(&worldManifold);
 
@@ -300,13 +300,13 @@ public:
 sf::Clock gClock;
 sf::Clock gDeltaClock;
 
-float gClockValue      = 0.0f;
+float gClockValue = 0.0f;
 float gDeltaClockValue = 0.0f;
 
-bool      gCurrentKeyStates[EH3Key_Count]  = { false };
+bool      gCurrentKeyStates[EH3Key_Count] = { false };
 bool      gPreviousKeyStates[EH3Key_Count] = { false };
 
-bool      gCurrentMouseButtonStates[EH3MouseButton_Count]  = { false };
+bool      gCurrentMouseButtonStates[EH3MouseButton_Count] = { false };
 bool      gPreviousMouseButtonStates[EH3MouseButton_Count] = { false };
 
 Gamepad   gGamepad;
@@ -327,7 +327,7 @@ bool H3Internal_ObjectOwnsObject(H3Handle needle, H3Handle haystack);
 void H3Internal_DecomposeTransform(sf::Transform* transform, float& px, float& py, float& r, float& sx, float& sy);
 
 b2Shape* H3Internal_MakePhysicsShape(const SH3ColliderDesc& desc);
-b2Body*  H3Internal_CreateAndAddPhysicsBody(b2World* world, float px, float py, SH3ColliderDesc* descList, uint32_t numShapes, bool rotationLocked, void* userData);
+b2Body* H3Internal_CreateAndAddPhysicsBody(b2World* world, float px, float py, SH3ColliderDesc* descList, uint32_t numShapes, bool rotationLocked, void* userData);
 
 b2Joint* H3Internal_CreateDistanceJoint(b2World* world, const SH3JointDesc& desc);
 b2Joint* H3Internal_CreateRevoluteJoint(b2World* world, const SH3JointDesc& desc);
@@ -345,8 +345,8 @@ H3_CAPI H3Handle H3_Init(SH3InitParams params)
 		sf::VideoMode(params.width, params.height),
 		params.windowTitle,
 		params.fullscreen
-			? sf::Style::Fullscreen
-			: sf::Style::Default,
+		? sf::Style::Fullscreen
+		: sf::Style::Default,
 		settings
 	);
 
@@ -369,7 +369,7 @@ H3_CAPI void H3_Terminate(H3Handle* h3)
 
 	ImGui::SFML::Shutdown();
 
- 	delete window;
+	delete window;
 	*h3 = nullptr;
 }
 
@@ -465,7 +465,7 @@ H3_CAPI void H3_Scene_Destroy(H3Handle scene)
 {
 	SH3Scene_* scn = (SH3Scene_*)scene;
 	H3_ASSERT(scn->type == EH3TypeInternal::Scene, "Handle type mismatch");
-	
+
 	for (auto& [_, a] : scn->allObjects)
 		for (auto& c : a->components)
 			if (c.Terminate)
@@ -690,7 +690,7 @@ H3_CAPI void H3_Object_SetTranslation(H3Handle object, float x, float y)
 
 	float px, py, rot, sx, sy;
 	H3Internal_DecomposeTransform(&obj->transform, px, py, rot, sx, sy);
-	
+
 	H3_Object_ResetTransform(object);
 	H3_Object_Translate(object, x, y);
 	H3_Object_Rotate(object, rot);
@@ -759,7 +759,7 @@ H3_CAPI void H3_Object_AddComponent(H3Handle object, SH3Component component)
 		H3_ASSERT(false, "This object already has a component of this type.");
 	else
 		sObject->components.push_back(component);
- }
+}
 
 H3_CAPI bool H3_Object_RemoveComponent(H3Handle object, uint32_t componentId)
 {
@@ -979,7 +979,7 @@ H3_CAPI H3Handle H3_Texture_Load(const char* path, uint32_t* width, uint32_t* he
 	tex->loadFromFile(std::string(path));
 
 	auto size = tex->getSize();
-	*width  = size.x;
+	*width = size.x;
 	*height = size.y;
 
 	return tex;
@@ -995,10 +995,10 @@ H3_CAPI void H3_Texture_Destroy(H3Handle handle)
 
 H3_CAPI void H3_Texture_Draw(H3Handle h3, float px, float py, H3Handle texture, EH3Anchor anchor)
 {
-	H3_ASSERT(h3,      "h3 must not be NULL");
+	H3_ASSERT(h3, "h3 must not be NULL");
 	H3_ASSERT(texture, "texture must not be NULL");
 
-	sf::Texture* tex     = (sf::Texture*)texture;
+	sf::Texture* tex = (sf::Texture*)texture;
 	sf::Vector2f texSize = sf::Vector2f(float(tex->getSize().x), float(tex->getSize().y));
 
 	sf::Vector2f fvAnchor(0.0f, 0.0f);
@@ -1098,7 +1098,7 @@ H3_CAPI void H3_Map_Destroy(H3Handle* handle)
 
 	for (auto layer : tmxMap->layers)
 		delete layer;
-	
+
 	delete tmxMap;
 	*handle = nullptr;
 }
@@ -1162,7 +1162,7 @@ H3_CAPI void H3_Map_RegisterObjectLayerForPhysicsInScene(H3Handle scene, H3Handl
 
 			case tmx::Object::Shape::Rectangle:
 				newDesc.shapeType = CST_Box;
-				newDesc.shapeData.box.width  = object.getAABB().width;
+				newDesc.shapeData.box.width = object.getAABB().width;
 				newDesc.shapeData.box.height = object.getAABB().height;
 				newDesc.shapeData.box.anchor = A_Top | A_Left;
 				newDesc.rotation = object.getRotation();
@@ -1443,7 +1443,14 @@ H3_CAPI void H3_Font_Printf(H3Handle h3, SH3TextProperties properties, SH3Transf
 
 H3_CAPI bool H3_Button(H3Handle h3, H3Handle texture, float x, float y, EH3Anchor anchor)
 {
+	sf::RenderWindow* window = (sf::RenderWindow*)h3;
+
+	auto view = window->getView();
+	window->setView(window->getDefaultView());
+
 	H3_Texture_Draw(h3, x, y, texture, anchor);
+
+	window->setView(view);
 
 	if (H3_Input_IsMouseBtnPressed(MB_Left))
 	{
@@ -1518,7 +1525,7 @@ H3_CAPI void H3_SetView(H3Handle h3, SH3Transform* transform, float w, float h)
 
 	H3_Listener_SetPosition(x, y);
 
- 	window->setView(view);
+	window->setView(view);
 }
 
 H3_CAPI void H3_SetView2(H3Handle h3, float x, float y, float w, float h)
@@ -1541,10 +1548,10 @@ H3_CAPI bool H3_DoFrame(H3Handle h3, H3Handle scene)
 	H3_ASSERT_CONSOLE(h3, "h3 must not be NULL");
 	H3_ASSERT(scene, "scene must not be NULL");
 
-	auto t  = gClock.getElapsedTime();
+	auto t = gClock.getElapsedTime();
 	auto dt = gDeltaClock.restart();
 
-	gClockValue      = t.asSeconds();
+	gClockValue = t.asSeconds();
 	gDeltaClockValue = dt.asSeconds();
 
 	sf::Transform noTransform = sf::Transform::Identity;
@@ -1572,7 +1579,7 @@ H3_CAPI bool H3_DoFrame(H3Handle h3, H3Handle scene)
 				}
 			}
 		}
-		
+
 		{ // Update physics and transforms
 
 			for (auto o : scn->rootObjects)
@@ -1680,7 +1687,7 @@ H3_CAPI bool H3_DoFrame(H3Handle h3, H3Handle scene)
 				H3Internal_AddObjectToScene(obj, sObjName, scn);
 
 			scn->deferredAdditions.clear();
-		
+
 			for (auto& [toDel, recursive] : scn->deferredDeletions)
 			{
 				H3Internal_DestroyObject(toDel, recursive);
@@ -1688,7 +1695,7 @@ H3_CAPI bool H3_DoFrame(H3Handle h3, H3Handle scene)
 			scn->deferredDeletions.clear();
 		}
 	}
-	
+
 	{ // Poll inputs
 		for (int k = 0; k < EH3Key_Count; ++k)
 		{
@@ -1717,7 +1724,7 @@ H3_CAPI bool H3_DoFrame(H3Handle h3, H3Handle scene)
 				default:
 					return false;
 				}
-			})();
+				})();
 		}
 
 		for (int k = 0; k < EH3MouseButton_Count; ++k)
@@ -1732,7 +1739,7 @@ H3_CAPI bool H3_DoFrame(H3Handle h3, H3Handle scene)
 				default:
 					return sf::Mouse::ButtonCount;
 				}
-			})());
+				})());
 		}
 
 		if (gGamepad.Refresh())
@@ -1760,7 +1767,7 @@ H3_CAPI bool H3_DoFrame(H3Handle h3, H3Handle scene)
 					default:
 						return -1;
 					}
-				})());
+					})());
 			}
 		}
 
@@ -1902,7 +1909,7 @@ bool H3Internal_SceneOwnsObject(H3Handle scene, H3Handle object)
 
 bool H3Internal_ObjectOwnsObject(H3Handle needle, H3Handle haystack)
 {
-	H3_ASSERT(((SH3ObjectBase_*)needle)->type   == EH3TypeInternal::SceneObject, "Handle type mismatch");
+	H3_ASSERT(((SH3ObjectBase_*)needle)->type == EH3TypeInternal::SceneObject, "Handle type mismatch");
 	H3_ASSERT(((SH3ObjectBase_*)haystack)->type == EH3TypeInternal::SceneObject, "Handle type mismatch");
 
 	if (needle == haystack)
@@ -1982,7 +1989,7 @@ void H3Internal_DecomposeTransform(sf::Transform* transform, float& px, float& p
 	sf::Vector2f origin = transform->transformPoint(sf::Vector2f(0.0f, 0.0f));
 	px = origin.x; py = origin.y;
 
-	sf::Vector2f unit   = transform->transformPoint(sf::Vector2f(1.0f, 0.0f));
+	sf::Vector2f unit = transform->transformPoint(sf::Vector2f(1.0f, 0.0f));
 	unit.x -= origin.x;
 	unit.y -= origin.y;
 
@@ -2035,7 +2042,7 @@ b2Shape* H3Internal_MakePhysicsShape(const SH3ColliderDesc& desc)
 			v += b2Vec2(px * 0.01f, py * 0.01f);
 		shape->m_radius = b2_polygonRadius;
 	}
-		break;
+	break;
 
 	default:
 		break;
@@ -2088,17 +2095,17 @@ b2Body* H3Internal_CreateAndAddPhysicsBody(b2World* world, float px, float py, S
 b2Joint* H3Internal_CreateDistanceJoint(b2World* world, const SH3JointDesc& desc)
 {
 	b2DistanceJointDef def;
-	def.bodyA            = ((SH3SceneObject_*)(desc.body1))->physicsBody;
-	def.bodyB            = ((SH3SceneObject_*)(desc.body2))->physicsBody;
-	def.localAnchorA     = { desc.localAnchor1.x * 0.01f, desc.localAnchor1.y * 0.01f };
-	def.localAnchorB     = { desc.localAnchor2.x * 0.01f, desc.localAnchor2.y * 0.01f };
+	def.bodyA = ((SH3SceneObject_*)(desc.body1))->physicsBody;
+	def.bodyB = ((SH3SceneObject_*)(desc.body2))->physicsBody;
+	def.localAnchorA = { desc.localAnchor1.x * 0.01f, desc.localAnchor1.y * 0.01f };
+	def.localAnchorB = { desc.localAnchor2.x * 0.01f, desc.localAnchor2.y * 0.01f };
 	def.collideConnected = false;
 
 
-	def.length    = 0.01f * desc.data.distance.restLength;
+	def.length = 0.01f * desc.data.distance.restLength;
 	def.minLength = 0.01f * desc.data.distance.minLength;
 	def.maxLength = 0.01f * desc.data.distance.maxLength;
-	def.damping   = desc.data.distance.damping;
+	def.damping = desc.data.distance.damping;
 	def.stiffness = desc.data.distance.stiffness;
 
 	return world->CreateJoint(&def);
@@ -2107,32 +2114,32 @@ b2Joint* H3Internal_CreateDistanceJoint(b2World* world, const SH3JointDesc& desc
 b2Joint* H3Internal_CreateRevoluteJoint(b2World* world, const SH3JointDesc& desc)
 {
 	b2RevoluteJointDef def;
-	def.bodyA            = ((SH3SceneObject_*)(desc.body1))->physicsBody;
-	def.bodyB            = ((SH3SceneObject_*)(desc.body2))->physicsBody;
-	def.localAnchorA     = { desc.localAnchor1.x * 0.01f, desc.localAnchor1.y * 0.01f };
-	def.localAnchorB     = { desc.localAnchor2.x * 0.01f, desc.localAnchor2.y * 0.01f };
+	def.bodyA = ((SH3SceneObject_*)(desc.body1))->physicsBody;
+	def.bodyB = ((SH3SceneObject_*)(desc.body2))->physicsBody;
+	def.localAnchorA = { desc.localAnchor1.x * 0.01f, desc.localAnchor1.y * 0.01f };
+	def.localAnchorB = { desc.localAnchor2.x * 0.01f, desc.localAnchor2.y * 0.01f };
 	def.collideConnected = false;
 
-	def.enableLimit    = desc.data.revolute.enableLimits;
-	def.lowerAngle     = desc.data.revolute.lowerAngle;
-	def.upperAngle     = desc.data.revolute.upperAngle;
+	def.enableLimit = desc.data.revolute.enableLimits;
+	def.lowerAngle = desc.data.revolute.lowerAngle;
+	def.upperAngle = desc.data.revolute.upperAngle;
 	def.referenceAngle = desc.data.revolute.referenceAngle;
-	
+
 	return world->CreateJoint(&def);
 }
 
 b2Joint* H3Internal_CreatePrismaticJoint(b2World* world, const SH3JointDesc& desc)
 {
 	b2PrismaticJointDef def;
-	def.bodyA            = ((SH3SceneObject_*)(desc.body1))->physicsBody;
-	def.bodyB            = ((SH3SceneObject_*)(desc.body2))->physicsBody;
-	def.localAnchorA     = { desc.localAnchor1.x * 0.01f, desc.localAnchor1.y * 0.01f };
-	def.localAnchorB     = { desc.localAnchor2.x * 0.01f, desc.localAnchor2.y * 0.01f };
+	def.bodyA = ((SH3SceneObject_*)(desc.body1))->physicsBody;
+	def.bodyB = ((SH3SceneObject_*)(desc.body2))->physicsBody;
+	def.localAnchorA = { desc.localAnchor1.x * 0.01f, desc.localAnchor1.y * 0.01f };
+	def.localAnchorB = { desc.localAnchor2.x * 0.01f, desc.localAnchor2.y * 0.01f };
 	def.collideConnected = false;
 
-	def.localAxisA       = { desc.data.prismatic.localAxis.x, desc.data.prismatic.localAxis.y };
-	def.enableLimit      = desc.data.prismatic.enableLimits;
-	def.referenceAngle   = desc.data.prismatic.referenceAngle;
+	def.localAxisA = { desc.data.prismatic.localAxis.x, desc.data.prismatic.localAxis.y };
+	def.enableLimit = desc.data.prismatic.enableLimits;
+	def.referenceAngle = desc.data.prismatic.referenceAngle;
 	def.lowerTranslation = desc.data.prismatic.lowerTranslation * 0.01f;
 	def.upperTranslation = desc.data.prismatic.upperTranslation * 0.01f;
 
@@ -2142,18 +2149,18 @@ b2Joint* H3Internal_CreatePrismaticJoint(b2World* world, const SH3JointDesc& des
 b2Joint* H3Internal_CreateWheelJoint(b2World* world, const SH3JointDesc& desc)
 {
 	b2WheelJointDef def;
-	def.bodyA            = ((SH3SceneObject_*)(desc.body1))->physicsBody;
-	def.bodyB            = ((SH3SceneObject_*)(desc.body2))->physicsBody;
-	def.localAnchorA     = { desc.localAnchor1.x * 0.01f, desc.localAnchor1.y * 0.01f };
-	def.localAnchorB     = { desc.localAnchor2.x * 0.01f, desc.localAnchor2.y * 0.01f };
+	def.bodyA = ((SH3SceneObject_*)(desc.body1))->physicsBody;
+	def.bodyB = ((SH3SceneObject_*)(desc.body2))->physicsBody;
+	def.localAnchorA = { desc.localAnchor1.x * 0.01f, desc.localAnchor1.y * 0.01f };
+	def.localAnchorB = { desc.localAnchor2.x * 0.01f, desc.localAnchor2.y * 0.01f };
 	def.collideConnected = false;
 
-	def.damping          = desc.data.wheel.damping;
-	def.stiffness        = desc.data.wheel.stiffness;
-	def.enableLimit      = desc.data.wheel.enableLimits;
+	def.damping = desc.data.wheel.damping;
+	def.stiffness = desc.data.wheel.stiffness;
+	def.enableLimit = desc.data.wheel.enableLimits;
 	def.lowerTranslation = desc.data.wheel.lowerTranslation * 0.01f;
 	def.upperTranslation = desc.data.wheel.upperTranslation * 0.01f;
-	def.localAxisA       = { desc.data.wheel.localAxis.x, desc.data.wheel.localAxis.y };
+	def.localAxisA = { desc.data.wheel.localAxis.x, desc.data.wheel.localAxis.y };
 
 	return world->CreateJoint(&def);
 }

@@ -237,19 +237,19 @@ int main()
         if (EnemieCounteBoss <= 1)
         {
 
-            if (H3_GetTime() - Timer >= 360)
+            if (H3_GetTime() - Timer >= 5)
             {
                 H3Handle Boss = H3_Object_Create(scene, "Boss", NULL);
                 H3_Object_EnablePhysics(Boss, H3_BOX_COLLIDER(CDT_Dynamic, 54, 60, 0x22, false));
                 H3_Object_AddComponent(Boss, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/miniboss.png", A_Center + A_Middle));
                 H3_Object_AddComponent(Boss, ENEMIECOMPONENT_CREATE(player, scene));
-                H3_Object_SetTranslation(Boss, 400, 400);
+                H3_Object_SetTranslation(Boss, 2670, 485);
                 H3_Object_SetRenderOrder(Boss, 4);
                 EnemieCounteBoss += 1;
                 TimerBoss = H3_GetTime();
             }
         }
-        if (EnemieCounteMinion <= 15)
+        if (EnemieCounteMinion <= 1)
         {
 
             if (H3_GetTime() - Timer >= 1)
@@ -261,20 +261,18 @@ int main()
                 H3_Object_AddComponent(Enemie, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/enemie.png", A_Center + A_Middle));
                 H3_Object_AddComponent(Enemie, ENEMIECOMPONENT_CREATE(player, scene));
                 H3_Object_SetRenderOrder(Enemie, 4);
+                H3_Object_SetTranslation(Enemie, 3165, 642);
                 EnemieCounteMinion += 1;
                 Timer = H3_GetTime();
-                if (EnemieCounteMinion <=5)
-                {
-                    H3_Object_SetTranslation(Enemie, 3165, 642);
-                }
-                if (EnemieCounteMinion <= 10 && EnemieCounteMinion >=5)
+                
+               /* if (EnemieCounteMinion <= 10 && EnemieCounteMinion >=5)
                 {
                     H3_Object_SetTranslation(Enemie, 1500, 1035);
                 }
                 if (EnemieCounteMinion <= 15 && EnemieCounteMinion >= 10)
                 {
                     H3_Object_SetTranslation(Enemie, 2670, 485);
-                }
+                }*/
             }
         }
 

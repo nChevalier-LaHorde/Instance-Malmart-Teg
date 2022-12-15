@@ -1,8 +1,6 @@
 #include "Enemie.h"
-#include "Enemie.h"
+#include "Detector.h"
 #include "components/spritecomponent.h"
-#include <components/playercomponent.h>
-#include <components/bulletscomponent.h>
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -15,6 +13,7 @@ typedef struct
 	float vex;
 	float vey;
 	float Timer;
+	float TimerDetector;
 	float TimerEnemie;
 	float rndx;
 	float rndy;
@@ -33,7 +32,6 @@ void EnemieComponent_Terminate(void* properties)
 {
 	free(properties);
 }
-
 
 void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform, float t, float dt, void* properties)
 {
@@ -64,7 +62,7 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 	Delty = py - ey;
 	aRad = atan2(Delty, Deltx);
 	aDeg = aRad * (180 / H3_PI);
-	
+
 
 	H3_Object_SetRotation(object, 0);
 
@@ -91,23 +89,24 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 
 
 
-	
-	//RAYCAST
-	if (H3_GetTime() - props->TimerEnemie > 2)
-	{
-		props->detectorindex += rand() % 360;
-		snprintf(props->detector, 256, "detector_%d", props->detectorindex);
-		H3Handle Enemie = H3_Object_Create(props->scene, props->detector, NULL);
 
-		H3_Object_EnablePhysics(Enemie, H3_BOX_COLLIDER(CDT_Dynamic, 4, 6, 0x22, true));
+	//RAYCAST
+	if (H3_GetTime() - props->TimerDetector > 0.5)
+	{
+		props->detectorindex += 1;
+		snprintf(props->detector, 256, "detector_%d", props->detectorindex);
+		H3Handle Detector = H3_Object_Create(props->scene, props->detector, NULL);
+
+		H3_Object_EnablePhysics(Detector, H3_BOX_COLLIDER(CDT_Dynamic, 4, 6, 0x22, true));
+		H3_Object_AddComponent(Detector, DETECTORCOMPONENT_CREATE(object));
 		bx = ((px - ex) / dist) * 2000;
 		by = ((py - ey) / dist) * 2000;
 		pbx = ((px - ex) / dist) * 50;
 		pby = ((py - ey) / dist) * 50;
-		H3_Object_SetVelocity(Enemie, bx, by);
-		H3_Object_SetRotation(Enemie, aDeg + 90);
-		H3_Object_SetTranslation(Enemie, ex + pbx, ey + pby);
-		props->TimerEnemie = H3_GetTime();
+		H3_Object_SetVelocity(Detector, bx, by);
+		H3_Object_SetRotation(Detector, aDeg + 90);
+		H3_Object_SetTranslation(Detector, ex + pbx, ey + pby);
+		props->TimerDetector = H3_GetTime();
 	}
 
 
@@ -116,11 +115,11 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 	{
 		props->vex = ((px - ex) / (dist + 1)) * 96;
 		props->vey = ((py - ey) / (dist + 1)) * 96;
-		
-		
-			props->dpx = px;
-			props->dpy = py;
-		
+
+
+		props->dpx = px;
+		props->dpy = py;
+
 		props->chasing = true;
 
 		props->aDeg2 = (atan2((props->dpx - ex), (props->dpy - ey)) * (180 / H3_PI)) + 180;
@@ -144,9 +143,9 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 
 		}
 		if (props->dpy > ey)
-		{	
+		{
 			props->vex = ((props->dpx - ex) / (dist + 1)) * 64;
-			props->vey = ((props->dpy - ey) / (dist + 1)) * 64; 
+			props->vey = ((props->dpy - ey) / (dist + 1)) * 64;
 			props->dpy += 1;
 
 			if (H3_Ui_BeginWindow(H3_Object_GetName(object)))
@@ -181,14 +180,14 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 			H3_Ui_EndWindow();
 		}
 
-		
+
 
 		if (dist >= 300 && H3_GetTime() - props->TimerEnemie > 3)
 		{
 			props->chasing = false;
 			props->TimerEnemie = H3_GetTime();
 		}
-		
+
 	}
 	if (props->chasing == false)
 	{

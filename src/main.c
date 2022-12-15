@@ -238,9 +238,9 @@ int main()
         if (EnemieCounteBoss <= 1)
         {
 
-            if (H3_GetTime() - Timer >= 5)
+            if (H3_GetTime() - Timer >= 360)
             {
-                H3Handle Boss = H3_Object_Create(scene, Boss, NULL);
+                H3Handle Boss = H3_Object_Create(scene, "Boss", NULL);
                 H3_Object_EnablePhysics(Boss, H3_BOX_COLLIDER(CDT_Dynamic, 54, 60, 0x22, false));
                 H3_Object_AddComponent(Boss, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/miniboss.png", A_Center + A_Middle));
                 H3_Object_AddComponent(Boss, ENEMIECOMPONENT_CREATE(player, scene));
@@ -253,7 +253,7 @@ int main()
         if (EnemieCounteMinion <= 15)
         {
 
-            if (H3_GetTime() - Timer >= 5)
+            if (H3_GetTime() - Timer >= 1)
             {
                 enemieindex += 1;
                 snprintf(enemie, 256, "Enemie_%d", enemieindex);

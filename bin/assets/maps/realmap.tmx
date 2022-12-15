@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="120" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="207">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="120" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="208">
  <tileset firstgid="1" source="../walls/w6.tsx"/>
  <tileset firstgid="2" source="../walls/w3.tsx"/>
  <tileset firstgid="3" source="../walls/w7.tsx"/>
@@ -352,7 +352,7 @@
   <object id="201" x="3826.75" y="256" width="13.25" height="63.75"/>
   <object id="202" x="2880" y="320" width="64" height="64"/>
   <object id="204" x="2880" y="0" width="960" height="64"/>
-  <object id="205" x="3218.67" y="132"/>
-  <object id="206" x="1536" y="983.333" width="31.6667" height="8.66667"/>
+  <object id="206" x="3424" y="1216" width="384" height="32"/>
+  <object id="207" x="1536" y="983.75" width="31.75" height="8.25"/>
  </objectgroup>
 </map>

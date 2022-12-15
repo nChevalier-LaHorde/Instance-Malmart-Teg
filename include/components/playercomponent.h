@@ -7,7 +7,7 @@ typedef enum
 {
 	OBJ_case_1, //poche n°1
 	OBJ_case_2, //poche n°2
-	//OBJ_case_3, //les mains ?
+	OBJ_case_3, //poche n°3
 } EinventoryObjects;
 
 #define PLAYERCOMPONENT_TYPEID 0x10000001
@@ -23,10 +23,9 @@ void* PlayerComponent_CreateProperties(H3Handle scene, int character);
 
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, int, character);
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, int, Tiredness);
+
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, bool, isCatch);
-H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, bool, isGun);
-H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, bool, isCoffee);
-H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, bool, isMonster);
+H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, bool, isBook);
 H3_CAPI_END_BLOCK
 
 #define PLAYERCOMPONENT_CREATE(SCENE, CHARACTER)                                \

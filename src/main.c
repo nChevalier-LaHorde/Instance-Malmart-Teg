@@ -90,6 +90,21 @@ int main(int argc, char** argv)
     H3_Object_SetTranslation(airsoft_gun, 1552, 957);
     H3_Object_SetRenderOrder(airsoft_gun, 6);
 
+    H3Handle keycard_test = H3_Object_Create(scene, "keycard_test", NULL);
+    H3_Object_EnablePhysics(keycard_test, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));
+    H3_Object_AddComponent(keycard_test, SPRITECOMPONENT_CREATE("assets/items/keycardB.png", A_Center + A_Middle));
+    H3_Object_AddComponent(keycard_test, OBJECTSCOMPONENT_CREATE(OBJ_keycard));
+    H3_Object_SetTranslation(keycard_test, 1552, 1050);
+    H3_Object_SetRenderOrder(keycard_test, 5);
+
+    H3Handle book_test = H3_Object_Create(scene, "book_test", NULL);
+    H3_Object_EnablePhysics(book_test, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));
+    H3_Object_AddComponent(book_test, SPRITECOMPONENT_CREATE("assets/items/pedestal1.png", A_Center + A_Middle));
+    H3_Object_AddComponent(book_test, OBJECTSCOMPONENT_CREATE(OBJ_book));
+    H3_Object_SetTranslation(book_test, 3792, 752);
+    H3_Object_SetRenderOrder(book_test, 5);
+
+
     bool keepGoing = true;
     while (keepGoing)
     {
@@ -97,15 +112,18 @@ int main(int argc, char** argv)
         H3_Object_SetTranslation(inventory, inventory_x, inventory_y + 230);
         H3_Object_SetTranslation(inventory_pointer, inventory_x + inventory_pointer_offset, inventory_y + 230);
 
-        if (H3_Input_IsKeyPressed(K_Tab))
+        if (PlayerComponent_GetisCatchEx(player) == false && PlayerComponent_GetTirednessEx(player) < 100)
         {
-            nb_tab += 1;
-            if      (PlayerComponent_GetcharacterEx(player) == 1) inventory_pointer_offset = -inventory_pointer_offset;
-            else if (PlayerComponent_GetcharacterEx(player) == 2)
+            if (H3_Input_IsKeyPressed(K_Tab))
             {
-                if      (nb_tab % 3 == 0) inventory_pointer_offset = -60;
-                else if (nb_tab % 3 == 1) inventory_pointer_offset =   0;
-                else if (nb_tab % 3 == 2) inventory_pointer_offset =  60;
+                nb_tab += 1;
+                if (PlayerComponent_GetcharacterEx(player) == 1) inventory_pointer_offset = -inventory_pointer_offset;
+                else if (PlayerComponent_GetcharacterEx(player) == 2)
+                {
+                    if (nb_tab % 3 == 0) inventory_pointer_offset = -60;
+                    else if (nb_tab % 3 == 1) inventory_pointer_offset = 0;
+                    else if (nb_tab % 3 == 2) inventory_pointer_offset = 60;
+                }
             }
         }
 

@@ -10,9 +10,13 @@ typedef enum
 	OBJ_coffee,
 	OBJ_post_it,
 	OBJ_coin,
-	OBJ_puzzlepiece,
+	OBJ_puzzlepiece_square,
+	OBJ_puzzlepiece_circle,
+	OBJ_puzzlepiece_triangle,
+	OBJ_puzzlepiece_octogon,
 	OBJ_key,
 	OBJ_keycard,
+	OBJ_book,
 
 	OBJ_Void,
 } EObjects;

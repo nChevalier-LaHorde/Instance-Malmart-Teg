@@ -82,13 +82,13 @@ void WireComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform,
 
 		if (H3_Input_IsKeyPressed(K_Space))
 		{
-			if (2990 < props->px && props->px < 3000 && 90>props->py && props->py > 85)
+			if (2990 < props->px && props->px < 3000 && 98>props->py && props->py > 92)
 			{
 				H3_Object_AddComponent(props->Wire, SPRITECOMPONENT_CREATE("assets/wires/wires0.png", A_Center + A_Middle));
 				props->wireOn = true;
 			}
 		}
-		else if (props->py > 90)
+		else if (props->py > 94)
 		{
 			props->wireOn = false;
 			H3_Object_Destroy(props->Wire, false);
@@ -119,7 +119,7 @@ void WireComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform,
 
 		if (props->wireOn == true)
 		{
-			H3_Object_SetTranslation(props->Player, 2995, 88);
+			H3_Object_SetTranslation(props->Player, 2995, 92);
 
 			if (props->wireRnd == 1)
 			{
@@ -321,7 +321,7 @@ void WireComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform,
 			props->wireCreate = false;
 			props->wireOn = false;
 			H3_Object_Destroy(props->Wire, false);
-			H3_Object_SetTranslation(props->Player, 2995, 95);
+			H3_Object_SetTranslation(props->Player, 2995, 100);
 			H3_Object_RemoveComponent(props->Wire1, SPRITECOMPONENT_TYPEID);
 			H3_Object_RemoveComponent(props->Wire2, SPRITECOMPONENT_TYPEID);
 			H3_Object_RemoveComponent(props->Wire3, SPRITECOMPONENT_TYPEID);
@@ -373,7 +373,7 @@ void WireComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties)
 
 	if (props->wireOn == true)
 	{
-		if (H3_Button(h3, props->WirePlugText, 720, 203, A_Center + A_Middle))
+		if (H3_Button(h3, props->WirePlugText, 720, 255, A_Center + A_Middle))
 		{
 			H3_Object_SetTranslation(props->PlugUsed1, 2895, -31);
 			H3_Object_AddComponent(props->PlugUsed1, SPRITECOMPONENT_CREATE("assets/wires/wire_plug_used.png", A_Middle + A_Center));
@@ -394,7 +394,7 @@ void WireComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties)
 				props->pos4 += 1;
 			}
 		}
-		if (H3_Button(h3, props->WirePlugText, 720, 364, A_Center + A_Middle))
+		if (H3_Button(h3, props->WirePlugText, 720, 416, A_Center + A_Middle))
 		{
 			H3_Object_SetTranslation(props->PlugUsed2, 2895, 50);
 			H3_Object_AddComponent(props->PlugUsed2, SPRITECOMPONENT_CREATE("assets/wires/wire_plug_used.png", A_Middle + A_Center));
@@ -415,7 +415,7 @@ void WireComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties)
 				props->pos4 += 10;
 			}
 		}
-		if (H3_Button(h3, props->WirePlugText, 720, 524, A_Center + A_Middle))
+		if (H3_Button(h3, props->WirePlugText, 720, 576, A_Center + A_Middle))
 		{
 			H3_Object_SetTranslation(props->PlugUsed3, 2895, 130);
 			H3_Object_AddComponent(props->PlugUsed3, SPRITECOMPONENT_CREATE("assets/wires/wire_plug_used.png", A_Middle + A_Center));
@@ -436,7 +436,7 @@ void WireComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties)
 				props->pos4 += 100;
 			}
 		}
-		if (H3_Button(h3, props->WirePlugText, 720, 682, A_Center + A_Middle))
+		if (H3_Button(h3, props->WirePlugText, 720, 734, A_Center + A_Middle))
 		{
 			H3_Object_SetTranslation(props->PlugUsed4, 2895, 210);
 			H3_Object_AddComponent(props->PlugUsed4, SPRITECOMPONENT_CREATE("assets/wires/wire_plug_used.png", A_Middle + A_Center));
@@ -457,7 +457,7 @@ void WireComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties)
 				props->pos4 += 1000;
 			}
 		}
-		if (H3_Button(h3, props->WirePlugText, 1120, 203, A_Center + A_Middle))
+		if (H3_Button(h3, props->WirePlugText, 1120, 255, A_Center + A_Middle))
 		{
 			H3_Object_SetTranslation(props->PlugUsed5, 3095, -31);
 			H3_Object_AddComponent(props->PlugUsed5, SPRITECOMPONENT_CREATE("assets/wires/wire_plug_used.png", A_Middle + A_Center));
@@ -478,7 +478,7 @@ void WireComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties)
 				props->pos4 += 10;
 			}
 		}
-		if (H3_Button(h3, props->WirePlugText, 1120, 364, A_Center + A_Middle))
+		if (H3_Button(h3, props->WirePlugText, 1120, 416, A_Center + A_Middle))
 		{
 			H3_Object_SetTranslation(props->PlugUsed6, 3095, 50);
 			H3_Object_AddComponent(props->PlugUsed6, SPRITECOMPONENT_CREATE("assets/wires/wire_plug_used.png", A_Middle + A_Center));
@@ -499,7 +499,7 @@ void WireComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties)
 				props->pos4 += 1;
 			}
 		}
-		if (H3_Button(h3, props->WirePlugText, 1120, 524, A_Center + A_Middle))
+		if (H3_Button(h3, props->WirePlugText, 1120, 576, A_Center + A_Middle))
 		{
 			H3_Object_SetTranslation(props->PlugUsed7, 3095, 130);
 			H3_Object_AddComponent(props->PlugUsed7, SPRITECOMPONENT_CREATE("assets/wires/wire_plug_used.png", A_Middle + A_Center));
@@ -520,7 +520,7 @@ void WireComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties)
 				props->pos4 += 100;
 			}
 		}
-		if (H3_Button(h3, props->WirePlugText, 1120, 682, A_Center + A_Middle))
+		if (H3_Button(h3, props->WirePlugText, 1120, 734, A_Center + A_Middle))
 		{
 			H3_Object_SetTranslation(props->PlugUsed8, 3095, 210);
 			H3_Object_AddComponent(props->PlugUsed8, SPRITECOMPONENT_CREATE("assets/wires/wire_plug_used.png", A_Middle + A_Center));

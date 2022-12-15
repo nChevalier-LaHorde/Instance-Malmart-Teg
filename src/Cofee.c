@@ -105,13 +105,13 @@ void CofeeComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform
 		{
 
 
-			if (2190 < props->px && props->px < 2225 && 314>props->py && props->py > 310)
+			if (2180 < props->px && props->px < 2226 && 320>props->py && props->py > 316)
 			{
 				H3_Object_AddComponent(props->Button, SPRITECOMPONENT_CREATE("assets/buttons/buttons.png", A_Center + A_Middle));
 				props->buttonOn = true;
 			}
 		}
-		else if (props->py > 314)
+		else if (props->py > 318)
 		{
 			props->buttonOn = false;
 			H3_Object_Destroy(props->Button, false);
@@ -130,12 +130,12 @@ void CofeeComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform
 			}
 			H3_Ui_EndWindow();
 
-			H3_Object_SetTranslation(props->Player, 2205, 312);
+			H3_Object_SetTranslation(props->Player, 2205, 316);
 
 			if (props->ButtonBlue == true)
 			{
 				H3_Object_AddComponent(props->ButtonBluePressed, SPRITECOMPONENT_CREATE("assets/buttons/bluepressed.png", A_Center + A_Middle));
-				H3_Object_SetTranslation(props->ButtonBluePressed, props->px - 45, props->py+2);
+				H3_Object_SetTranslation(props->ButtonBluePressed, props->px - 45, props->py-4);
 				props->ButtonCount += 1;
 				if (props->ButtonCount == 1)
 				{
@@ -151,7 +151,7 @@ void CofeeComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform
 			if (props->ButtonPink == true)
 			{
 				H3_Object_AddComponent(props->ButtonPinkPressed, SPRITECOMPONENT_CREATE("assets/buttons/pinkpressed.png", A_Center + A_Middle));
-				H3_Object_SetTranslation(props->ButtonPinkPressed, props->px + 35, props->py + 2);
+				H3_Object_SetTranslation(props->ButtonPinkPressed, props->px + 35, props->py - 4);
 				props->ButtonCount += 1;
 				if (props->ButtonCount == 3)
 				{
@@ -167,7 +167,7 @@ void CofeeComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform
 			if (props->ButtonRed == true)
 			{
 				H3_Object_AddComponent(props->ButtonRedPressed, SPRITECOMPONENT_CREATE("assets/buttons/redpressed.png", A_Center + A_Middle));
-				H3_Object_SetTranslation(props->ButtonRedPressed, props->px - 125, props->py + 2);
+				H3_Object_SetTranslation(props->ButtonRedPressed, props->px - 125, props->py - 4);
 				props->ButtonCount += 1;
 				if (props->ButtonCount == 2)
 				{
@@ -183,7 +183,7 @@ void CofeeComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform
 			if (props->ButtonYellow == true)
 			{
 				H3_Object_AddComponent(props->ButtonYellowPressed, SPRITECOMPONENT_CREATE("assets/buttons/yellowpressed.png", A_Center + A_Middle));
-				H3_Object_SetTranslation(props->ButtonYellowPressed, props->px + 115, props->py + 2);
+				H3_Object_SetTranslation(props->ButtonYellowPressed, props->px + 115, props->py - 4);
 				props->ButtonCount += 1;
 				if (props->ButtonCount == 4)
 				{
@@ -252,20 +252,20 @@ void CofeeComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties)
 
 	if (props->buttonOn == true)
 	{
-		if (H3_Button(h3, props->buttonBlueTex, 817, 430, A_Center + A_Middle))
+		if (H3_Button(h3, props->buttonBlueTex, 817, 480, A_Center + A_Middle))
 		{
 			props->ButtonBlue = true;			
 		}
-		if (H3_Button(h3, props->buttonRedTex, 658, 430, A_Center + A_Middle))
+		if (H3_Button(h3, props->buttonRedTex, 658, 480, A_Center + A_Middle))
 		{
 			props->ButtonRed = true;
 		}
-		if (H3_Button(h3, props->buttonPinkTex, 978, 430, A_Center + A_Middle))
+		if (H3_Button(h3, props->buttonPinkTex, 978, 480, A_Center + A_Middle))
 		{
 			props->ButtonPink = true;
 
 		}
-		if (H3_Button(h3, props->buttonYellowTex, 1138, 430, A_Center + A_Middle))
+		if (H3_Button(h3, props->buttonYellowTex, 1138, 480, A_Center + A_Middle))
 		{
 			props->ButtonYellow = true;
 		}

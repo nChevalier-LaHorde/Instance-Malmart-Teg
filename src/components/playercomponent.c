@@ -2,7 +2,7 @@
 #include <components/playercomponent.h>
 #include <components/bulletscomponent.h>
 #include <components/inventorycomponent.h>
-
+#include <h3/ui.h>
 #include <components/spritecomponent.h>
 
 #include <stdlib.h>
@@ -67,12 +67,22 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 {
 	PlayerComponent_Properties* props = (PlayerComponent_Properties*)properties;
 
+
 	int mouse_x, mouse_y;
 	float player_x, player_y;
 	int player_velo_x = 0, player_velo_y = 0;
 
 	H3_Input_GetMousePos(h3, &mouse_x, &mouse_y);
 	H3_Transform_GetPosition(transform, &player_x, &player_y);
+
+	if (H3_Ui_BeginWindow("PLayer"))
+	{
+		H3_Ui_Printf("coordinate: (%f,%f)", player_x, player_y);
+	}
+	H3_Ui_EndWindow();
+
+
+
 
 
 	float center_x, center_y, view_width, view_height, window_width, window_height;

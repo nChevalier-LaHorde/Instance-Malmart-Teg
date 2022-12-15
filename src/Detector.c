@@ -1,5 +1,5 @@
 #include "Detector.h"
-#include "Player.h"
+#include <components/playercomponent.h>
 #include "Enemie.h"
 #include <math.h>
 #include <stdlib.h>

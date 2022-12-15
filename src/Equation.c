@@ -88,7 +88,7 @@ void EquationComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 	if (props->EquationCreate == true)
 	{
 		props->Equation = H3_Object_Create2(props->scene, "Equation", NULL, 11);
-		H3_Object_SetTranslation(props->Equation, 3730, 280);
+		H3_Object_SetTranslation(props->Equation, 3730, 285);
 		props->EquationCreate = false;
 	}
 
@@ -103,14 +103,14 @@ void EquationComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 		if (H3_Input_IsKeyPressed(K_Space))
 		{
 			
-			if (3725 < props->px && props->px < 3735 && 282>props->py && props->py > 280)
+			if (3725 < props->px && props->px < 3735 && 290>props->py && props->py > 285)
 			{
 				H3_Object_AddComponent(props->Equation, SPRITECOMPONENT_CREATE("assets/equation/pannel.png", A_Center + A_Middle));
 				props->EquationOn = true;
 				
 			}
 		}
-		else if (props->py > 282)
+		else if (props->py > 286)
 		{
 			props->EquationOn = false;
 			H3_Object_Destroy(props->Equation, false);
@@ -141,7 +141,7 @@ void EquationComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 		
 		if (props->EquationOn == true)
 		{
-			H3_Object_SetTranslation(props->Player, 3730, 280);
+			H3_Object_SetTranslation(props->Player, 3730, 285);
 
 			if (props->place1 == false && props->place2 == false && props->place3 == false && props->place4 == false && props->place5 == false)
 			{

@@ -1,127 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\components">
-      <UniqueIdentifier>{6c73c9ad-2476-4f28-ab34-d40b1464c3d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\components">
-      <UniqueIdentifier>{06aa2da0-6c3a-40a6-bd6d-b5bb04c6f85a}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="include\components\objectscomponent.c" />
+    <ClCompile Include="src\components\bulletscomponent.c" />
+    <ClCompile Include="src\components\clockcomponent.c" />
+    <ClCompile Include="src\components\inventorycomponent.c" />
+    <ClCompile Include="src\components\mycameracomponent.c" />
+    <ClCompile Include="src\components\playercomponent.c" />
+    <ClCompile Include="src\components\tirednesscomponent.c" />
+    <ClCompile Include="src\components\triggerplayercomponent.c" />
+    <ClCompile Include="src\Cofee.c" />
+    <ClCompile Include="src\Detector.c" />
+    <ClCompile Include="src\Enemie.c" />
+    <ClCompile Include="src\EnigmeShape.c" />
+    <ClCompile Include="src\Equation.c" />
+    <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\MainMenu.c" />
+    <ClCompile Include="src\Wire.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\playercomponent.c">
-      <Filter>Source Files\components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\triggerplayercomponent.c">
-      <Filter>Source Files\components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\bulletscomponent.c">
-      <Filter>Source Files\components</Filter>
-    </ClCompile>
-    <ClCompile Include="include\components\objectscomponent.c">
-      <Filter>Source Files\components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\inventorycomponent.c">
-      <Filter>Source Files\components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\mycameracomponent.c">
-      <Filter>Source Files\components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\clockcomponent.c">
-      <Filter>Source Files\components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\tirednesscomponent.c">
-      <Filter>Source Files\components</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\components\playercomponent.h">
-      <Filter>Header Files\components</Filter>
-    </ClInclude>
-    <ClInclude Include="include\components\triggerplayercomponent.h">
-      <Filter>Header Files\components</Filter>
-    </ClInclude>
-    <ClInclude Include="include\components\bulletscomponent.h">
-      <Filter>Header Files\components</Filter>
-    </ClInclude>
-    <ClInclude Include="include\components\objectscomponent.h">
-      <Filter>Header Files\components</Filter>
-    </ClInclude>
-    <ClInclude Include="include\components\inventorycomponent.h">
-      <Filter>Header Files\components</Filter>
-    </ClInclude>
-    <ClInclude Include="include\components\mycameracomponent.h">
-      <Filter>Header Files\components</Filter>
-    </ClInclude>
-    <ClInclude Include="include\components\clockcomponent.h">
-      <Filter>Header Files\components</Filter>
-    </ClInclude>
-    <ClInclude Include="include\components\tirednesscomponent.h">
-      <Filter>Header Files\components</Filter>
-    <ClCompile Include="src\Enemie.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Detector.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Player.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EnigmeShape.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cofee.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Wire.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MainMenu.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Equation.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\Enemie.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Detector.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Player.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\EnigmeShape.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Cofee.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Wire.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MainMenu.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Equation.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
+    <ClInclude Include="include\Cofee.h" />
+    <ClInclude Include="include\Detector.h" />
+    <ClInclude Include="include\Enemie.h" />
+    <ClInclude Include="include\EnigmeShape.h" />
+    <ClInclude Include="include\Equation.h" />
+    <ClInclude Include="include\MainMenu.h" />
+    <ClInclude Include="include\Wire.h" />
+    <ClInclude Include="include\components\bulletscomponent.h" />
+    <ClInclude Include="include\components\clockcomponent.h" />
+    <ClInclude Include="include\components\mycameracomponent.h" />
+    <ClInclude Include="include\components\objectscomponent.h" />
+    <ClInclude Include="include\components\inventorycomponent.h" />
+    <ClInclude Include="include\components\playercomponent.h" />
+    <ClInclude Include="include\components\tirednesscomponent.h" />
+    <ClInclude Include="include\components\triggerplayercomponent.h" />
   </ItemGroup>
 </Project>

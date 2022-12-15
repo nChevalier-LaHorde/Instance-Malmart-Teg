@@ -976,6 +976,10 @@ void PlayerComponent_OnCollisionEnter(H3Handle object, SH3Collision collider)
 	{
 		props->isCatch = true;
 	}
+	if (collider.other == NULL )
+	{
+		props->isCatch = false;
+	}
 }
 
 void PlayerComponent_OnTriggerEnter(H3Handle object, SH3Collision collider)

@@ -34,16 +34,6 @@ void EnemieComponent_Terminate(void* properties)
 	free(properties);
 }
 
-void EnemieComponent_OnCollisionEnter(H3Handle object, SH3Collision Collision)
-{
-	SH3Component* component = H3_Object_GetComponent(object, ENEMIECOMPONENT_TYPEID);
-	EnemieComponent_Properties* props = (EnemieComponent_Properties*)(component->properties);
-
-	if (H3_Object_HasComponent(Collision.other, BULLETSCOMPONENT_TYPEID))
-	{
-		PlayerComponent_SetisCatchEx(props->Player, true);
-	}
-}
 
 void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform, float t, float dt, void* properties)
 {
@@ -110,7 +100,6 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 		H3Handle Enemie = H3_Object_Create(props->scene, props->detector, NULL);
 
 		H3_Object_EnablePhysics(Enemie, H3_BOX_COLLIDER(CDT_Dynamic, 4, 6, 0x22, true));
-		H3_Object_AddComponent(Enemie, ENEMIECOMPONENT_CREATE(props->Player, props->scene));
 		bx = ((px - ex) / dist) * 2000;
 		by = ((py - ey) / dist) * 2000;
 		pbx = ((px - ex) / dist) * 50;

@@ -1,4 +1,5 @@
 #include <components/bulletscomponent.h>
+#include <Enemie.h>
 
 #include <stdlib.h>
 
@@ -30,12 +31,8 @@ void* BulletsComponent_CreateProperties()
 
 void BulletsComponent_OnCollisionEnter(H3Handle object, SH3Collision collider)
 {
-	if (collider.other == NULL /*|| H3_Object_HasComponent(collider.other, ENEMIESCOMPONENT_TYPEID)*/)
+	if (collider.other == NULL || H3_Object_HasComponent(collider.other, ENEMIECOMPONENT_TYPEID))
 	{
 		H3_Object_Destroy(object, false);
-		// set enenmies pv (get enenmies pv (collider.other) - 1);
 	}
 }
-
-//H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW(BulletsComponent, int, Useless);
-//H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(BulletsComponent, BULLETSCOMPONENT_TYPEID, int, Useless);

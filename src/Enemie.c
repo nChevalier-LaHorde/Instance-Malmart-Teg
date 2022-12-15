@@ -93,9 +93,9 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 
 	
 	//RAYCAST
-	if (H3_GetTime() - props->TimerEnemie > 0.5)
+	if (H3_GetTime() - props->TimerEnemie > 2)
 	{
-		props->detectorindex += 1;
+		props->detectorindex += rand() % 360;
 		snprintf(props->detector, 256, "detector_%d", props->detectorindex);
 		H3Handle Enemie = H3_Object_Create(props->scene, props->detector, NULL);
 

@@ -198,7 +198,6 @@ int main()
     int enemieindex = 0;
     float TimerBoss = H3_GetTime();
     float Timer = H3_GetTime();
-    float RndSpawn = rand() % 2;
 
 
 
@@ -259,21 +258,20 @@ int main()
                 snprintf(enemie, 256, "Enemie_%d", enemieindex);
                 H3Handle Enemie = H3_Object_Create(scene, enemie, NULL);
                 H3_Object_EnablePhysics(Enemie, H3_BOX_COLLIDER(CDT_Dynamic, 54, 60, 0x22, false));
-                H3_Object_AddComponent(Enemie, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/miniboss.png", A_Center + A_Middle));
+                H3_Object_AddComponent(Enemie, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/enemie.png", A_Center + A_Middle));
                 H3_Object_AddComponent(Enemie, ENEMIECOMPONENT_CREATE(player, scene));
                 H3_Object_SetRenderOrder(Enemie, 4);
                 EnemieCounteMinion += 1;
-                RndSpawn = rand() % 2;
                 Timer = H3_GetTime();
-                if (RndSpawn == 0)
+                if (EnemieCounteMinion <=5)
                 {
                     H3_Object_SetTranslation(Enemie, 3165, 642);
                 }
-                if (RndSpawn == 0)
+                if (EnemieCounteMinion <= 10 && EnemieCounteMinion >=5)
                 {
                     H3_Object_SetTranslation(Enemie, 1500, 1035);
                 }
-                if (RndSpawn == 0)
+                if (EnemieCounteMinion <= 15 && EnemieCounteMinion >= 10)
                 {
                     H3_Object_SetTranslation(Enemie, 2670, 485);
                 }

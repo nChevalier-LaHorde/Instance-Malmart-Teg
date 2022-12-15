@@ -18,7 +18,6 @@ H3_CAPI_END_BLOCK
 	(SH3Component) {                                                   \
 		.Terminate          = EnemieComponent_Terminate,               \
 		.Update             = EnemieComponent_Update,                  \
-		.OnCollisionEnter   = EnemieComponent_OnCollisionEnter,	 \
 		.isInitialized      = false,                                   \
 		.componentType      = ENEMIECOMPONENT_TYPEID,                  \
 		.properties         = EnemieComponent_CreateProperties(PLAYER,SCENE) \

@@ -34,7 +34,7 @@ void MainMenuComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 	{
 		if (props->inGame == true)
 		{
-			H3_Object_Translate(props->Player, 27, 849);
+			H3_Object_SetTranslation(props->Player, 27, 849);
 			props->lunching = false;
 		}
 	}
@@ -45,7 +45,7 @@ void MainMenuComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 		props->Ending = true;
 		if (props->Ending == true)
 		{
-			H3_Object_Translate(props->Player, -1000, -1000);
+			H3_Object_SetTranslation(props->Player, -1000, -1000);
 		}
 	}
 }
@@ -53,14 +53,20 @@ void MainMenuComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 void MainMenuComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties)
 {
 	MainMenuComponent_Properties* props = (MainMenuComponent_Properties*)properties;
-
-	if (H3_Button(h3, props->Play, 390, 720, A_Middle + A_Center))
+	if (props->lunching == true)
 	{
-		props->inGame = true;
+		if (H3_Button(h3, props->Play, 390, 720, A_Middle + A_Center))
+		{
+			props->inGame = true;
+		}
+		if (H3_Button(h3, props->Quit, 1130, 720, A_Middle + A_Center))
+		{
+			props->DoQuit = true;
+		}
 	}
-	if (H3_Button(h3, props->Quit, 1130, 740, A_Middle + A_Center))
+	if (props->Ending == true)
 	{
-		props->DoQuit = true;
+
 	}
 	/*if (H3_Button(h3, props->Retry, 1112, 658, A_Middle + A_Center))
 	{

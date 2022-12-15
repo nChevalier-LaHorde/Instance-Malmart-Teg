@@ -620,7 +620,9 @@ H3_CAPI void H3_Object_SetRenderOrder(H3Handle object, int32_t renderOrder)
 	{
 		auto& renderList = obj->scene->objectsByRenderOrder[obj->renderOrder];
 		auto it = std::find(renderList.begin(), renderList.end(), obj);
-		renderList.erase(it);
+
+		if (it != renderList.end())
+			renderList.erase(it);
 		obj->renderOrder = renderOrder;
 		obj->scene->objectsByRenderOrder[renderOrder].push_back(obj);
 	}

@@ -91,7 +91,7 @@ int main()
     /*if      (PlayerComponent_GetcharacterEx == 1)*/ H3_Object_AddComponent(inventory, SPRITECOMPONENT_CREATE("assets/hotbar/hotbar_male.png", A_Center + A_Middle));
     /*else if (PlayerComponent_GetcharacterEx == 2)*/ //H3_Object_AddComponent(inventory, SPRITECOMPONENT_CREATE("assets/hotbar/hotbar_female.png", A_Center + A_Middle));
     H3_Object_SetTranslation(inventory, inventory_x, inventory_y + 230);
-    H3_Object_SetRenderOrder(inventory, 7);
+    H3_Object_SetRenderOrder(inventory, 5);
 
     int inventory_pointer_offset;
     int nb_tab = 0;
@@ -100,7 +100,7 @@ int main()
     H3Handle inventory_pointer = H3_Object_Create(scene, "inventory_pointer", NULL);
     H3_Object_AddComponent(inventory_pointer, SPRITECOMPONENT_CREATE("assets/hotbar/hotbar_select.png", A_Center + A_Middle));
     H3_Object_SetTranslation(inventory_pointer, inventory_x + inventory_pointer_offset, inventory_y + 230);
-    H3_Object_SetRenderOrder(inventory_pointer, 7);
+    H3_Object_SetRenderOrder(inventory_pointer, 5);
 
 
     // Music
@@ -189,7 +189,7 @@ int main()
     //CHAMP DE VISION
     H3Handle Vision = H3_Object_Create(scene, "vision", player);
     H3_Object_AddComponent(Vision, SPRITECOMPONENT_CREATE("assets/ChampDeVision.png", A_Center + A_Middle));
-    H3_Object_SetRenderOrder(Vision, 6);
+    H3_Object_SetRenderOrder(Vision, 10);
 
 
     int EnemieCounteBoss = 1;

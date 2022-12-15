@@ -14,13 +14,14 @@ H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(EnemieComponent, bool, Detect);
 
 H3_CAPI_END_BLOCK
 
-#define ENEMIECOMPONENT_CREATE(PLAYER,SCENE)                                 \
+#define ENEMIECOMPONENT_CREATE(PLAYER,SCENE,PV)                                 \
 	(SH3Component) {                                                   \
 		.Terminate          = EnemieComponent_Terminate,               \
 		.Update             = EnemieComponent_Update,                  \
+		.OnCollisionEnter   = EnemieComponent_OnCollisionEnter,      \
 		.isInitialized      = false,                                   \
 		.componentType      = ENEMIECOMPONENT_TYPEID,                  \
-		.properties         = EnemieComponent_CreateProperties(PLAYER,SCENE) \
+		.properties         = EnemieComponent_CreateProperties(PLAYER,SCENE,PV) \
 	}
 
 #endif /* _H3_COMPONENTS_ENEMIECOMPONENT_H_ */

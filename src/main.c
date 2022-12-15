@@ -250,7 +250,7 @@ int main()
                 H3Handle Boss = H3_Object_Create(scene, "Boss", NULL);
                 H3_Object_EnablePhysics(Boss, H3_BOX_COLLIDER(CDT_Dynamic, 54, 60, 0x22, false));
                 H3_Object_AddComponent(Boss, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/miniboss.png", A_Center + A_Middle));
-                H3_Object_AddComponent(Boss, ENEMIECOMPONENT_CREATE(player, scene));
+                H3_Object_AddComponent(Boss, ENEMIECOMPONENT_CREATE(player, scene, 20));
                 H3_Object_SetTranslation(Boss, 2670, 485);
                 H3_Object_SetRenderOrder(Boss, 4);
                 EnemieCounteBoss += 1;
@@ -266,7 +266,7 @@ int main()
         //        H3Handle enemie = H3_Object_Create(scene, strEnemie, NULL);
         //        H3_Object_EnablePhysics(enemie, H3_BOX_COLLIDER(CDT_Dynamic, 54, 60, 0x22, false));
         //        H3_Object_AddComponent(enemie, SPRITECOMPONENT_CREATE("assets/playerandenemiessprites/enemie.png", A_Center + A_Middle));
-        //        H3_Object_AddComponent(enemie, ENEMIECOMPONENT_CREATE(player, scene));
+        //        H3_Object_AddComponent(enemie, ENEMIECOMPONENT_CREATE(player, scene, 5));
         //        H3_Object_SetRenderOrder(enemie, 4);
         //        H3_Object_SetTranslation(enemie, 1450, 950);
         //        EnemieCounteMinion += 1;

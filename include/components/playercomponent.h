@@ -25,6 +25,13 @@ H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, int, character);
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, int, Tiredness);
 
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, bool, isCatch);
+
+H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, int, nb_inventory_objects);
+H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, H3Handle, object_1);
+H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, H3Handle, object_2);
+H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, H3Handle, object_3);
+H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, H3Handle, object_feet);
+H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, H3Handle, object_tempo);
 H3_CAPI_END_BLOCK
 
 #define PLAYERCOMPONENT_CREATE(SCENE, CHARACTER)                                \

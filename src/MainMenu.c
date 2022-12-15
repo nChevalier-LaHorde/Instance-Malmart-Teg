@@ -1,6 +1,7 @@
 #include "MainMenu.h"
 #include "components/spritecomponent.h"
 #include <components/playercomponent.h>
+#include <components/inventorycomponent.h>
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -45,6 +46,16 @@ void MainMenuComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 			H3_Object_SetTranslation(props->Player, 27, 849);
 			props->Ending = false;
 			PlayerComponent_SetisCatchEx(props->Player, false);
+
+			PlayerComponent_Setobject_1Ex(props->Player, NULL);
+			PlayerComponent_Setobject_2Ex(props->Player, NULL);
+			PlayerComponent_Setobject_3Ex(props->Player, NULL);
+			PlayerComponent_Setobject_feetEx(props->Player, NULL);
+			PlayerComponent_Setobject_tempoEx(props->Player, NULL);
+			InventoryComponent_Setcase_1Ex(props->Player, OBJ_Void);
+			InventoryComponent_Setcase_2Ex(props->Player, OBJ_Void);
+			InventoryComponent_Setcase_3Ex(props->Player, OBJ_Void);
+			PlayerComponent_Setnb_inventory_objectsEx(props->Player, 0);
 		}
 	}
 

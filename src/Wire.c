@@ -72,11 +72,11 @@ void WireComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform,
 
 	H3_Transform_GetPosition(H3_Object_GetTransform(props->Wire1), &props->wx, &props->wy);
 
-	if (H3_Ui_BeginWindow("Wire"))
+	/*if (H3_Ui_BeginWindow("Wire"))
 	{
 		H3_Ui_Printf("wireRnd: %d", props->wireRnd);
 	}
-	H3_Ui_EndWindow();
+	H3_Ui_EndWindow();*/
 	
 
 	if (props->WireResolved == false)

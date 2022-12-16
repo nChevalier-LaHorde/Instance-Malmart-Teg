@@ -162,15 +162,15 @@ int main()
 
 
     //MENU BEGINNING
-    H3Handle BackGroudB = H3_Object_Create2(scene, "BackGroud", NULL, 100);
+    H3Handle BackGroudB = H3_Object_Create2(scene, "BackGroudb", NULL, 100);
     H3_Object_AddComponent(BackGroudB, SPRITECOMPONENT_CREATE("assets/menus/start.png", A_Middle + A_Center));
-    H3_Object_AddComponent(BackGroudB, MAINMENUCOMPONENT_CREATE(player));
+    H3_Object_AddComponent(BackGroudB, MAINMENUCOMPONENT_CREATE(player, Clock));
     H3_Object_SetTranslation(BackGroudB, 0, 0);
 
     //MENU ENDING
-    H3Handle BackGroudE = H3_Object_Create2(scene, "BackGroud", NULL, 100);
+    H3Handle BackGroudE = H3_Object_Create2(scene, "BackGroude", NULL, 100);
     H3_Object_AddComponent(BackGroudE, SPRITECOMPONENT_CREATE("assets/menus/gameover.png", A_Middle + A_Center));
-    H3_Object_AddComponent(BackGroudE, MAINMENUCOMPONENT_CREATE(player));
+    H3_Object_AddComponent(BackGroudE, MAINMENUCOMPONENT_CREATE(player, Clock));
     H3_Object_SetTranslation(BackGroudE, -1000, -1000);
 
     //ENIGME EQUATION
@@ -194,11 +194,22 @@ int main()
     H3_Object_AddComponent(Vision, SPRITECOMPONENT_CREATE("assets/ChampDeVision.png", A_Center + A_Middle));
     H3_Object_SetRenderOrder(Vision, 5);
 
+    //// ending door
+    //float ending_door_x = 3760, ending_door_y = 225;
+    //H3Handle ending_door = H3_Object_Create2(scene, "ending_door", NULL, 2);
+    //H3_Object_AddComponent(ending_door, SPRITECOMPONENT_CREATE("assets/objects/doorclosed.png", A_Center + A_Middle));
+    //H3_Object_SetTranslation(ending_door, ending_door_x, ending_door_y);
 
-    int EnemieCounteBoss = 1;
+
     int EnemieCounteMinion = 1;
     char strEnemie[256];
     int enemieindex = 0;
+
+
+    int EnemieCounteBoss = 1;
+    char strBoss[256];
+    int bossindex = 0;
+
     float TimerBoss = H3_GetTime();
     float Timer = H3_GetTime();
 
@@ -247,7 +258,9 @@ int main()
         {
             if (H3_GetTime() - Timer >= 5)
             {
-                H3Handle Boss = H3_Object_Create(scene, "Boss", NULL);
+                snprintf(strBoss, 256, "boss_%d", bossindex++);
+
+                H3Handle Boss = H3_Object_Create(scene, strBoss, NULL);
                 H3_Object_EnablePhysics(Boss, H3_BOX_COLLIDER(CDT_Dynamic, 54, 60, 0x22, false));
                 H3_Object_AddComponent(Boss, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/miniboss.png", A_Center + A_Middle));
                 H3_Object_AddComponent(Boss, ENEMIECOMPONENT_CREATE(player, scene, 20));

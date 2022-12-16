@@ -92,11 +92,11 @@ void EquationComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 		props->EquationCreate = false;
 	}
 
-	if (H3_Ui_BeginWindow("Equation"))
+	/*if (H3_Ui_BeginWindow("Equation"))
 	{
 		H3_Ui_Printf("Resol = %d", props->Resol);
 	}
-	H3_Ui_EndWindow();
+	H3_Ui_EndWindow();*/
 
 	if (props->EquationResolved == false)
 	{
@@ -679,11 +679,11 @@ void EquationComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 		if (props->GameOver == 3)
 		{
 			//ACCESSOR isCatch
-			if (H3_Ui_BeginWindow("Coffee"))
+			/*if (H3_Ui_BeginWindow("Coffee"))
 			{
 				H3_Ui_Printf("GameOver = true");
 			}
-			H3_Ui_EndWindow();
+			H3_Ui_EndWindow();*/
 		}
 
 	}

@@ -16,6 +16,7 @@ H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RO(ClockComponent, SH3TextProperties, Pr
 
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(ClockComponent, const char*, Text);
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(ClockComponent, SH3TextProperties, Props);
+H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(ClockComponent, bool, ingame);
 H3_CAPI_END_BLOCK
 
 #define CLOCKCOMPONENT_CREATE(TEXT, PROPS)                                 \

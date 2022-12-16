@@ -5,6 +5,8 @@
 
 typedef struct
 {
+	bool ingame;
+	
 	int hours;
 	
 	int unit_minutes;
@@ -25,35 +27,37 @@ void ClockComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties)
 	ClockComponent_Properties* props = (ClockComponent_Properties*)properties;
 	H3_Font_Printf(h3, props->Props, transform, props->Text, props->hours, props->dozen_minutes, props->unit_minutes);
 	
-	// 1s irl = 1min in game
-	if (H3_GetTime() - props->secondes >= 1)
+	if (props->ingame == true)
 	{
-		props->secondes = H3_GetTime();
-		props->unit_minutes += 1;
-
-		if (props->unit_minutes == 10)
+		// 1s irl = 1min in game
+		if (H3_GetTime() - props->secondes >= 1)
 		{
-			props->unit_minutes = 0;
-			props->dozen_minutes +=1;
+			props->secondes = H3_GetTime();
+			props->unit_minutes += 1;
 
-			if (props->dozen_minutes == 6)
+			if (props->unit_minutes == 10)
 			{
-				props->dozen_minutes = 0;
-				props->hours += 1;
+				props->unit_minutes = 0;
+				props->dozen_minutes += 1;
 
-				if (props->hours == 24)
+				if (props->dozen_minutes == 6)
 				{
-					props->hours = 0;
+					props->dozen_minutes = 0;
+					props->hours += 1;
+
+					if (props->hours == 24)
+					{
+						props->hours = 0;
+					}
 				}
 			}
-		}
 
-		if (props->hours == 8 && props->dozen_minutes == 3 && props->unit_minutes == 0)
-		{
-			;
+			if (props->hours == 8 && props->dozen_minutes == 3 && props->unit_minutes == 0)
+			{
+				;
+			}
 		}
 	}
-
 
 }
 
@@ -63,6 +67,8 @@ void* ClockComponent_CreateProperties(const char* text, SH3TextProperties props)
 	ClockComponent_Properties* properties = malloc(sizeof(ClockComponent_Properties));
 	properties->Text = text;
 	properties->Props = props;
+
+	properties->ingame = true;
 
 	properties->hours = 21;
 	properties->dozen_minutes = 3;
@@ -79,3 +85,4 @@ H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RO(ClockComponent, SH3TextProperties, Pro
 
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(ClockComponent, CLOCKCOMPONENT_TYPEID, const char*, Text);
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(ClockComponent, CLOCKCOMPONENT_TYPEID, SH3TextProperties, Props);
+H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(ClockComponent, CLOCKCOMPONENT_TYPEID, bool, ingame);

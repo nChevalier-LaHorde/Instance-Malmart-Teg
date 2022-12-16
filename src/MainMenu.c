@@ -18,6 +18,7 @@ typedef struct
 	H3Handle Quit;
 	H3Handle Retry;
 	H3Handle Player;
+	H3Handle Clock;
 
 } MainMenuComponent_Properties;
 
@@ -37,6 +38,8 @@ void MainMenuComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 		{
 			H3_Object_SetTranslation(props->Player, 27, 849);
 			props->lunching = false;
+			/*PlayerComponent_SetingameEx(props->Player, true);
+			PlayerComponent_SetingameEx(props->Clock, true);*/
 		}
 	}
 	if (props->Ending == true)
@@ -56,6 +59,7 @@ void MainMenuComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transf
 			InventoryComponent_Setcase_2Ex(props->Player, OBJ_Void);
 			InventoryComponent_Setcase_3Ex(props->Player, OBJ_Void);
 			PlayerComponent_Setnb_inventory_objectsEx(props->Player, 0);
+
 		}
 	}
 
@@ -94,12 +98,13 @@ void MainMenuComponent_Draw(H3Handle h3, SH3Transform* transform, void* properti
 	
 }
 
-void* MainMenuComponent_CreateProperties(H3Handle Player)
+void* MainMenuComponent_CreateProperties(H3Handle Player, H3Handle clock)
 {
 	MainMenuComponent_Properties* properties = malloc(sizeof(MainMenuComponent_Properties));
 	H3_ASSERT_CONSOLE(properties, "Failed to allocate properties");
 
 	properties->Player = Player;
+	properties->Clock = clock;	
 
 	properties->lunching = true;
 	properties->inGame = false;
@@ -118,3 +123,4 @@ void* MainMenuComponent_CreateProperties(H3Handle Player)
 
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(MainMenuComponent, MAINMENUCOMPONENT_TYPEID, bool, Ending);
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(MainMenuComponent, MAINMENUCOMPONENT_TYPEID, bool, lunching);
+H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(MainMenuComponent, MAINMENUCOMPONENT_TYPEID, bool, inGame);

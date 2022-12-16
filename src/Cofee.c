@@ -66,11 +66,11 @@ void CofeeComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform
 	H3_Transform_GetPosition(H3_Object_GetTransform(props->Player), &props->px, &props->py);
 	H3_Input_GetMousePos(h3, &props->mx, &props->my);
 
-	if (H3_Ui_BeginWindow("Coffee"))
+	/*if (H3_Ui_BeginWindow("Coffee"))
 	{
 		H3_Ui_Printf("position = (%d, %d)", props->mx, props->my);
 	}
-	H3_Ui_EndWindow();
+	H3_Ui_EndWindow();*/
 
 
 
@@ -83,25 +83,25 @@ void CofeeComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform
 
 	if (props->resolved == false)
 	{
-		if (H3_Ui_BeginWindow("Coffee"))
+		/*if (H3_Ui_BeginWindow("Coffee"))
 		{
 			H3_Ui_Printf("nbr = %d", props->nbr);
 		}
-		H3_Ui_EndWindow();
+		H3_Ui_EndWindow();*/
 
 		props->nbr = 0;
 
-		if (H3_Ui_BeginWindow("Coffee"))
+		/*if (H3_Ui_BeginWindow("Coffee"))
 		{
 			H3_Ui_Printf("Count = %d", props->ButtonCount);
 		}
-		H3_Ui_EndWindow();
+		H3_Ui_EndWindow();*/
 
-		if (H3_Ui_BeginWindow("Coffee"))
+		/*if (H3_Ui_BeginWindow("Coffee"))
 		{
 			H3_Ui_Printf("GameOver = %d", props->GameOver);
 		}
-		H3_Ui_EndWindow();
+		H3_Ui_EndWindow();*/
 
 		if (H3_Input_IsKeyPressed(K_Space))
 		{
@@ -126,11 +126,11 @@ void CofeeComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform
 
 		if (props->buttonOn == true)
 		{
-			if (H3_Ui_BeginWindow("Coffee"))
+			/*if (H3_Ui_BeginWindow("Coffee"))
 			{
 				H3_Ui_Printf("buttonOn = true", props->buttonOn);
 			}
-			H3_Ui_EndWindow();
+			H3_Ui_EndWindow();*/
 
 			H3_Object_SetTranslation(props->Player, 2205, 316);
 
@@ -238,11 +238,11 @@ void CofeeComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform
 		if (props->GameOver == 3)
 		{
 			PlayerComponent_SetisCatchEx(props->Player, true);
-			if (H3_Ui_BeginWindow("Coffee"))
+			/*if (H3_Ui_BeginWindow("Coffee"))
 			{
 				H3_Ui_Printf("GameOver = true");
 			}
-			H3_Ui_EndWindow();
+			H3_Ui_EndWindow();*/
 		}
 
 	}

@@ -141,11 +141,11 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				props->vey = ((props->dpy - ey) / (dist + 1)) * 64;
 				props->dpy -= 1;
 
-				if (H3_Ui_BeginWindow(H3_Object_GetName(object)))
+				/*if (H3_Ui_BeginWindow(H3_Object_GetName(object)))
 				{
 					H3_Ui_Printf("haut");
 				}
-				H3_Ui_EndWindow();
+				H3_Ui_EndWindow();*/
 
 			}
 			if (props->dpy > ey)
@@ -154,11 +154,11 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				props->vey = ((props->dpy - ey) / (dist + 1)) * 64;
 				props->dpy += 1;
 
-				if (H3_Ui_BeginWindow(H3_Object_GetName(object)))
+				/*if (H3_Ui_BeginWindow(H3_Object_GetName(object)))
 				{
 					H3_Ui_Printf("bas");
 				}
-				H3_Ui_EndWindow();
+				H3_Ui_EndWindow();*/
 			}
 			if (props->dpx > ex)
 			{
@@ -166,11 +166,11 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				props->vey = ((props->dpy - ey) / (dist + 1)) * 64;
 				props->dpx += 1;
 
-				if (H3_Ui_BeginWindow(H3_Object_GetName(object)))
+				/*if (H3_Ui_BeginWindow(H3_Object_GetName(object)))
 				{
 					H3_Ui_Printf("droite");
 				}
-				H3_Ui_EndWindow();
+				H3_Ui_EndWindow();*/
 			}
 			if (props->dpx < ex)
 			{
@@ -179,11 +179,11 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 				props->vey = ((props->dpy - ey) / (dist + 1)) * 64;
 				props->dpx -= 1;
 
-				if (H3_Ui_BeginWindow(H3_Object_GetName(object)))
+				/*if (H3_Ui_BeginWindow(H3_Object_GetName(object)))
 				{
 					H3_Ui_Printf("gauche");
 				}
-				H3_Ui_EndWindow();
+				H3_Ui_EndWindow();*/
 			}
 
 
@@ -218,11 +218,11 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 			printf("ey = %f\n", ey);
 			props->Timer = H3_GetTime();
 		}*/
-		if (H3_Ui_BeginWindow(H3_Object_GetName(object)))
+		/*if (H3_Ui_BeginWindow(H3_Object_GetName(object)))
 		{
 			H3_Ui_Printf("Angle to player: %f", props->aDeg2);
 		}
-		H3_Ui_EndWindow();
+		H3_Ui_EndWindow();*/
 	}
 
 	//knocking out

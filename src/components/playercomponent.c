@@ -3,6 +3,7 @@
 #include <components/bulletscomponent.h>
 #include <components/inventorycomponent.h>
 #include <Enemie.h>
+#include <MainMenu.h>
 
 #include <components/spritecomponent.h>
 
@@ -13,6 +14,7 @@
 typedef struct
 {
 	H3Handle scene;
+	bool ingame;
 	
 	int character; // 1 for man or 2 for woman like on the vital cards
 
@@ -127,183 +129,319 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 	if (InventoryComponent_Getcase_2Ex(object) != OBJ_Void) H3_Object_SetTranslation(props->object_2, object_2_x, object_2_y);
 	if (InventoryComponent_Getcase_3Ex(object) != OBJ_Void) H3_Object_SetTranslation(props->object_3, object_3_x, object_3_y);
 
-
-	if (props->Tiredness < 100 && props->isCatch == false)
+	if (props->ingame == true)
 	{
-		// movements
-		if (!(H3_Input_IsKeyDown(K_Shift)))
+		if (props->Tiredness < 100 && props->isCatch == false)
 		{
-			if (H3_Input_IsKeyDown(K_D) /*|| H3_Input_IsKeyDown(K_Right)*/)
+			// movements
+			if (!(H3_Input_IsKeyDown(K_Shift)))
 			{
-				player_velo_x = 128;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+				if (H3_Input_IsKeyDown(K_D) /*|| H3_Input_IsKeyDown(K_Right)*/)
+				{
+					player_velo_x = 128;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
 
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
-			}
-			else if (H3_Input_IsKeyDown(K_Q) /*|| H3_Input_IsKeyDown(K_Left)*/)
-			{
-				player_velo_x = -128;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
+				}
+				else if (H3_Input_IsKeyDown(K_Q) /*|| H3_Input_IsKeyDown(K_Left)*/)
+				{
+					player_velo_x = -128;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
 
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
+				}
+				else
+				{
+					player_velo_x = 0;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+				}
+
+				if (H3_Input_IsKeyDown(K_Z) /*|| H3_Input_IsKeyDown(K_Up)*/)
+				{
+					player_velo_y = -128;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
+				}
+				else if (H3_Input_IsKeyDown(K_S) /*|| H3_Input_IsKeyDown(K_Down)*/)
+				{
+					player_velo_y = 128;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
+				}
+				else
+				{
+					player_velo_y = 0;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+				}
 			}
 			else
 			{
-				player_velo_x = 0;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
-			}
-
-			if (H3_Input_IsKeyDown(K_Z) /*|| H3_Input_IsKeyDown(K_Up)*/)
-			{
-				player_velo_y = -128;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
-
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
-			}
-			else if (H3_Input_IsKeyDown(K_S) /*|| H3_Input_IsKeyDown(K_Down)*/)
-			{
-				player_velo_y = 128;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
-
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
-			}
-			else
-			{
-				player_velo_y = 0;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
-			}
-		}
-		else
-		{
-			if (H3_Input_IsKeyDown(K_D) /*|| H3_Input_IsKeyDown(K_Right)*/)
-			{
-				player_velo_x = 282;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
-
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
-			}
-			else if (H3_Input_IsKeyDown(K_Q) /*|| H3_Input_IsKeyDown(K_Left)*/)
-			{
-				player_velo_x = -282;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
-
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
-			}
-			else
-			{
-				player_velo_x = 0;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
-			}
-
-			if (H3_Input_IsKeyDown(K_Z) /*|| H3_Input_IsKeyDown(K_Up)*/)
-			{
-				player_velo_y = -282;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
-
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
-			}
-			else if (H3_Input_IsKeyDown(K_S) /*|| H3_Input_IsKeyDown(K_Down)*/)
-			{
-				player_velo_y = 282;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
-
-				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
-			}
-			else
-			{
-				player_velo_y = 0;
-				H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
-			}
-		}
-
-		// action
-		if (H3_Input_IsMouseBtnPressed(MB_Left))
-		{
-			// attack 
-			if (props->isGun == true)
-			{
-				H3_Sound_Play(props->Sound_Effect, 0.5, false);
-
-				float bullet_x = player_x, bullet_y = player_y;
-				float bullet_velo_x = (dx / dist) * 500;
-				float bullet_velo_y = (dy / dist) * 500;
-
-				snprintf(props->strBullets, 256, "bullet_%d", props->nb_bullets++);
-
-				H3Handle bullet = H3_Object_Create2(props->scene, props->strBullets, NULL, 7);
-				H3_Object_AddComponent(bullet, SPRITECOMPONENT_CREATE("assets/weapons/bullet.png", A_Center + A_Middle));
-				H3_Object_AddComponent(bullet, BULLETSCOMPONENT_CREATE());
-				H3_Object_EnablePhysics(bullet, H3_BOX_COLLIDER(CDT_Dynamic, 4, 4, 0x22, false));
-				H3_Object_SetRotation(bullet, angle);
-				H3_Object_SetTranslation(bullet, bullet_x + (bullet_velo_x * 0.07), bullet_y + (bullet_velo_y * 0.07));
-				H3_Object_SetVelocity(bullet, bullet_velo_x, bullet_velo_y);
-			}
-
-			// energy boost
-			else if (props->isCoffee == true)
-			{
-				props->Tiredness -= 20; // nous donne 60s en plus
-				if (props->Tiredness < 0) props->Tiredness = 0;
-
-				if (props->inventory_pointer == 1)
+				if (H3_Input_IsKeyDown(K_D) /*|| H3_Input_IsKeyDown(K_Right)*/)
 				{
-					InventoryComponent_Setcase_1Ex(object, OBJ_Void);
-					H3_Object_Destroy(props->object_1, false);
+					player_velo_x = 282;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
 				}
-				else if (props->inventory_pointer == 2)
+				else if (H3_Input_IsKeyDown(K_Q) /*|| H3_Input_IsKeyDown(K_Left)*/)
 				{
-					InventoryComponent_Setcase_2Ex(object, OBJ_Void);
-					H3_Object_Destroy(props->object_2, false);
+					player_velo_x = -282;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
 				}
-				else if (props->inventory_pointer == 3)
+				else
 				{
-					InventoryComponent_Setcase_3Ex(object, OBJ_Void);
-					H3_Object_Destroy(props->object_3, false);
+					player_velo_x = 0;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
 				}
 
+				if (H3_Input_IsKeyDown(K_Z) /*|| H3_Input_IsKeyDown(K_Up)*/)
+				{
+					player_velo_y = -282;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
+				}
+				else if (H3_Input_IsKeyDown(K_S) /*|| H3_Input_IsKeyDown(K_Down)*/)
+				{
+					player_velo_y = 282;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
+				}
+				else
+				{
+					player_velo_y = 0;
+					H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+				}
 			}
-			else if (props->isMonster == true)
+
+			// action
+			if (H3_Input_IsMouseBtnPressed(MB_Left))
 			{
-				props->Tiredness -= 15; // nous donne 45s en plus
-				if (props->Tiredness < 0) props->Tiredness = 0;
+				// attack 
+				if (props->isGun == true)
+				{
+					H3_Sound_Play(props->Sound_Effect, 0.5, false);
 
-				if (props->inventory_pointer == 1)
-				{
-					InventoryComponent_Setcase_1Ex(object, OBJ_Void);
-					H3_Object_Destroy(props->object_1, false);
-				}
-				else if (props->inventory_pointer == 2)
-				{
-					InventoryComponent_Setcase_2Ex(object, OBJ_Void);
-					H3_Object_Destroy(props->object_2, false);
-				}
-				else if (props->inventory_pointer == 3)
-				{
-					InventoryComponent_Setcase_3Ex(object, OBJ_Void);
-					H3_Object_Destroy(props->object_3, false);
-				}
+					float bullet_x = player_x, bullet_y = player_y;
+					float bullet_velo_x = (dx / dist) * 500;
+					float bullet_velo_y = (dy / dist) * 500;
 
-			}
+					snprintf(props->strBullets, 256, "bullet_%d", props->nb_bullets++);
 
-			//money
-			else if ((player_x >= 208 && player_x <= 272) && (player_y >= 1050 && player_y <= 1060))
-			{
-				//unlock cash box
-				if (props->isKeyCard == true)
-				{
-					props->isCashBox = true;
+					H3Handle bullet = H3_Object_Create2(props->scene, props->strBullets, NULL, 7);
+					H3_Object_AddComponent(bullet, SPRITECOMPONENT_CREATE("assets/weapons/bullet.png", A_Center + A_Middle));
+					H3_Object_AddComponent(bullet, BULLETSCOMPONENT_CREATE());
+					H3_Object_EnablePhysics(bullet, H3_BOX_COLLIDER(CDT_Dynamic, 4, 4, 0x22, false));
+					H3_Object_SetRotation(bullet, angle);
+					H3_Object_SetTranslation(bullet, bullet_x + (bullet_velo_x * 0.07), bullet_y + (bullet_velo_y * 0.07));
+					H3_Object_SetVelocity(bullet, bullet_velo_x, bullet_velo_y);
 				}
 
-				// get money
-				if (props->isCashBox == true && props->nb_Coins < 5)
+				// energy boost
+				else if (props->isCoffee == true)
+				{
+					props->Tiredness -= 20; // nous donne 60s en plus
+					if (props->Tiredness < 0) props->Tiredness = 0;
+
+					if (props->inventory_pointer == 1)
+					{
+						InventoryComponent_Setcase_1Ex(object, OBJ_Void);
+						H3_Object_Destroy(props->object_1, false);
+					}
+					else if (props->inventory_pointer == 2)
+					{
+						InventoryComponent_Setcase_2Ex(object, OBJ_Void);
+						H3_Object_Destroy(props->object_2, false);
+					}
+					else if (props->inventory_pointer == 3)
+					{
+						InventoryComponent_Setcase_3Ex(object, OBJ_Void);
+						H3_Object_Destroy(props->object_3, false);
+					}
+
+				}
+				else if (props->isMonster == true)
+				{
+					props->Tiredness -= 15; // nous donne 45s en plus
+					if (props->Tiredness < 0) props->Tiredness = 0;
+
+					if (props->inventory_pointer == 1)
+					{
+						InventoryComponent_Setcase_1Ex(object, OBJ_Void);
+						H3_Object_Destroy(props->object_1, false);
+					}
+					else if (props->inventory_pointer == 2)
+					{
+						InventoryComponent_Setcase_2Ex(object, OBJ_Void);
+						H3_Object_Destroy(props->object_2, false);
+					}
+					else if (props->inventory_pointer == 3)
+					{
+						InventoryComponent_Setcase_3Ex(object, OBJ_Void);
+						H3_Object_Destroy(props->object_3, false);
+					}
+
+				}
+
+				//money
+				else if ((player_x >= 208 && player_x <= 272) && (player_y >= 1050 && player_y <= 1060))
+				{
+					//unlock cash box
+					if (props->isKeyCard == true)
+					{
+						props->isCashBox = true;
+					}
+
+					// get money
+					if (props->isCashBox == true && props->nb_Coins < 5)
+					{
+						// si tu as un objet, tu le pose par terre
+						if (props->nb_inventory_objects != 0)
+						{
+							if (props->inventory_pointer == 1 && InventoryComponent_Getcase_1Ex(object) != OBJ_Void)
+							{
+								H3_Object_SetTranslation(props->object_1, player_x, player_y);
+								H3_Object_SetRenderOrder(props->object_1, 3);
+							}
+							else if (props->inventory_pointer == 2 && InventoryComponent_Getcase_2Ex(object) != OBJ_Void)
+							{
+								H3_Object_SetTranslation(props->object_2, player_x, player_y);
+								H3_Object_SetRenderOrder(props->object_2, 3);
+							}
+							else if (props->inventory_pointer == 3 && InventoryComponent_Getcase_3Ex(object) != OBJ_Void)
+							{
+								H3_Object_SetTranslation(props->object_3, player_x, player_y);
+								H3_Object_SetRenderOrder(props->object_3, 3);
+							}
+						}
+
+						snprintf(props->strCoins, 256, "coin_%d", props->nb_Coins++);
+
+						H3Handle coin = H3_Object_Create2(props->scene, props->strCoins, NULL, 6);
+						H3_Object_EnablePhysics(coin, H3_BOX_COLLIDER(CDT_Dynamic, 22, 22, 0x22, true));
+						H3_Object_AddComponent(coin, SPRITECOMPONENT_CREATE("assets/items/coin.png", A_Center + A_Middle));
+						H3_Object_AddComponent(coin, OBJECTSCOMPONENT_CREATE(OBJ_coin));
+
+						// tu dis à ton inventaire que tu vas prendre une pièce
+						if (props->inventory_pointer == 1)
+						{
+							InventoryComponent_Setcase_1Ex(object, OBJ_coin);
+							props->object_1 = coin;
+						}
+						else if (props->inventory_pointer == 2)
+						{
+							InventoryComponent_Setcase_2Ex(object, OBJ_coin);
+							props->object_2 = coin;
+						}
+						else if (props->inventory_pointer == 3)
+						{
+							InventoryComponent_Setcase_3Ex(object, OBJ_coin);
+							props->object_3 = coin;
+						}
+
+						props->nb_inventory_objects += 1;
+						if (props->character == 1 && props->nb_inventory_objects > 2) props->nb_inventory_objects = 2;
+						else if (props->character == 2 && props->nb_inventory_objects > 3) props->nb_inventory_objects = 3;
+
+						// tu prends l'objet
+						if (props->character == 1)
+						{
+							if (props->inventory_pointer == 1)
+							{
+								H3_Object_SetTranslation(props->object_1, player_x - 30, player_y + 230);
+								H3_Object_SetRenderOrder(props->object_1, 6);
+							}
+							else if (props->inventory_pointer == 2)
+							{
+								H3_Object_SetTranslation(props->object_2, player_x + 30, player_y + 230);
+								H3_Object_SetRenderOrder(props->object_2, 6);
+							}
+						}
+						else if (props->character == 2)
+						{
+							if (props->inventory_pointer == 1)
+							{
+								H3_Object_SetTranslation(props->object_1, player_x - 60, player_y + 230);
+								H3_Object_SetRenderOrder(props->object_1, 6);
+							}
+							else if (props->inventory_pointer == 2)
+							{
+								H3_Object_SetTranslation(props->object_2, player_x, player_y + 230);
+								H3_Object_SetRenderOrder(props->object_2, 6);
+							}
+							else if (props->inventory_pointer == 3)
+							{
+								H3_Object_SetTranslation(props->object_3, player_x + 60, player_y + 230);
+								H3_Object_SetRenderOrder(props->object_3, 6);
+							}
+						}
+					}
+				}
+
+				// coin to coffee
+				else if (props->isCoin == true && ((player_x >= 2176 && player_x <= 2208) && (player_y >= 316 && player_y <= 330)))
+				{
+					float coin_x, coin_y;
+					snprintf(props->strCoffees, 256, "coffee_%d", props->nb_Coffees++);
+
+					H3Handle coffee = H3_Object_Create2(props->scene, props->strCoffees, NULL, 6);
+					H3_Object_EnablePhysics(coffee, H3_BOX_COLLIDER(CDT_Dynamic, 32, 25, 0x22, true));
+					H3_Object_AddComponent(coffee, SPRITECOMPONENT_CREATE("assets/items/coffee.png", A_Center + A_Middle));
+					H3_Object_AddComponent(coffee, OBJECTSCOMPONENT_CREATE(OBJ_coffee));
+
+					if (props->inventory_pointer == 1)
+					{
+						H3_Transform_GetPosition(H3_Object_GetTransform(props->object_1), &coin_x, &coin_y);
+						InventoryComponent_Setcase_1Ex(object, OBJ_Void);
+						H3_Object_Destroy(props->object_1, false);
+
+						H3_Object_SetTranslation(coffee, coin_x, coin_y);
+
+						InventoryComponent_Setcase_1Ex(object, OBJ_coffee);
+						props->object_1 = coffee;
+
+					}
+					else if (props->inventory_pointer == 2)
+					{
+						H3_Transform_GetPosition(H3_Object_GetTransform(props->object_2), &coin_x, &coin_y);
+						InventoryComponent_Setcase_2Ex(object, OBJ_Void);
+						H3_Object_Destroy(props->object_2, false);
+
+						H3_Object_SetTranslation(coffee, coin_x, coin_y);
+
+						InventoryComponent_Setcase_2Ex(object, OBJ_coffee);
+						props->object_2 = coffee;
+
+					}
+					else if (props->inventory_pointer == 3)
+					{
+						H3_Transform_GetPosition(H3_Object_GetTransform(props->object_3), &coin_x, &coin_y);
+						InventoryComponent_Setcase_3Ex(object, OBJ_Void);
+						H3_Object_Destroy(props->object_3, false);
+
+						H3_Object_SetTranslation(coffee, coin_x, coin_y);
+
+						InventoryComponent_Setcase_3Ex(object, OBJ_coffee);
+						props->object_3 = coffee;
+
+					}
+				}
+
+				// Monster Vending Machine
+				else if ((player_x >= 64 && player_x <= 128) && (player_y >= 760 && player_y <= 770))
 				{
 					// si tu as un objet, tu le pose par terre
 					if (props->nb_inventory_objects != 0)
@@ -325,28 +463,28 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 						}
 					}
 
-					snprintf(props->strCoins, 256, "coin_%d", props->nb_Coins++);
+					snprintf(props->strMonsters, 256, "coin_%d", props->nb_Monsters++);
 
-					H3Handle coin = H3_Object_Create2(props->scene, props->strCoins, NULL, 6);
-					H3_Object_EnablePhysics(coin, H3_BOX_COLLIDER(CDT_Dynamic, 22, 22, 0x22, true));
-					H3_Object_AddComponent(coin, SPRITECOMPONENT_CREATE("assets/items/coin.png", A_Center + A_Middle));
-					H3_Object_AddComponent(coin, OBJECTSCOMPONENT_CREATE(OBJ_coin));
+					H3Handle monster = H3_Object_Create2(props->scene, props->strMonsters, NULL, 6);
+					H3_Object_EnablePhysics(monster, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));
+					H3_Object_AddComponent(monster, SPRITECOMPONENT_CREATE("assets/items/monster.png", A_Center + A_Middle));
+					H3_Object_AddComponent(monster, OBJECTSCOMPONENT_CREATE(OBJ_monster));
 
 					// tu dis à ton inventaire que tu vas prendre une pièce
 					if (props->inventory_pointer == 1)
 					{
-						InventoryComponent_Setcase_1Ex(object, OBJ_coin);
-						props->object_1 = coin;
+						InventoryComponent_Setcase_1Ex(object, OBJ_monster);
+						props->object_1 = monster;
 					}
 					else if (props->inventory_pointer == 2)
 					{
-						InventoryComponent_Setcase_2Ex(object, OBJ_coin);
-						props->object_2 = coin;
+						InventoryComponent_Setcase_2Ex(object, OBJ_monster);
+						props->object_2 = monster;
 					}
 					else if (props->inventory_pointer == 3)
 					{
-						InventoryComponent_Setcase_3Ex(object, OBJ_coin);
-						props->object_3 = coin;
+						InventoryComponent_Setcase_3Ex(object, OBJ_monster);
+						props->object_3 = monster;
 					}
 
 					props->nb_inventory_objects += 1;
@@ -386,572 +524,438 @@ void PlayerComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 						}
 					}
 				}
-			}
 
-			// coin to coffee
-			else if (props->isCoin == true && ((player_x >= 2176 && player_x <= 2208) && (player_y >= 316 && player_y <= 330)))
-			{
-				float coin_x, coin_y;
-				snprintf(props->strCoffees, 256, "coffee_%d", props->nb_Coffees++);
-
-				H3Handle coffee = H3_Object_Create2(props->scene, props->strCoffees, NULL, 6);
-				H3_Object_EnablePhysics(coffee, H3_BOX_COLLIDER(CDT_Dynamic, 32, 25, 0x22, true));
-				H3_Object_AddComponent(coffee, SPRITECOMPONENT_CREATE("assets/items/coffee.png", A_Center + A_Middle));
-				H3_Object_AddComponent(coffee, OBJECTSCOMPONENT_CREATE(OBJ_coffee));
-
-				if (props->inventory_pointer == 1)
+				//read book
+				else if (props->isBook == true)
 				{
-					H3_Transform_GetPosition(H3_Object_GetTransform(props->object_1), &coin_x, &coin_y);
-					InventoryComponent_Setcase_1Ex(object, OBJ_Void);
-					H3_Object_Destroy(props->object_1, false);
-
-					H3_Object_SetTranslation(coffee, coin_x, coin_y);
-
-					InventoryComponent_Setcase_1Ex(object, OBJ_coffee);
-					props->object_1 = coffee;
-
-				}
-				else if (props->inventory_pointer == 2)
-				{
-					H3_Transform_GetPosition(H3_Object_GetTransform(props->object_2), &coin_x, &coin_y);
-					InventoryComponent_Setcase_2Ex(object, OBJ_Void);
-					H3_Object_Destroy(props->object_2, false);
-
-					H3_Object_SetTranslation(coffee, coin_x, coin_y);
-
-					InventoryComponent_Setcase_2Ex(object, OBJ_coffee);
-					props->object_2 = coffee;
-
-				}
-				else if (props->inventory_pointer == 3)
-				{
-					H3_Transform_GetPosition(H3_Object_GetTransform(props->object_3), &coin_x, &coin_y);
-					InventoryComponent_Setcase_3Ex(object, OBJ_Void);
-					H3_Object_Destroy(props->object_3, false);
-
-					H3_Object_SetTranslation(coffee, coin_x, coin_y);
-
-					InventoryComponent_Setcase_3Ex(object, OBJ_coffee);
-					props->object_3 = coffee;
-
+					;
 				}
 			}
 
-			// Monster Vending Machine
-			else if ((player_x >= 64 && player_x <= 128) && (player_y >= 760 && player_y <= 770))
+			if (H3_Input_IsKeyPressed(K_Space))
 			{
-				// si tu as un objet, tu le pose par terre
-				if (props->nb_inventory_objects != 0)
+				// pick up
+				if (props->inObject == true)
+				{
+					props->inObject = false;
+					// si tu as un objet, tu le pose par terre
+					if (props->nb_inventory_objects != 0)
+					{
+						if (props->inventory_pointer == 1 && InventoryComponent_Getcase_1Ex(object) != OBJ_Void)
+						{
+							H3_Object_SetTranslation(props->object_1, player_x, player_y);
+							H3_Object_SetRenderOrder(props->object_1, 3);
+							props->object_tempo = props->object_1;
+							props->inObject = true;
+						}
+						else if (props->inventory_pointer == 2 && InventoryComponent_Getcase_2Ex(object) != OBJ_Void)
+						{
+							H3_Object_SetTranslation(props->object_2, player_x, player_y);
+							H3_Object_SetRenderOrder(props->object_2, 3);
+							props->object_tempo = props->object_2;
+							props->inObject = true;
+						}
+						else if (props->inventory_pointer == 3 && InventoryComponent_Getcase_3Ex(object) != OBJ_Void)
+						{
+							H3_Object_SetTranslation(props->object_3, player_x, player_y);
+							H3_Object_SetRenderOrder(props->object_3, 3);
+							props->object_tempo = props->object_3;
+							props->inObject = true;
+						}
+					}
+
+					// tu dis à ton inventaire quel objet on va prendre
+					if (props->inventory_pointer == 1)
+					{
+						InventoryComponent_Setcase_1Ex(object, ObjectsComponent_GetobjectEx(props->object_feet));
+						props->object_1 = props->object_feet;
+					}
+					else if (props->inventory_pointer == 2)
+					{
+						InventoryComponent_Setcase_2Ex(object, ObjectsComponent_GetobjectEx(props->object_feet));
+						props->object_2 = props->object_feet;
+					}
+					else if (props->inventory_pointer == 3)
+					{
+						InventoryComponent_Setcase_3Ex(object, ObjectsComponent_GetobjectEx(props->object_feet));
+						props->object_3 = props->object_feet;
+					}
+
+					props->nb_inventory_objects += 1;
+					if (props->character == 1 && props->nb_inventory_objects > 2) props->nb_inventory_objects = 2;
+					else if (props->character == 2 && props->nb_inventory_objects > 3) props->nb_inventory_objects = 3;
+
+					// tu prends l'objet
+					if (props->character == 1)
+					{
+						if (props->inventory_pointer == 1)
+						{
+							H3_Object_SetTranslation(props->object_1, player_x - 30, player_y + 230);
+							H3_Object_SetRenderOrder(props->object_1, 6);
+						}
+						else if (props->inventory_pointer == 2)
+						{
+							H3_Object_SetTranslation(props->object_2, player_x + 30, player_y + 230);
+							H3_Object_SetRenderOrder(props->object_2, 6);
+						}
+					}
+					else if (props->character == 2)
+					{
+						if (props->inventory_pointer == 1)
+						{
+							H3_Object_SetTranslation(props->object_1, player_x - 60, player_y + 230);
+							H3_Object_SetRenderOrder(props->object_1, 6);
+						}
+						else if (props->inventory_pointer == 2)
+						{
+							H3_Object_SetTranslation(props->object_2, player_x, player_y + 230);
+							H3_Object_SetRenderOrder(props->object_2, 6);
+						}
+						else if (props->inventory_pointer == 3)
+						{
+							H3_Object_SetTranslation(props->object_3, player_x + 60, player_y + 230);
+							H3_Object_SetRenderOrder(props->object_3, 6);
+						}
+					}
+
+					props->object_feet = props->object_tempo;
+				}
+
+				// drop
+				else if (props->inObject == false)
 				{
 					if (props->inventory_pointer == 1 && InventoryComponent_Getcase_1Ex(object) != OBJ_Void)
 					{
 						H3_Object_SetTranslation(props->object_1, player_x, player_y);
 						H3_Object_SetRenderOrder(props->object_1, 3);
+						props->inObject = true;
+						InventoryComponent_Setcase_1Ex(object, OBJ_Void);
+						props->object_feet = props->object_1;
+						props->object_1 = NULL;
 					}
 					else if (props->inventory_pointer == 2 && InventoryComponent_Getcase_2Ex(object) != OBJ_Void)
 					{
 						H3_Object_SetTranslation(props->object_2, player_x, player_y);
 						H3_Object_SetRenderOrder(props->object_2, 3);
+						props->inObject = true;
+						InventoryComponent_Setcase_2Ex(object, OBJ_Void);
+						props->object_feet = props->object_2;
+						props->object_2 = NULL;
 					}
 					else if (props->inventory_pointer == 3 && InventoryComponent_Getcase_3Ex(object) != OBJ_Void)
 					{
 						H3_Object_SetTranslation(props->object_3, player_x, player_y);
 						H3_Object_SetRenderOrder(props->object_3, 3);
+						props->inObject = true;
+						InventoryComponent_Setcase_3Ex(object, OBJ_Void);
+						props->object_feet = props->object_3;
+						props->object_3 = NULL;
 					}
 				}
+			}
 
-				snprintf(props->strMonsters, 256, "coin_%d", props->nb_Monsters++);
+			// inventory
+			if (H3_Input_IsKeyPressed(K_Tab))
+			{
+				props->inventory_pointer += 1;
 
-				H3Handle monster = H3_Object_Create2(props->scene, props->strMonsters, NULL, 6);
-				H3_Object_EnablePhysics(monster, H3_BOX_COLLIDER(CDT_Dynamic, 9, 20, 0x22, true));
-				H3_Object_AddComponent(monster, SPRITECOMPONENT_CREATE("assets/items/monster.png", A_Center + A_Middle));
-				H3_Object_AddComponent(monster, OBJECTSCOMPONENT_CREATE(OBJ_monster));
-
-				// tu dis à ton inventaire que tu vas prendre une pièce
-				if (props->inventory_pointer == 1)
-				{
-					InventoryComponent_Setcase_1Ex(object, OBJ_monster);
-					props->object_1 = monster;
-				}
-				else if (props->inventory_pointer == 2)
-				{
-					InventoryComponent_Setcase_2Ex(object, OBJ_monster);
-					props->object_2 = monster;
-				}
-				else if (props->inventory_pointer == 3)
-				{
-					InventoryComponent_Setcase_3Ex(object, OBJ_monster);
-					props->object_3 = monster;
-				}
-
-				props->nb_inventory_objects += 1;
-				if (props->character == 1 && props->nb_inventory_objects > 2) props->nb_inventory_objects = 2;
-				else if (props->character == 2 && props->nb_inventory_objects > 3) props->nb_inventory_objects = 3;
-
-				// tu prends l'objet
 				if (props->character == 1)
 				{
-					if (props->inventory_pointer == 1)
-					{
-						H3_Object_SetTranslation(props->object_1, player_x - 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 6);
-					}
-					else if (props->inventory_pointer == 2)
-					{
-						H3_Object_SetTranslation(props->object_2, player_x + 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 6);
-					}
+					if (props->inventory_pointer > 2) props->inventory_pointer = 1;
 				}
 				else if (props->character == 2)
 				{
-					if (props->inventory_pointer == 1)
-					{
-						H3_Object_SetTranslation(props->object_1, player_x - 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 6);
-					}
-					else if (props->inventory_pointer == 2)
-					{
-						H3_Object_SetTranslation(props->object_2, player_x, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 6);
-					}
-					else if (props->inventory_pointer == 3)
-					{
-						H3_Object_SetTranslation(props->object_3, player_x + 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_3, 6);
-					}
+					if (props->inventory_pointer > 3) props->inventory_pointer = 1;
 				}
 			}
 
-			//read book
-			else if (props->isBook == true)
+			// boolean management
+			if (props->inventory_pointer == 1)
 			{
-				;
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_airsoft_gun)
+				{
+					props->isGun = true;
+					if (props->direction == K_Z)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerbackgun.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_Q)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleftgun.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_S)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_D)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerrightgun.png", A_Center + A_Middle));
+					}
+				}
+				else
+				{
+					props->isGun = false;
+					if (props->direction == K_Z)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_Q)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_S)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_D)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
+					}
+				}
+
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_monster) props->isMonster = true;
+				else props->isMonster = false;
+
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_coffee) props->isCoffee = true;
+				else props->isCoffee = false;
+
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_post_it) props->isPostIt = true;
+				else props->isPostIt = false;
+
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_coin) props->isCoin = true;
+				else props->isCoin = false;
+
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_puzzlepiece_square) props->isPuzzlePieceSquare = true;
+				else props->isPuzzlePieceSquare = false;
+
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_puzzlepiece_circle) props->isPuzzlePieceCircle = true;
+				else props->isPuzzlePieceCircle = false;
+
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_puzzlepiece_triangle) props->isPuzzlePieceTriangle = true;
+				else props->isPuzzlePieceTriangle = false;
+
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_puzzlepiece_octogon) props->isPuzzlePieceOctogon = true;
+				else props->isPuzzlePieceOctogon = false;
+
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_key) props->isKey = true;
+				else props->isKey = false;
+
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_keycard) props->isKeyCard = true;
+				else props->isKeyCard = false;
+
+				if (InventoryComponent_Getcase_1Ex(object) == OBJ_book) props->isBook = true;
+				else props->isBook = false;
 			}
-		}
-
-		if (H3_Input_IsKeyPressed(K_Space))
-		{
-			// pick up
-			if (props->inObject == true)
+			else if (props->inventory_pointer == 2)
 			{
-				props->inObject = false;
-				// si tu as un objet, tu le pose par terre
-				if (props->nb_inventory_objects != 0)
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_airsoft_gun)
 				{
-					if (props->inventory_pointer == 1 && InventoryComponent_Getcase_1Ex(object) != OBJ_Void)
+					props->isGun = true;
+					if (props->direction == K_Z)
 					{
-						H3_Object_SetTranslation(props->object_1, player_x, player_y);
-						H3_Object_SetRenderOrder(props->object_1, 3);
-						props->object_tempo = props->object_1;
-						props->inObject = true;
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerbackgun.png", A_Center + A_Middle));
 					}
-					else if (props->inventory_pointer == 2 && InventoryComponent_Getcase_2Ex(object) != OBJ_Void)
+					else if (props->direction == K_Q)
 					{
-						H3_Object_SetTranslation(props->object_2, player_x, player_y);
-						H3_Object_SetRenderOrder(props->object_2, 3);
-						props->object_tempo = props->object_2;
-						props->inObject = true;
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleftgun.png", A_Center + A_Middle));
 					}
-					else if (props->inventory_pointer == 3 && InventoryComponent_Getcase_3Ex(object) != OBJ_Void)
+					else if (props->direction == K_S)
 					{
-						H3_Object_SetTranslation(props->object_3, player_x, player_y);
-						H3_Object_SetRenderOrder(props->object_3, 3);
-						props->object_tempo = props->object_3;
-						props->inObject = true;
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_D)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerrightgun.png", A_Center + A_Middle));
+					}
+				}
+				else
+				{
+					props->isGun = false;
+					if (props->direction == K_Z)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_Q)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_S)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_D)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
 					}
 				}
 
-				// tu dis à ton inventaire quel objet on va prendre
-				if (props->inventory_pointer == 1)
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_monster) props->isMonster = true;
+				else props->isMonster = false;
+
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_coffee) props->isCoffee = true;
+				else props->isCoffee = false;
+
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_post_it) props->isPostIt = true;
+				else props->isPostIt = false;
+
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_coin) props->isCoin = true;
+				else props->isCoin = false;
+
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_puzzlepiece_square) props->isPuzzlePieceSquare = true;
+				else props->isPuzzlePieceSquare = false;
+
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_puzzlepiece_circle) props->isPuzzlePieceCircle = true;
+				else props->isPuzzlePieceCircle = false;
+
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_puzzlepiece_triangle) props->isPuzzlePieceTriangle = true;
+				else props->isPuzzlePieceTriangle = false;
+
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_puzzlepiece_octogon) props->isPuzzlePieceOctogon = true;
+				else props->isPuzzlePieceOctogon = false;
+
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_key) props->isKey = true;
+				else props->isKey = false;
+
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_keycard) props->isKeyCard = true;
+				else props->isKeyCard = false;
+
+				if (InventoryComponent_Getcase_2Ex(object) == OBJ_book) props->isBook = true;
+				else props->isBook = false;
+			}
+			else if (props->inventory_pointer == 3)
+			{
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_airsoft_gun)
 				{
-					InventoryComponent_Setcase_1Ex(object, ObjectsComponent_GetobjectEx(props->object_feet));
-					props->object_1 = props->object_feet;
+					props->isGun = true;
+					if (props->direction == K_Z)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerbackgun.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_Q)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleftgun.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_S)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_D)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerrightgun.png", A_Center + A_Middle));
+					}
 				}
-				else if (props->inventory_pointer == 2)
+				else
 				{
-					InventoryComponent_Setcase_2Ex(object, ObjectsComponent_GetobjectEx(props->object_feet));
-					props->object_2 = props->object_feet;
-				}
-				else if (props->inventory_pointer == 3)
-				{
-					InventoryComponent_Setcase_3Ex(object, ObjectsComponent_GetobjectEx(props->object_feet));
-					props->object_3 = props->object_feet;
+					props->isGun = false;
+					if (props->direction == K_Z)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_Q)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_S)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
+					}
+					else if (props->direction == K_D)
+					{
+						H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+						H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
+					}
 				}
 
-				props->nb_inventory_objects += 1;
-				if (props->character == 1 && props->nb_inventory_objects > 2) props->nb_inventory_objects = 2;
-				else if (props->character == 2 && props->nb_inventory_objects > 3) props->nb_inventory_objects = 3;
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_monster) props->isMonster = true;
+				else props->isMonster = false;
 
-				// tu prends l'objet
-				if (props->character == 1)
-				{
-					if (props->inventory_pointer == 1)
-					{
-						H3_Object_SetTranslation(props->object_1, player_x - 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 6);
-					}
-					else if (props->inventory_pointer == 2)
-					{
-						H3_Object_SetTranslation(props->object_2, player_x + 30, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 6);
-					}
-				}
-				else if (props->character == 2)
-				{
-					if (props->inventory_pointer == 1)
-					{
-						H3_Object_SetTranslation(props->object_1, player_x - 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_1, 6);
-					}
-					else if (props->inventory_pointer == 2)
-					{
-						H3_Object_SetTranslation(props->object_2, player_x, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_2, 6);
-					}
-					else if (props->inventory_pointer == 3)
-					{
-						H3_Object_SetTranslation(props->object_3, player_x + 60, player_y + 230);
-						H3_Object_SetRenderOrder(props->object_3, 6);
-					}
-				}
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_coffee) props->isCoffee = true;
+				else props->isCoffee = false;
 
-				props->object_feet = props->object_tempo;
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_post_it) props->isPostIt = true;
+				else props->isPostIt = false;
+
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_coin) props->isCoin = true;
+				else props->isCoin = false;
+
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_puzzlepiece_square) props->isPuzzlePieceSquare = true;
+				else props->isPuzzlePieceSquare = false;
+
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_puzzlepiece_circle) props->isPuzzlePieceCircle = true;
+				else props->isPuzzlePieceCircle = false;
+
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_puzzlepiece_triangle) props->isPuzzlePieceTriangle = true;
+				else props->isPuzzlePieceTriangle = false;
+
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_puzzlepiece_octogon) props->isPuzzlePieceOctogon = true;
+				else props->isPuzzlePieceOctogon = false;
+
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_key) props->isKey = true;
+				else props->isKey = false;
+
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_keycard) props->isKeyCard = true;
+				else props->isKeyCard = false;
+
+				if (InventoryComponent_Getcase_3Ex(object) == OBJ_book) props->isBook = true;
+				else props->isBook = false;
 			}
 
-			// drop
-			else if (props->inObject == false)
+			// tiredness
+			if (!(H3_Input_IsKeyDown(K_Shift)))
 			{
-				if (props->inventory_pointer == 1 && InventoryComponent_Getcase_1Ex(object) != OBJ_Void)
+				if (H3_GetTime() - props->player_timer > 3)
 				{
-					H3_Object_SetTranslation(props->object_1, player_x, player_y);
-					H3_Object_SetRenderOrder(props->object_1, 3);
-					props->inObject = true;
-					InventoryComponent_Setcase_1Ex(object, OBJ_Void);
-					props->object_feet = props->object_1;
-					props->object_1 = NULL;
-				}
-				else if (props->inventory_pointer == 2 && InventoryComponent_Getcase_2Ex(object) != OBJ_Void)
-				{
-					H3_Object_SetTranslation(props->object_2, player_x, player_y);
-					H3_Object_SetRenderOrder(props->object_2, 3);
-					props->inObject = true;
-					InventoryComponent_Setcase_2Ex(object, OBJ_Void);
-					props->object_feet = props->object_2;
-					props->object_2 = NULL;
-				}
-				else if (props->inventory_pointer == 3 && InventoryComponent_Getcase_3Ex(object) != OBJ_Void)
-				{
-					H3_Object_SetTranslation(props->object_3, player_x, player_y);
-					H3_Object_SetRenderOrder(props->object_3, 3);
-					props->inObject = true;
-					InventoryComponent_Setcase_3Ex(object, OBJ_Void);
-					props->object_feet = props->object_3;
-					props->object_3 = NULL;
-				}
-			}
-		}
-
-		// inventory
-		if (H3_Input_IsKeyPressed(K_Tab))
-		{
-			props->inventory_pointer += 1;
-
-			if (props->character == 1)
-			{
-				if (props->inventory_pointer > 2) props->inventory_pointer = 1;
-			}
-			else if (props->character == 2)
-			{
-				if (props->inventory_pointer > 3) props->inventory_pointer = 1;
-			}
-		}
-
-		// boolean management
-		if (props->inventory_pointer == 1)
-		{
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_airsoft_gun)
-			{
-				props->isGun = true;
-				if (props->direction == K_Z)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerbackgun.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_Q)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleftgun.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_S)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_D)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerrightgun.png", A_Center + A_Middle));
+					props->Tiredness++;
+					props->player_timer = H3_GetTime();
 				}
 			}
 			else
 			{
-				props->isGun = false;
-				if (props->direction == K_Z)
+				if (H3_GetTime() - props->player_timer > 1.5)
 				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_Q)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_S)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_D)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
+					props->Tiredness++;
+					props->player_timer = H3_GetTime();
 				}
 			}
 
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_monster) props->isMonster = true;
-			else props->isMonster = false;
-
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_coffee) props->isCoffee = true;
-			else props->isCoffee = false;
-
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_post_it) props->isPostIt = true;
-			else props->isPostIt = false;
-
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_coin) props->isCoin = true;
-			else props->isCoin = false;
-
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_puzzlepiece_square) props->isPuzzlePieceSquare = true;
-			else props->isPuzzlePieceSquare = false;
-
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_puzzlepiece_circle) props->isPuzzlePieceCircle = true;
-			else props->isPuzzlePieceCircle = false;
-
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_puzzlepiece_triangle) props->isPuzzlePieceTriangle = true;
-			else props->isPuzzlePieceTriangle = false;
-
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_puzzlepiece_octogon) props->isPuzzlePieceOctogon = true;
-			else props->isPuzzlePieceOctogon = false;
-
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_key) props->isKey = true;
-			else props->isKey = false;
-
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_keycard) props->isKeyCard = true;
-			else props->isKeyCard = false;
-
-			if (InventoryComponent_Getcase_1Ex(object) == OBJ_book) props->isBook = true;
-			else props->isBook = false;
-		}
-		else if (props->inventory_pointer == 2)
-		{
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_airsoft_gun)
-			{
-				props->isGun = true;
-				if (props->direction == K_Z)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerbackgun.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_Q)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleftgun.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_S)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_D)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerrightgun.png", A_Center + A_Middle));
-				}
-			}
-			else
-			{
-				props->isGun = false;
-				if (props->direction == K_Z)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_Q)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_S)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_D)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
-				}
-			}
-
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_monster) props->isMonster = true;
-			else props->isMonster = false;
-
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_coffee) props->isCoffee = true;
-			else props->isCoffee = false;
-
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_post_it) props->isPostIt = true;
-			else props->isPostIt = false;
-
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_coin) props->isCoin = true;
-			else props->isCoin = false;
-
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_puzzlepiece_square) props->isPuzzlePieceSquare = true;
-			else props->isPuzzlePieceSquare = false;
-
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_puzzlepiece_circle) props->isPuzzlePieceCircle = true;
-			else props->isPuzzlePieceCircle = false;
-
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_puzzlepiece_triangle) props->isPuzzlePieceTriangle = true;
-			else props->isPuzzlePieceTriangle = false;
-
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_puzzlepiece_octogon) props->isPuzzlePieceOctogon = true;
-			else props->isPuzzlePieceOctogon = false;
-
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_key) props->isKey = true;
-			else props->isKey = false;
-
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_keycard) props->isKeyCard = true;
-			else props->isKeyCard = false;
-
-			if (InventoryComponent_Getcase_2Ex(object) == OBJ_book) props->isBook = true;
-			else props->isBook = false;
-		}
-		else if (props->inventory_pointer == 3)
-		{
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_airsoft_gun)
-			{
-				props->isGun = true;
-				if (props->direction == K_Z)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerbackgun.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_Q)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleftgun.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_S)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerwithgun.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_D)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerrightgun.png", A_Center + A_Middle));
-				}
-			}
-			else
-			{
-				props->isGun = false;
-				if (props->direction == K_Z)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerback.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_Q)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerleft.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_S)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/player.png", A_Center + A_Middle));
-				}
-				else if (props->direction == K_D)
-				{
-					H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-					H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerright.png", A_Center + A_Middle));
-				}
-			}
-
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_monster) props->isMonster = true;
-			else props->isMonster = false;
-
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_coffee) props->isCoffee = true;
-			else props->isCoffee = false;
-
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_post_it) props->isPostIt = true;
-			else props->isPostIt = false;
-
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_coin) props->isCoin = true;
-			else props->isCoin = false;
-
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_puzzlepiece_square) props->isPuzzlePieceSquare = true;
-			else props->isPuzzlePieceSquare = false;
-
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_puzzlepiece_circle) props->isPuzzlePieceCircle = true;
-			else props->isPuzzlePieceCircle = false;
-
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_puzzlepiece_triangle) props->isPuzzlePieceTriangle = true;
-			else props->isPuzzlePieceTriangle = false;
-
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_puzzlepiece_octogon) props->isPuzzlePieceOctogon = true;
-			else props->isPuzzlePieceOctogon = false;
-
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_key) props->isKey = true;
-			else props->isKey = false;
-
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_keycard) props->isKeyCard = true;
-			else props->isKeyCard = false;
-
-			if (InventoryComponent_Getcase_3Ex(object) == OBJ_book) props->isBook = true;
-			else props->isBook = false;
+			//printf("player_x = %f and player_y = %f\n", player_x, player_y);
 		}
 
-		// tiredness
-		if (!(H3_Input_IsKeyDown(K_Shift)))
+		else if (props->Tiredness >= 100 || props->isCatch == true)
 		{
-			if (H3_GetTime() - props->player_timer > 3)
+			//STOP
+			player_velo_x = 0;
+			player_velo_y = 0;
+			H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
+
+			if (props->Tiredness >= 100)
 			{
-				props->Tiredness++;
-				props->player_timer = H3_GetTime();
+				H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
+				H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerdead.png", A_Center + A_Middle));
 			}
-		}
-		else
-		{
-			if (H3_GetTime() - props->player_timer > 1.5)
-			{
-				props->Tiredness++;
-				props->player_timer = H3_GetTime();
-			}
-		}
-
-		//printf("player_x = %f and player_y = %f\n", player_x, player_y);
-	}
-
-	else if (props->Tiredness >= 100 || props->isCatch == true)
-	{
-		//STOP
-		player_velo_x = 0;
-		player_velo_y = 0;
-		H3_Object_SetVelocity(object, player_velo_x, player_velo_y);
-
-		if (props->Tiredness >= 100)
-		{
-			H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
-			H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/playerdead.png", A_Center + A_Middle));
 		}
 	}
 }
@@ -999,6 +1003,7 @@ void* PlayerComponent_CreateProperties(H3Handle scene, int character)
 	properties->scene = scene;
 
 	properties->character = character;
+	properties->ingame = true;
 
 	properties->isCatch = false;
 	properties->isCashBox = false;
@@ -1044,6 +1049,7 @@ H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TY
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, int, Tiredness);
 
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, bool, isCatch);
+H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, bool, ingame);
 
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, int, nb_inventory_objects);
 H3_DEFINE_COMPONENT_PROPERTY_ACCESSORS_RW_EX(PlayerComponent, PLAYERCOMPONENT_TYPEID, H3Handle, object_1);

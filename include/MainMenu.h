@@ -9,21 +9,22 @@ H3_CAPI_BEGIN_BLOCK
 void MainMenuComponent_Terminate(void* properties);
 void MainMenuComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transform, float t, float dt, void* properties);
 void MainMenuComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties);
-void* MainMenuComponent_CreateProperties(H3Handle Player);
+void* MainMenuComponent_CreateProperties(H3Handle Player, H3Handle clock);
 
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(MainMenuComponent, bool, Ending);
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(MainMenuComponent, bool, lunching);
+H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RO_EX(MainMenuComponent, bool, inGame);
 
 H3_CAPI_END_BLOCK
 
-#define MAINMENUCOMPONENT_CREATE(PLAYER)                                 \
+#define MAINMENUCOMPONENT_CREATE(PLAYER, CLOCK)                                 \
 	(SH3Component) {                                                 \
 		.Terminate          = MainMenuComponent_Terminate,             \
 		.Update             = MainMenuComponent_Update,                \
 		.Draw               = MainMenuComponent_Draw, \
 		.isInitialized      = false,                                 \
 		.componentType      = MAINMENUCOMPONENT_TYPEID,                \
-		.properties         = MainMenuComponent_CreateProperties(PLAYER) \
+		.properties         = MainMenuComponent_CreateProperties(PLAYER, CLOCK) \
 	}
 
 #endif /* _H3_COMPONENTS_MAINMENUCOMPONENT_H_ */

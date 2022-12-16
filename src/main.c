@@ -260,7 +260,7 @@ int main()
         //if (EnemieCounteMinion <= 5)
         //{
 
-        //    if (h3_gettime() - Timer >= 1) 
+        //    if (H3_GetTime() - Timer >= 1) 
         //    {
         //        snprintf(strEnemie, 256, "enemie_%d", enemieindex++);
         //        H3Handle enemie = H3_Object_Create(scene, strEnemie, NULL);

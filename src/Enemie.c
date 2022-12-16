@@ -14,6 +14,7 @@ typedef struct
 	int pv;
 	int init_pv;
 	float timer_knocking_out;
+	float backup_x, backup_y;
 
 	float vex;
 	float vey;
@@ -231,7 +232,9 @@ void EnemieComponent_Update(H3Handle h3, H3Handle object, SH3Transform* transfor
 		if (props->init_pv == 20) H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/miniboss_knockedout.png", A_Center + A_Middle));
 		else if (props->init_pv == 5) H3_Object_AddComponent(object, SPRITECOMPONENT_CREATE("assets/PlayerAndEnemiesSprites/enemie_knockedout.png", A_Center + A_Middle));
 
-		if (H3_GetTime() - props->timer_knocking_out >= 30)
+		H3_Object_SetTranslation(object, props->backup_x, props->backup_y);
+
+		if (H3_GetTime() - props->timer_knocking_out >= 120)
 		{
 			props->pv = props->init_pv;
 			H3_Object_RemoveComponent(object, SPRITECOMPONENT_TYPEID);
@@ -252,6 +255,7 @@ void EnemieComponent_OnCollisionEnter(H3Handle object, SH3Collision collider)
 		{
 			props->pv -= 1;
 			props->timer_knocking_out = H3_GetTime();
+			H3_Transform_GetPosition(H3_Object_GetTransform(object), &props->backup_x, &props->backup_y);
 		}
 	}
 }

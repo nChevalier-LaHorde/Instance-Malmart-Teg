@@ -9,7 +9,7 @@ H3_CAPI_BEGIN_BLOCK
 void TirednessComponent_Terminate(void* properties);
 void TirednessComponent_Draw(H3Handle h3, SH3Transform* transform, void* properties);
 
-void* TirednessComponent_CreateProperties(const char* text, SH3TextProperties props);
+void* TirednessComponent_CreateProperties(const char* text, SH3TextProperties props, H3Handle player);
 
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RW(TirednessComponent, const char*, Text);
 H3_DECLARE_COMPONENT_PROPERTY_ACCESSORS_RO(TirednessComponent, SH3TextProperties, Props);

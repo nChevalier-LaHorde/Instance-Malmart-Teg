@@ -53,12 +53,15 @@ int main()
     // Map
     H3Handle map_load = H3_Map_Load("assets/maps/realmap.tmx");
     H3_Map_RegisterObjectLayerForPhysicsInScene(scene, map_load, "collider");
+    
     H3Handle mapfloor = H3_Object_Create(scene, "mapfloor", NULL);
     H3_Object_AddComponent(mapfloor, MAPLAYERCOMPONENT_CREATE(map_load, "floor"));
     H3_Object_SetRenderOrder(mapfloor, 1);
+    
     H3Handle mapwalls = H3_Object_Create(scene, "mapwalls", NULL);
     H3_Object_AddComponent(mapwalls, MAPLAYERCOMPONENT_CREATE(map_load, "walls"));
     H3_Object_SetRenderOrder(mapwalls, 2);
+    
     H3Handle mapobjects = H3_Object_Create(scene, "mapobjects", NULL);
     H3_Object_AddComponent(mapobjects, MAPLAYERCOMPONENT_CREATE(map_load, "objects"));
     H3_Object_SetRenderOrder(mapobjects, 5);
